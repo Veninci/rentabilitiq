@@ -11,6 +11,16 @@ const PricingCards = () => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
   const navigate = useNavigate();
 
+  const handleSubscribe = (plan: any) => {
+    if (plan.name === 'Basic') {
+      navigate('/calculator');
+      return;
+    }
+    
+    // Redirection vers la page de paiement avec les paramètres du plan
+    navigate(`/checkout?planId=${plan.name.toLowerCase()}&planName=${plan.name}&amount=${plan.price[billingCycle]}&cycle=${billingCycle}`);
+  };
+
   const pricingPlans = [
     {
       name: 'Basic',
@@ -34,7 +44,6 @@ const PricingCards = () => {
       cta: 'Commencer gratuitement',
       variant: 'default',
       highlighted: false,
-      action: () => navigate('/calculator'),
     },
     {
       name: 'Pro',
@@ -59,7 +68,6 @@ const PricingCards = () => {
       cta: 'S\'abonner maintenant',
       variant: 'default',
       highlighted: true,
-      action: () => alert('Fonctionnalité à venir: abonnement Pro'),
     },
     {
       name: 'Expert',
@@ -81,7 +89,6 @@ const PricingCards = () => {
       cta: 'S\'abonner maintenant',
       variant: 'elevated',
       highlighted: false,
-      action: () => alert('Fonctionnalité à venir: abonnement Expert'),
     },
   ];
 
@@ -181,7 +188,7 @@ const PricingCards = () => {
             <Button 
               className="w-full mt-4 touch-target" 
               variant={plan.highlighted ? "default" : "outline"}
-              onClick={plan.action}
+              onClick={() => handleSubscribe(plan)}
             >
               {plan.cta}
             </Button>
