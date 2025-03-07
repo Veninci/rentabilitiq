@@ -81,6 +81,16 @@ const Calculator = () => {
     // Faire défiler jusqu'aux résultats
     setTimeout(() => {
       document.getElementById('results')?.scrollIntoView({ behavior: 'smooth' });
+      
+      // After showing the results, set a timeout to redirect to pricing page
+      // This will happen once they've had a chance to see their calculation results
+      setTimeout(() => {
+        toast({
+          title: "Essai terminé",
+          description: "Vous avez utilisé votre calcul gratuit. Découvrez nos offres pour des calculs illimités.",
+        });
+        navigate('/pricing');
+      }, 300000); // Redirect after 5 minutes (300 seconds) of showing results
     }, 100);
   };
 
