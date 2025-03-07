@@ -58,3 +58,11 @@
     font-size: 1.25rem;
   }
 }
+
+/* Dialog content for expanded view */
+[data-state="open"] > .dialog-content {
+  width: 95vw;
+  max-width: 800px;
+  max-height: 90vh;
+}
+
