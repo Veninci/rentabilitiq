@@ -23,4 +23,15 @@ export const formatter = {
       ...options,
     }).format(value / 100);
   },
+  
+  formatSavings: (monthlyPrice: number, yearlyPrice: number) => {
+    const monthlyCost = monthlyPrice * 12;
+    const savings = monthlyCost - yearlyPrice;
+    const savingsPercent = Math.round((savings / monthlyCost) * 100);
+    
+    return {
+      amount: savings,
+      percent: savingsPercent
+    };
+  }
 };
