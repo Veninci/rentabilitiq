@@ -179,4 +179,9 @@
   .compact-spacing > *:last-child {
     margin-bottom: 0;
   }
+  
+  /* Adjustments for the slogan on mobile */
+  .hero-slogan {
+    margin-top: -12px !important;
+  }
 }

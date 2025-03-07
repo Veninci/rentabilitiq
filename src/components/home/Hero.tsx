@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ArrowRight, BarChart4, PieChart, Calculator, Maximize2, Home, Building, Wallet, TrendingUp, Landmark, Settings, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -11,7 +10,7 @@ const Hero = () => {
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
 
   return (
-    <section className="relative pt-24 md:pt-32 pb-10 md:pb-24 overflow-hidden px-4 md:px-0">
+    <section className="relative pt-20 md:pt-32 pb-10 md:pb-24 overflow-hidden px-4 md:px-0">
       {/* Background gradient */}
       <div className="absolute top-0 left-0 right-0 h-[70vh] bg-gradient-to-b from-primary/5 to-transparent -z-10"></div>
       
@@ -21,7 +20,7 @@ const Hero = () => {
       
       <div className="container mx-auto">
         <div className="max-w-4xl mx-auto text-center mb-8 md:mb-12">
-          <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4 md:mb-6 animate-fade-in">
+          <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-3 md:mb-6 animate-fade-in -mt-3 md:mt-0">
             <span>Solution innovante pour investisseurs immobiliers</span>
           </div>
           
@@ -340,3 +339,4 @@ const Hero = () => {
 };
 
 export default Hero;
+
