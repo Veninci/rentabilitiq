@@ -39,7 +39,6 @@ export interface PropertyResults {
   monthlyCashFlow: number;
   grossYield: number;
   netYield: number;
-  roi: number;
   paybackPeriod: number;
   monthlyMortgage: number;
   pricePerSqm: number; // Added price per m²

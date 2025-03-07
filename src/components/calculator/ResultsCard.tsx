@@ -19,7 +19,6 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
     monthlyCashFlow,
     grossYield,
     netYield,
-    roi,
     paybackPeriod,
     monthlyMortgage,
     pricePerSqm,
@@ -53,11 +52,6 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
             <ResultItem 
               label="Rendement net" 
               value={`${formatter.formatPercent(netYield)}`} 
-              color="text-primary"
-            />
-            <ResultItem 
-              label="ROI" 
-              value={`${formatter.formatPercent(roi)}`} 
               color="text-primary"
             />
           </div>

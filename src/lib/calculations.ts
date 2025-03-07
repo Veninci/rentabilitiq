@@ -54,9 +54,7 @@ export const calculateResults = (data: PropertyData): PropertyResults => {
   const grossYield = totalInvestment > 0 ? (annualIncome / totalInvestment) * 100 : 0;
   const netYield = totalInvestment > 0 ? (annualCashFlow / totalInvestment) * 100 : 0;
   
-  // ROI (Return On Investment) - Calculé sur l'apport personnel pour plus de précision
-  // Éviter la division par zéro
-  const roi = data.downPayment > 0 ? (annualCashFlow / data.downPayment) * 100 : 0;
+  // ROI removed as requested
   
   // Période de récupération de l'investissement (en années)
   // Si le cash flow est négatif ou nul, l'investissement ne sera jamais rentabilisé
@@ -85,7 +83,6 @@ export const calculateResults = (data: PropertyData): PropertyResults => {
     monthlyCashFlow: Math.round(monthlyCashFlow * 100) / 100,
     grossYield: Math.round(grossYield * 100) / 100,
     netYield: Math.round(netYield * 100) / 100,
-    roi: Math.round(roi * 100) / 100,
     paybackPeriod: Math.round(paybackPeriod * 100) / 100,
     monthlyMortgage: Math.round(monthlyMortgage * 100) / 100,
     pricePerSqm: Math.round(pricePerSqm * 100) / 100,
