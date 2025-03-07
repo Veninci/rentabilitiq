@@ -23,6 +23,56 @@ interface CityPriceUpdate {
   }>;
 }
 
+// Données de référence pour les prix au m² de certaines villes françaises
+const CITY_PRICE_REFERENCES: Record<string, number> = {
+  "Paris": 11500,
+  "Lyon": 5400,
+  "Marseille": 3200,
+  "Bordeaux": 4950,
+  "Lille": 3700,
+  "Toulouse": 3800,
+  "Nice": 4900,
+  "Nantes": 4200,
+  "Strasbourg": 3450,
+  "Montpellier": 3600,
+  "Rennes": 3500,
+  "Grenoble": 3100,
+  "Toulon": 2900,
+  "Dijon": 2500,
+  "Angers": 2700,
+  "Le Mans": 2100,
+  "Reims": 2300,
+  "Saint-Étienne": 1700,
+  "Aix-en-Provence": 4800,
+  "Brest": 2300,
+  "Le Havre": 2100,
+  "Clermont-Ferrand": 2200,
+  "Tours": 2700,
+  "Limoges": 1800,
+  "Amiens": 2100,
+  // Grandes villes supplémentaires
+  "Metz": 2300,
+  "Perpignan": 2400,
+  "Besançon": 2200,
+  "Orléans": 2600,
+  "Rouen": 2500,
+  "Caen": 2400,
+  "Nancy": 2300,
+  "Mulhouse": 1900,
+  "Avignon": 2700,
+  "La Rochelle": 4200,
+  "Cannes": 5800,
+  "Antibes": 5200,
+  "Saint-Denis": 3000,
+  "Versailles": 7500,
+  "Courbevoie": 8200,
+  "Neuilly-sur-Seine": 11000,
+  "Saint-Germain-en-Laye": 6800,
+  "Boulogne-Billancourt": 9500,
+  "Issy-les-Moulineaux": 8700,
+  "Levallois-Perret": 10300,
+};
+
 export class OpenAIService {
   private static API_KEY_STORAGE_KEY = 'openai_api_key';
   private static CITIES_DATA_KEY = 'french_cities_data';
@@ -52,6 +102,37 @@ export class OpenAIService {
     localStorage.setItem(this.CITIES_DATA_KEY, JSON.stringify(citiesData));
   }
 
+  // Obtenir le prix de référence pour une ville
+  private static getReferencePriceForCity(cityName: string): number {
+    // Utiliser le prix de référence s'il existe, sinon estimer selon la taille de la ville
+    const normalizedCityName = this.normalizeCity(cityName);
+    
+    for (const [referenceCity, price] of Object.entries(CITY_PRICE_REFERENCES)) {
+      if (this.normalizeCity(referenceCity) === normalizedCityName) {
+        return price;
+      }
+    }
+    
+    // Prix par défaut basé sur le nom de la ville
+    // Plus le nom est long, plus la ville est probablement petite (heuristique simple)
+    const basePrice = cityName.length > 10 ? 2000 : 3000;
+    
+    // Ajout d'une variabilité aléatoire mais déterministe basée sur le nom de la ville
+    const seed = cityName.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
+    const priceVariation = (seed % 1500) - 750; // Variation entre -750 et +750
+    
+    return basePrice + priceVariation;
+  }
+  
+  // Normaliser le nom de la ville pour une comparaison plus robuste
+  private static normalizeCity(cityName: string): string {
+    return cityName
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "") // Supprimer les accents
+      .replace(/[^a-z]/g, ""); // Conserver uniquement les lettres
+  }
+
   static async updateCityPrices(cityName: string): Promise<CityPriceUpdate | null> {
     const apiKey = this.getApiKey();
     
@@ -75,13 +156,18 @@ export class OpenAIService {
       const currentMonth = new Date().toLocaleString('fr-FR', { month: 'long' });
       const previousMonths = this.getPreviousMonths(5);
       
+      // Obtenir le prix de référence pour cette ville
+      const referencePrice = this.getReferencePriceForCity(cityName);
+      
       const prompt = `
         En tant qu'expert immobilier, génère des données réalistes sur l'évolution du marché immobilier à ${cityName}, France pour les 6 derniers mois (${[...previousMonths, currentMonth].join(', ')}).
         
+        Pour cette ville, le prix moyen au m² est d'environ ${referencePrice}€.
+        
         Pour chaque mois, fournis:
-        1. Le prix moyen au m² (entre 2500€ et 12000€ selon la ville)
+        1. Le prix moyen au m² (environ ${referencePrice - 200}€ à ${referencePrice + 200}€)
         2. L'évolution mensuelle du prix au m² (entre -1% et +2%)
-        3. Le rendement locatif moyen (entre 3% et 7%)
+        3. Le rendement locatif moyen (entre 3% et 7%, inversement proportionnel au prix au m²)
         4. L'évolution du rendement (entre -0.5% et +0.5%)
         
         Retourne uniquement un objet JSON avec cette structure:
