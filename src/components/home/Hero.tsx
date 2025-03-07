@@ -215,7 +215,7 @@ const Hero = () => {
 
       {/* Expanded Calculator Modal */}
       <Dialog open={isCalculatorOpen} onOpenChange={setIsCalculatorOpen}>
-        <DialogContent className="sm:max-w-[90vw] md:max-w-[80vw] p-0 bg-transparent border-none shadow-none">
+        <DialogContent className="sm:max-w-[90vw] md:max-w-[80vw] lg:max-w-[75vw] p-0 bg-transparent border-none shadow-none max-h-[90vh] overflow-y-auto">
           <div className="relative">
             <DialogClose className="absolute right-2 top-2 z-10">
               <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full bg-white/80 hover:bg-white/90">
@@ -224,105 +224,105 @@ const Hero = () => {
               <span className="sr-only">Fermer</span>
             </DialogClose>
             
-            <GlassCard variant="elevated" className="w-full overflow-hidden p-4 md:p-6">
+            <GlassCard variant="elevated" className="w-full overflow-hidden p-2 sm:p-3 md:p-4 lg:p-6">
               <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden">
-                <div className="p-4 md:p-8">
-                  <div className="flex items-center justify-between mb-6 md:mb-8">
-                    <div className="flex items-center space-x-3 md:space-x-5">
-                      <div className="bg-primary/10 h-12 w-12 md:h-16 md:w-16 rounded-xl flex items-center justify-center">
-                        <Calculator className="h-6 w-6 md:h-8 md:w-8 text-primary" />
+                <div className="p-3 sm:p-4 md:p-6 lg:p-8">
+                  <div className="flex items-center justify-between mb-4 sm:mb-6 md:mb-8">
+                    <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-5">
+                      <div className="bg-primary/10 h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 lg:h-16 lg:w-16 rounded-xl flex items-center justify-center">
+                        <Calculator className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 lg:h-8 lg:w-8 text-primary" />
                       </div>
-                      <div className="text-xl md:text-2xl font-medium">Calculateur de rentabilité</div>
+                      <div className="text-sm sm:text-base md:text-xl lg:text-2xl font-medium">Calculateur de rentabilité</div>
                     </div>
-                    <div className="bg-amber-100 text-amber-700 text-sm md:text-base font-medium py-1.5 px-3 md:px-4 rounded-full">
+                    <div className="bg-amber-100 text-amber-700 text-xs sm:text-sm md:text-base font-medium py-1 px-2 sm:py-1.5 sm:px-3 md:px-4 rounded-full">
                       Exemple
                     </div>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
-                    <div className="col-span-1 md:col-span-2 bg-white rounded-xl shadow-md p-4 md:p-6">
-                      <div className="flex items-center justify-between mb-4 md:mb-6">
-                        <div className="text-base md:text-lg font-medium flex items-center">
-                          <Settings className="h-5 w-5 md:h-6 md:w-6 mr-2 text-primary" /> 
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 md:gap-6 lg:gap-8">
+                    <div className="col-span-1 md:col-span-2 bg-white rounded-xl shadow-md p-3 sm:p-4 md:p-5 lg:p-6">
+                      <div className="flex items-center justify-between mb-3 sm:mb-4 md:mb-5 lg:mb-6">
+                        <div className="text-xs sm:text-sm md:text-base lg:text-lg font-medium flex items-center">
+                          <Settings className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 mr-1 sm:mr-1.5 md:mr-2 text-primary" /> 
                           <span>Paramètres du bien</span>
                         </div>
-                        <div className="flex space-x-2 md:space-x-3">
-                          <div className="px-2.5 md:px-3.5 py-1 md:py-1.5 bg-primary/10 rounded text-sm md:text-base text-primary font-medium">Appartement</div>
-                          <div className="px-2.5 md:px-3.5 py-1 md:py-1.5 bg-gray-100 rounded text-sm md:text-base text-gray-500 font-medium">Lyon</div>
+                        <div className="flex space-x-1 sm:space-x-2 md:space-x-3">
+                          <div className="px-1.5 sm:px-2 md:px-2.5 lg:px-3.5 py-0.5 sm:py-1 md:py-1 lg:py-1.5 bg-primary/10 rounded text-[10px] sm:text-xs md:text-sm lg:text-base text-primary font-medium">Appartement</div>
+                          <div className="px-1.5 sm:px-2 md:px-2.5 lg:px-3.5 py-0.5 sm:py-1 md:py-1 lg:py-1.5 bg-gray-100 rounded text-[10px] sm:text-xs md:text-sm lg:text-base text-gray-500 font-medium">Lyon</div>
                         </div>
                       </div>
                       
-                      <div className="grid grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
-                        <div className="space-y-2">
-                          <div className="text-sm md:text-base text-gray-500">Prix d'achat</div>
-                          <div className="h-10 md:h-12 bg-gray-100 rounded-md flex items-center px-4 text-base md:text-lg font-medium">210 000 €</div>
+                      <div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:gap-6 mb-3 sm:mb-4 md:mb-5 lg:mb-6">
+                        <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
+                          <div className="text-xs md:text-sm lg:text-base text-gray-500">Prix d'achat</div>
+                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium">210 000 €</div>
                         </div>
-                        <div className="space-y-2">
-                          <div className="text-sm md:text-base text-gray-500">Surface</div>
-                          <div className="h-10 md:h-12 bg-gray-100 rounded-md flex items-center px-4 text-base md:text-lg font-medium">45 m²</div>
+                        <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
+                          <div className="text-xs md:text-sm lg:text-base text-gray-500">Surface</div>
+                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium">45 m²</div>
                         </div>
-                        <div className="space-y-2">
-                          <div className="text-sm md:text-base text-gray-500">Loyer mensuel</div>
-                          <div className="h-10 md:h-12 bg-gray-100 rounded-md flex items-center px-4 text-base md:text-lg font-medium">850 €</div>
+                        <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
+                          <div className="text-xs md:text-sm lg:text-base text-gray-500">Loyer mensuel</div>
+                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium">850 €</div>
                         </div>
-                        <div className="space-y-2">
-                          <div className="text-sm md:text-base text-gray-500">Type de location</div>
-                          <div className="h-10 md:h-12 bg-gray-100 rounded-md flex items-center px-4 text-base md:text-lg font-medium">Longue durée</div>
+                        <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
+                          <div className="text-xs md:text-sm lg:text-base text-gray-500">Type de location</div>
+                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium">Longue durée</div>
                         </div>
-                        <div className="space-y-2">
-                          <div className="text-sm md:text-base text-gray-500">Apport</div>
-                          <div className="h-10 md:h-12 bg-gray-100 rounded-md flex items-center px-4 text-base md:text-lg font-medium">40 000 €</div>
+                        <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
+                          <div className="text-xs md:text-sm lg:text-base text-gray-500">Apport</div>
+                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium">40 000 €</div>
                         </div>
-                        <div className="space-y-2">
-                          <div className="text-sm md:text-base text-gray-500">Taux d'intérêt</div>
-                          <div className="h-10 md:h-12 bg-gray-100 rounded-md flex items-center px-4 text-base md:text-lg font-medium">3.5%</div>
+                        <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
+                          <div className="text-xs md:text-sm lg:text-base text-gray-500">Taux d'intérêt</div>
+                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium">3.5%</div>
                         </div>
                       </div>
                       <div className="flex justify-end">
-                        <div className="h-10 md:h-12 w-40 md:w-48 bg-primary rounded-md flex items-center justify-center text-white text-sm md:text-base font-medium hover:bg-primary/90 transition-colors cursor-pointer">
+                        <div className="h-7 sm:h-8 md:h-10 lg:h-12 w-28 sm:w-32 md:w-40 lg:w-48 bg-primary rounded-md flex items-center justify-center text-white text-xs sm:text-sm md:text-base font-medium hover:bg-primary/90 transition-colors cursor-pointer">
                           Calculer
                         </div>
                       </div>
                     </div>
                     
-                    <div className="bg-white rounded-xl shadow-md p-4 md:p-6 flex flex-col">
-                      <div className="flex items-center justify-between mb-4 md:mb-6">
-                        <div className="text-lg md:text-xl font-medium">Dashboard</div>
+                    <div className="bg-white rounded-xl shadow-md p-3 sm:p-4 md:p-5 lg:p-6 flex flex-col">
+                      <div className="flex items-center justify-between mb-3 sm:mb-4 md:mb-5 lg:mb-6">
+                        <div className="text-sm sm:text-base md:text-lg lg:text-xl font-medium">Dashboard</div>
                       </div>
                       
-                      <div className="space-y-4 md:space-y-6 flex-grow">
-                        <div className="flex items-center justify-between bg-gray-50 p-4 rounded-lg">
+                      <div className="space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-6 flex-grow">
+                        <div className="flex items-center justify-between bg-gray-50 p-2 sm:p-3 md:p-4 rounded-lg">
                           <div className="flex items-center">
-                            <TrendingUp className="h-5 w-5 text-primary mr-3" />
-                            <div className="text-sm md:text-base text-muted-foreground">Rendement brut</div>
+                            <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 text-primary mr-1.5 sm:mr-2 md:mr-3" />
+                            <div className="text-xs md:text-sm lg:text-base text-muted-foreground">Rendement brut</div>
                           </div>
-                          <div className="font-medium text-primary text-lg">5.8%</div>
+                          <div className="font-medium text-primary text-sm sm:text-base md:text-lg">5.8%</div>
                         </div>
                         
-                        <div className="flex items-center justify-between bg-gray-50 p-4 rounded-lg">
+                        <div className="flex items-center justify-between bg-gray-50 p-2 sm:p-3 md:p-4 rounded-lg">
                           <div className="flex items-center">
-                            <Wallet className="h-5 w-5 text-green-500 mr-3" />
-                            <div className="text-sm md:text-base text-muted-foreground">Cash-flow mensuel</div>
+                            <Wallet className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 text-green-500 mr-1.5 sm:mr-2 md:mr-3" />
+                            <div className="text-xs md:text-sm lg:text-base text-muted-foreground">Cash-flow mensuel</div>
                           </div>
-                          <div className="font-medium text-green-500 text-lg">387 €</div>
+                          <div className="font-medium text-green-500 text-sm sm:text-base md:text-lg">387 €</div>
                         </div>
                         
-                        <div className="flex items-center justify-between bg-gray-50 p-4 rounded-lg">
+                        <div className="flex items-center justify-between bg-gray-50 p-2 sm:p-3 md:p-4 rounded-lg">
                           <div className="flex items-center">
-                            <Landmark className="h-5 w-5 text-blue-500 mr-3" />
-                            <div className="text-sm md:text-base text-muted-foreground">Mensualité crédit</div>
+                            <Landmark className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 text-blue-500 mr-1.5 sm:mr-2 md:mr-3" />
+                            <div className="text-xs md:text-sm lg:text-base text-muted-foreground">Mensualité crédit</div>
                           </div>
-                          <div className="font-medium text-blue-500 text-lg">614 €</div>
+                          <div className="font-medium text-blue-500 text-sm sm:text-base md:text-lg">614 €</div>
                         </div>
                       </div>
                       
-                      <div className="mt-6 h-40 bg-gray-50 rounded-lg flex items-center justify-center relative">
-                        <PieChart className="h-24 w-24 text-primary/30 absolute" />
+                      <div className="mt-3 sm:mt-4 md:mt-5 lg:mt-6 h-24 sm:h-28 md:h-32 lg:h-40 bg-gray-50 rounded-lg flex items-center justify-center relative">
+                        <PieChart className="h-12 w-12 sm:h-16 sm:w-16 md:h-20 md:w-20 lg:h-24 lg:w-24 text-primary/30 absolute" />
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="bg-white rounded-full h-28 w-28 flex items-center justify-center shadow-md">
+                          <div className="bg-white rounded-full h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24 lg:h-28 lg:w-28 flex items-center justify-center shadow-md">
                             <div className="text-center">
-                              <div className="text-3xl font-bold text-primary">4.2%</div>
-                              <div className="text-sm text-gray-500">Rendement</div>
+                              <div className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-bold text-primary">4.2%</div>
+                              <div className="text-xs sm:text-xs md:text-sm text-gray-500">Rendement</div>
                             </div>
                           </div>
                         </div>
