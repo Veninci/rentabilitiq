@@ -5,9 +5,11 @@ import { Check, X } from 'lucide-react';
 import GlassCard from '@/components/ui/GlassCard';
 import { formatter } from '@/lib/formatter';
 import { cn } from '@/lib/utils';
+import { useNavigate } from 'react-router-dom';
 
 const PricingCards = () => {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
+  const navigate = useNavigate();
 
   const pricingPlans = [
     {
@@ -32,6 +34,7 @@ const PricingCards = () => {
       cta: 'Commencer gratuitement',
       variant: 'default',
       highlighted: false,
+      action: () => navigate('/calculator'),
     },
     {
       name: 'Pro',
@@ -56,6 +59,7 @@ const PricingCards = () => {
       cta: 'Essayer 14 jours gratuits',
       variant: 'default',
       highlighted: true,
+      action: () => alert('Fonctionnalité à venir: abonnement Pro'),
     },
     {
       name: 'Expert',
@@ -77,6 +81,7 @@ const PricingCards = () => {
       cta: 'Essayer 14 jours gratuits',
       variant: 'elevated',
       highlighted: false,
+      action: () => alert('Fonctionnalité à venir: abonnement Expert'),
     },
   ];
 
@@ -155,7 +160,12 @@ const PricingCards = () => {
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-2">
                     <Check className="text-green-500 shrink-0 mt-0.5" size={16} />
-                    <span className="text-sm md:text-base">{feature}</span>
+                    <span className={cn(
+                      "text-sm md:text-base",
+                      feature.includes("3 simulations") ? "font-medium" : ""
+                    )}>
+                      {feature}
+                    </span>
                   </li>
                 ))}
                 
@@ -171,6 +181,7 @@ const PricingCards = () => {
             <Button 
               className="w-full mt-4 touch-target" 
               variant={plan.highlighted ? "default" : "outline"}
+              onClick={plan.action}
             >
               {plan.cta}
             </Button>
