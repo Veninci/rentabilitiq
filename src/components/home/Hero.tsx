@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ArrowRight, BarChart4, PieChart, Calculator, Maximize2, Home, Building, Wallet, TrendingUp, Landmark, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -16,7 +17,7 @@ const Hero = () => {
       <div className="absolute bottom-20 left-[5%] w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10"></div>
       
       <div className="container mx-auto">
-        <div className="max-w-4xl mx-auto text-center mb-8 md:mb-16">
+        <div className="max-w-4xl mx-auto text-center mb-8 md:mb-12">
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4 md:mb-6 animate-fade-in">
             <span>Solution innovante pour investisseurs immobiliers</span>
           </div>
@@ -45,71 +46,71 @@ const Hero = () => {
           </div>
         </div>
         
-        <div className="relative mt-8 md:mt-12 mb-6 md:mb-8 animate-blur-in" style={{ animationDelay: "300ms" }}>
-          <GlassCard className="mx-auto max-w-5xl overflow-hidden">
-            <div className="relative aspect-video bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden">
+        <div className="relative mt-8 md:mt-10 mb-6 md:mb-8 animate-blur-in" style={{ animationDelay: "300ms" }}>
+          <GlassCard className="mx-auto max-w-6xl overflow-hidden">
+            <div className="relative aspect-[16/10] md:aspect-[16/9] bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden">
               <div className="absolute inset-0 flex items-center justify-center">
                 {/* Interface mockup */}
                 <div className="w-full h-full p-3 md:p-6 flex flex-col">
                   <div className="flex items-center justify-between mb-4 md:mb-6">
                     <div className="flex items-center space-x-2 md:space-x-4">
-                      <div className="bg-primary/10 h-8 w-8 md:h-10 md:w-10 rounded-lg flex items-center justify-center">
-                        <Calculator className="h-4 w-4 md:h-5 md:w-5 text-primary" />
+                      <div className="bg-primary/10 h-8 w-8 md:h-12 md:w-12 rounded-lg flex items-center justify-center">
+                        <Calculator className="h-4 w-4 md:h-6 md:w-6 text-primary" />
                       </div>
-                      <div className="text-sm md:text-lg font-medium">Calculateur de rentabilité</div>
+                      <div className="text-sm md:text-xl font-medium">Calculateur de rentabilité</div>
                     </div>
-                    <div className="bg-amber-100 text-amber-700 text-xs font-medium py-1 px-2 md:px-3 rounded-full">
+                    <div className="bg-amber-100 text-amber-700 text-xs md:text-sm font-medium py-1 px-2 md:px-3 rounded-full">
                       Exemple
                     </div>
                   </div>
                   
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6 flex-grow">
-                    <div className="col-span-1 md:col-span-2 bg-white rounded-xl shadow-sm p-3 md:p-4 flex flex-col">
+                    <div className="col-span-1 md:col-span-2 bg-white rounded-xl shadow-sm p-3 md:p-5 flex flex-col">
                       <div className="flex items-center justify-between mb-3 md:mb-4">
-                        <div className="text-xs md:text-sm font-medium flex items-center">
-                          <Settings className="h-3 w-3 md:h-4 md:w-4 mr-1 md:mr-2 text-primary" /> 
-                          Paramètres du bien
+                        <div className="text-xs md:text-base font-medium flex items-center">
+                          <Settings className="h-3 w-3 md:h-5 md:w-5 mr-1 md:mr-2 text-primary" /> 
+                          <span className="hidden md:inline">Paramètres du bien</span>
                         </div>
                         <div className="flex space-x-1 md:space-x-2">
-                          <div className="px-1.5 md:px-2 py-0.5 md:py-1 bg-primary/10 rounded text-[10px] md:text-xs text-primary font-medium">Appartement</div>
-                          <div className="px-1.5 md:px-2 py-0.5 md:py-1 bg-gray-100 rounded text-[10px] md:text-xs text-gray-500 font-medium">Lyon</div>
+                          <div className="px-1.5 md:px-2.5 py-0.5 md:py-1.5 bg-primary/10 rounded text-[10px] md:text-sm text-primary font-medium">Appartement</div>
+                          <div className="px-1.5 md:px-2.5 py-0.5 md:py-1.5 bg-gray-100 rounded text-[10px] md:text-sm text-gray-500 font-medium">Lyon</div>
                         </div>
                       </div>
                       
-                      <div className="grid grid-cols-2 gap-2 md:gap-3 mb-2 md:mb-3">
-                        <div className="space-y-1.5">
-                          <div className="text-xs text-gray-500">Prix d'achat</div>
-                          <div className="h-8 bg-gray-100 rounded-md flex items-center px-3 text-sm font-medium">210 000 €</div>
+                      <div className="grid grid-cols-2 gap-2 md:gap-4 mb-2 md:mb-4">
+                        <div className="space-y-1.5 md:space-y-2">
+                          <div className="text-xs md:text-sm text-gray-500">Prix d'achat</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium">210 000 €</div>
                         </div>
-                        <div className="space-y-1.5">
-                          <div className="text-xs text-gray-500">Surface</div>
-                          <div className="h-8 bg-gray-100 rounded-md flex items-center px-3 text-sm font-medium">45 m²</div>
+                        <div className="space-y-1.5 md:space-y-2">
+                          <div className="text-xs md:text-sm text-gray-500">Surface</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium">45 m²</div>
                         </div>
-                        <div className="space-y-1.5">
-                          <div className="text-xs text-gray-500">Loyer mensuel</div>
-                          <div className="h-8 bg-gray-100 rounded-md flex items-center px-3 text-sm font-medium">850 €</div>
+                        <div className="space-y-1.5 md:space-y-2">
+                          <div className="text-xs md:text-sm text-gray-500">Loyer mensuel</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium">850 €</div>
                         </div>
-                        <div className="space-y-1.5">
-                          <div className="text-xs text-gray-500">Type de location</div>
-                          <div className="h-8 bg-gray-100 rounded-md flex items-center px-3 text-sm font-medium">Longue durée</div>
+                        <div className="space-y-1.5 md:space-y-2">
+                          <div className="text-xs md:text-sm text-gray-500">Type de location</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium">Longue durée</div>
                         </div>
-                        <div className="space-y-1.5">
-                          <div className="text-xs text-gray-500">Apport</div>
-                          <div className="h-8 bg-gray-100 rounded-md flex items-center px-3 text-sm font-medium">40 000 €</div>
+                        <div className="space-y-1.5 md:space-y-2">
+                          <div className="text-xs md:text-sm text-gray-500">Apport</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium">40 000 €</div>
                         </div>
-                        <div className="space-y-1.5">
-                          <div className="text-xs text-gray-500">Taux d'intérêt</div>
-                          <div className="h-8 bg-gray-100 rounded-md flex items-center px-3 text-sm font-medium">3.5%</div>
+                        <div className="space-y-1.5 md:space-y-2">
+                          <div className="text-xs md:text-sm text-gray-500">Taux d'intérêt</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium">3.5%</div>
                         </div>
                       </div>
                       <div className="mt-auto flex justify-end">
-                        <div className="h-6 md:h-8 w-24 md:w-36 bg-primary rounded-md flex items-center justify-center text-white text-xs md:text-sm font-medium">
+                        <div className="h-8 md:h-10 w-28 md:w-40 bg-primary rounded-md flex items-center justify-center text-white text-xs md:text-sm font-medium">
                           Calculer
                         </div>
                       </div>
                     </div>
                     
-                    <div className="hidden md:flex bg-white rounded-xl shadow-sm p-4 flex-col">
+                    <div className="hidden md:flex bg-white rounded-xl shadow-sm p-4 md:p-5 flex-col">
                       <div className="flex items-center justify-between mb-4">
                         <div className="text-lg font-medium mb-2">Dashboard</div>
                       </div>
@@ -140,12 +141,12 @@ const Hero = () => {
                         </div>
                       </div>
                       
-                      <div className="mt-4 h-24 bg-gray-50 rounded-lg flex items-center justify-center relative">
-                        <PieChart className="h-12 w-12 text-primary/30 absolute" />
+                      <div className="mt-4 h-28 bg-gray-50 rounded-lg flex items-center justify-center relative">
+                        <PieChart className="h-16 w-16 text-primary/30 absolute" />
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="bg-white rounded-full h-16 w-16 flex items-center justify-center shadow-sm">
+                          <div className="bg-white rounded-full h-20 w-20 flex items-center justify-center shadow-sm">
                             <div className="text-center">
-                              <div className="text-xl font-bold text-primary">4.2%</div>
+                              <div className="text-2xl font-bold text-primary">4.2%</div>
                               <div className="text-xs text-gray-500">Rendement</div>
                             </div>
                           </div>
