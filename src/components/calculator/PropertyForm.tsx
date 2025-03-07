@@ -1,16 +1,52 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ArrowRight, Building, Home, Landmark, PercentCircle } from 'lucide-react';
+import { 
+  ArrowRight, 
+  Building, 
+  Home, 
+  Landmark, 
+  PercentCircle,
+  MapPin
+} from 'lucide-react';
 import { PropertyData, RentalType } from '@/types/property';
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
 
 interface PropertyFormProps {
   onCalculate: (data: PropertyData) => void;
 }
+
+const FRENCH_CITIES = [
+  "Paris",
+  "Marseille",
+  "Lyon",
+  "Toulouse",
+  "Nice",
+  "Nantes",
+  "Strasbourg",
+  "Montpellier",
+  "Bordeaux",
+  "Lille",
+  "Rennes",
+  "Reims",
+  "Saint-Étienne",
+  "Toulon",
+  "Le Havre",
+  "Grenoble",
+  "Dijon",
+  "Angers",
+  "Nîmes",
+  "Villeurbanne"
+];
 
 const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
   const [activeTab, setActiveTab] = useState('purchase');
@@ -35,6 +71,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
     airbnbNightlyRate: 80,
     airbnbOccupancyRate: 70,
     managementFees: 3,
+    city: "Paris",
     
     // Charges
     propertyTax: 1200,
@@ -59,6 +96,13 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
     setPropertyData({
       ...propertyData,
       rentalType: value,
+    });
+  };
+
+  const handleCityChange = (value: string) => {
+    setPropertyData({
+      ...propertyData,
+      city: value,
     });
   };
   
@@ -91,6 +135,28 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
         
         <TabsContent value="purchase" className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="space-y-2 sm:col-span-2">
+              <Label htmlFor="city">Ville</Label>
+              <Select
+                value={propertyData.city}
+                onValueChange={handleCityChange}
+              >
+                <SelectTrigger id="city" className="w-full">
+                  <SelectValue placeholder="Sélectionnez une ville" />
+                </SelectTrigger>
+                <SelectContent>
+                  {FRENCH_CITIES.map((city) => (
+                    <SelectItem key={city} value={city}>
+                      <div className="flex items-center">
+                        <MapPin className="h-4 w-4 mr-2 text-muted-foreground" />
+                        <span>{city}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
             <div className="space-y-2">
               <Label htmlFor="purchasePrice">Prix d'achat (€)</Label>
               <Input

@@ -7,14 +7,18 @@ import ResultsCard from '@/components/calculator/ResultsCard';
 import ComparisonChart from '@/components/calculator/ComparisonChart';
 import { PropertyData, PropertyResults } from '@/types/property';
 import { calculateResults, calculateAirbnbResults, calculateLongTermResults } from '@/lib/calculations';
-import { Calculator as CalculatorIcon } from 'lucide-react';
+import { Calculator as CalculatorIcon, MapPin } from 'lucide-react';
 
 const Calculator = () => {
   const [results, setResults] = useState<PropertyResults | null>(null);
   const [longTermResults, setLongTermResults] = useState<PropertyResults | null>(null);
   const [airbnbResults, setAirbnbResults] = useState<PropertyResults | null>(null);
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
 
   const handleCalculate = (data: PropertyData) => {
+    // Enregistrer la ville sélectionnée
+    setSelectedCity(data.city);
+    
     // Calculer les résultats pour le type de location sélectionné
     const calculatedResults = calculateResults(data);
     setResults(calculatedResults);
@@ -67,6 +71,15 @@ const Calculator = () => {
                 <h2 className="text-3xl font-bold mb-4">
                   Résultats de votre analyse
                 </h2>
+                
+                {selectedCity && (
+                  <div className="flex items-center justify-center mb-4">
+                    <MapPin className="h-5 w-5 text-primary mr-2" />
+                    <span className="text-lg text-muted-foreground font-medium">
+                      {selectedCity}
+                    </span>
+                  </div>
+                )}
                 
                 <p className="text-muted-foreground">
                   Voici l'analyse détaillée de la rentabilité de votre bien immobilier.

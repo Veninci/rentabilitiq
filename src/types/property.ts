@@ -20,6 +20,7 @@ export interface PropertyData {
   airbnbNightlyRate: number;
   airbnbOccupancyRate: number;
   managementFees: number;
+  city: string;
   
   // Charges
   propertyTax: number;
