@@ -25,7 +25,7 @@ export const calculateResults = (data: PropertyData): PropertyResults => {
   const numberOfPayments = data.loanTerm * 12;
   
   let monthlyMortgage = 0;
-  if (monthlyInterestRate > 0 && numberOfPayments > 0) {
+  if (monthlyInterestRate > 0 && numberOfPayments > 0 && data.loanAmount > 0) {
     monthlyMortgage = 
       data.loanAmount * 
       (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) / 
@@ -50,26 +50,29 @@ export const calculateResults = (data: PropertyData): PropertyResults => {
   const monthlyCashFlow = annualCashFlow / 12;
   
   // Calcul des rendements
-  const grossYield = (annualIncome / totalInvestment) * 100;
-  const netYield = (annualCashFlow / totalInvestment) * 100;
+  // Éviter la division par zéro
+  const grossYield = totalInvestment > 0 ? (annualIncome / totalInvestment) * 100 : 0;
+  const netYield = totalInvestment > 0 ? (annualCashFlow / totalInvestment) * 100 : 0;
   
   // ROI (Return On Investment)
-  const roi = (annualCashFlow / data.downPayment) * 100;
+  // Éviter la division par zéro
+  const roi = data.downPayment > 0 ? (annualCashFlow / data.downPayment) * 100 : 0;
   
   // Période de récupération de l'investissement (en années)
-  const paybackPeriod = annualCashFlow > 0 ? totalInvestment / annualCashFlow : 999;
+  // Si le cash flow est négatif ou nul, l'investissement ne sera jamais rentabilisé
+  const paybackPeriod = (annualCashFlow > 0) ? (totalInvestment / annualCashFlow) : Infinity;
   
   return {
-    totalInvestment,
-    annualIncome,
-    annualExpenses,
-    annualCashFlow,
-    monthlyCashFlow,
-    grossYield,
-    netYield,
-    roi,
-    paybackPeriod,
-    monthlyMortgage,
+    totalInvestment: Math.round(totalInvestment * 100) / 100,
+    annualIncome: Math.round(annualIncome * 100) / 100,
+    annualExpenses: Math.round(annualExpenses * 100) / 100,
+    annualCashFlow: Math.round(annualCashFlow * 100) / 100,
+    monthlyCashFlow: Math.round(monthlyCashFlow * 100) / 100,
+    grossYield: Math.round(grossYield * 100) / 100,
+    netYield: Math.round(netYield * 100) / 100,
+    roi: Math.round(roi * 100) / 100,
+    paybackPeriod: Math.round(paybackPeriod * 100) / 100,
+    monthlyMortgage: Math.round(monthlyMortgage * 100) / 100,
   };
 };
 
