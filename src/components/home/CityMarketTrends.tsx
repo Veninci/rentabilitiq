@@ -1,11 +1,11 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, TrendingUp, TrendingDown, RefreshCw, Settings } from 'lucide-react';
+import { ArrowRight, TrendingUp, TrendingDown, RefreshCw, Settings, Search } from 'lucide-react';
 import { formatter } from '@/lib/formatter';
 import { OpenAIService } from '@/services/openai';
 import { toast } from 'sonner';
@@ -25,6 +25,15 @@ interface CityData {
   }>;
 }
 
+// Liste des principales villes françaises
+const MAJOR_CITIES = [
+  "Paris", "Lyon", "Marseille", "Bordeaux", "Lille", "Toulouse", "Nice", 
+  "Nantes", "Strasbourg", "Montpellier", "Rennes", "Grenoble", "Toulon",
+  "Dijon", "Angers", "Le Mans", "Reims", "Saint-Étienne", "Aix-en-Provence",
+  "Brest", "Le Havre", "Clermont-Ferrand", "Tours", "Limoges", "Amiens"
+];
+
+// Données par défaut pour les villes principales
 const cityData: Record<string, CityData> = {
   "Paris": {
     name: "Paris",
@@ -110,8 +119,36 @@ const CityMarketTrends: React.FC = () => {
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [showApiKeyInput, setShowApiKeyInput] = useState<boolean>(false);
   const [apiKey, setApiKey] = useState<string>(OpenAIService.getApiKey() || "");
+  const [allCitiesData, setAllCitiesData] = useState<Record<string, CityData>>(cityData);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [filteredCities, setFilteredCities] = useState<string[]>(MAJOR_CITIES);
   
-  const city = cityData[selectedCity] || cityData["Paris"];
+  const city = allCitiesData[selectedCity] || allCitiesData["Paris"];
+
+  // Load cached city data on component mount
+  useEffect(() => {
+    const cachedData = OpenAIService.getAllCachedCitiesData();
+    if (Object.keys(cachedData).length > 0) {
+      setAllCitiesData(prev => ({
+        ...prev,
+        ...cachedData
+      }));
+    }
+  }, []);
+
+  // Filter cities based on search query
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setFilteredCities(MAJOR_CITIES);
+      return;
+    }
+    
+    const query = searchQuery.toLowerCase().trim();
+    const filtered = MAJOR_CITIES.filter(city => 
+      city.toLowerCase().includes(query)
+    );
+    setFilteredCities(filtered);
+  }, [searchQuery]);
 
   const handleCityChange = (value: string) => {
     if (value === "custom") {
@@ -132,15 +169,19 @@ const CityMarketTrends: React.FC = () => {
       }
 
       setIsUpdating(true);
-      const cityData = await OpenAIService.updateCityPrices(customCity);
+      const newCityData = await OpenAIService.updateCityPrices(customCity);
       setIsUpdating(false);
 
-      if (cityData) {
+      if (newCityData) {
         // Add the new city data to our cityData object
-        cityData[customCity] = {
-          name: customCity,
-          ...cityData
+        const updatedCityData = {
+          ...allCitiesData,
+          [customCity]: {
+            name: customCity,
+            ...newCityData
+          }
         };
+        setAllCitiesData(updatedCityData);
         setSelectedCity(customCity);
         setShowCustomInput(false);
       }
@@ -161,12 +202,15 @@ const CityMarketTrends: React.FC = () => {
 
     if (updatedData) {
       // Update the city data with the new values
-      cityData[selectedCity] = {
-        ...cityData[selectedCity],
-        ...updatedData
+      const newCityData = {
+        ...allCitiesData,
+        [selectedCity]: {
+          ...allCitiesData[selectedCity],
+          ...updatedData,
+          name: selectedCity
+        }
       };
-      // Force a re-render
-      setSelectedCity(prev => prev);
+      setAllCitiesData(newCityData);
     }
   };
 
@@ -189,28 +233,55 @@ const CityMarketTrends: React.FC = () => {
         <DialogHeader>
           <DialogTitle className="text-xl font-bold mb-2">Évolution du marché immobilier</DialogTitle>
           <DialogDescription className="text-sm text-muted-foreground">
-            Consultez les tendances du marché immobilier dans différentes villes françaises.
+            Consultez les tendances du marché immobilier dans toutes les villes françaises.
           </DialogDescription>
         </DialogHeader>
         
         <div className="space-y-6">
-          <div className="flex justify-between items-center">
-            <div className="grid grid-cols-2 gap-4 items-end flex-1">
+          <div className="flex justify-between items-start">
+            <div className="grid grid-cols-1 gap-4 items-end flex-1">
               <div className="space-y-2">
                 <Label htmlFor="city-select">Ville</Label>
-                <Select value={selectedCity} onValueChange={handleCityChange}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Sélectionnez une ville" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Paris">Paris</SelectItem>
-                    <SelectItem value="Lyon">Lyon</SelectItem>
-                    <SelectItem value="Bordeaux">Bordeaux</SelectItem>
-                    <SelectItem value="Marseille">Marseille</SelectItem>
-                    <SelectItem value="Strasbourg">Strasbourg</SelectItem>
-                    <SelectItem value="custom">Autre ville...</SelectItem>
-                  </SelectContent>
-                </Select>
+                <div className="flex space-x-2">
+                  <div className="flex-1">
+                    <Select value={selectedCity} onValueChange={handleCityChange}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Sélectionnez une ville" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <div className="py-2 px-3">
+                          <Input
+                            placeholder="Rechercher une ville..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="mb-2"
+                          />
+                        </div>
+                        {filteredCities.map(city => (
+                          <SelectItem key={city} value={city}>{city}</SelectItem>
+                        ))}
+                        <SelectItem value="custom">Autre ville...</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <Button 
+                    size="icon" 
+                    variant="outline" 
+                    onClick={handleUpdateCityData} 
+                    disabled={isUpdating} 
+                    title="Mettre à jour les données"
+                  >
+                    <RefreshCw className={`h-4 w-4 ${isUpdating ? 'animate-spin' : ''}`} />
+                  </Button>
+                  <Button 
+                    size="icon" 
+                    variant="outline" 
+                    onClick={() => setShowApiKeyInput(!showApiKeyInput)} 
+                    title="Configurer l'API"
+                  >
+                    <Settings className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
               
               {showCustomInput && (
@@ -229,26 +300,6 @@ const CityMarketTrends: React.FC = () => {
                   </div>
                 </div>
               )}
-            </div>
-
-            <div className="flex items-end space-x-2 ml-2">
-              <Button 
-                size="icon" 
-                variant="outline" 
-                onClick={handleUpdateCityData} 
-                disabled={isUpdating} 
-                title="Mettre à jour les données"
-              >
-                <RefreshCw className={`h-4 w-4 ${isUpdating ? 'animate-spin' : ''}`} />
-              </Button>
-              <Button 
-                size="icon" 
-                variant="outline" 
-                onClick={() => setShowApiKeyInput(!showApiKeyInput)} 
-                title="Configurer l'API"
-              >
-                <Settings className="h-4 w-4" />
-              </Button>
             </div>
           </div>
 

@@ -25,6 +25,7 @@ interface CityPriceUpdate {
 
 export class OpenAIService {
   private static API_KEY_STORAGE_KEY = 'openai_api_key';
+  private static CITIES_DATA_KEY = 'french_cities_data';
 
   static saveApiKey(apiKey: string): void {
     localStorage.setItem(this.API_KEY_STORAGE_KEY, apiKey);
@@ -35,12 +36,39 @@ export class OpenAIService {
     return localStorage.getItem(this.API_KEY_STORAGE_KEY);
   }
 
+  static getCachedCityData(cityName: string): CityPriceUpdate | null {
+    const citiesData = this.getAllCachedCitiesData();
+    return citiesData[cityName] || null;
+  }
+
+  static getAllCachedCitiesData(): Record<string, CityPriceUpdate> {
+    const citiesDataString = localStorage.getItem(this.CITIES_DATA_KEY);
+    return citiesDataString ? JSON.parse(citiesDataString) : {};
+  }
+
+  static saveCityData(cityName: string, data: CityPriceUpdate): void {
+    const citiesData = this.getAllCachedCitiesData();
+    citiesData[cityName] = data;
+    localStorage.setItem(this.CITIES_DATA_KEY, JSON.stringify(citiesData));
+  }
+
   static async updateCityPrices(cityName: string): Promise<CityPriceUpdate | null> {
     const apiKey = this.getApiKey();
     
     if (!apiKey) {
       toast.error("Clé API OpenAI manquante. Veuillez configurer votre clé API.");
       return null;
+    }
+
+    // Check if we already have cached data for this city
+    const cachedData = this.getCachedCityData(cityName);
+    if (cachedData) {
+      // Check if the data is from today
+      const today = new Date().toLocaleDateString('fr-FR');
+      if (localStorage.getItem(`city_${cityName}_date`) === today) {
+        console.log(`Using cached data for ${cityName}`);
+        return cachedData;
+      }
     }
 
     try {
@@ -116,6 +144,11 @@ export class OpenAIService {
       try {
         const cityData = JSON.parse(jsonString) as CityPriceUpdate;
         toast.success(`Données de ${cityName} mises à jour avec succès`);
+        
+        // Save to cache with timestamp
+        this.saveCityData(cityName, cityData);
+        localStorage.setItem(`city_${cityName}_date`, new Date().toLocaleDateString('fr-FR'));
+        
         return cityData;
       } catch (jsonError) {
         console.error('Error parsing JSON:', jsonError, 'Raw content:', contentString);
