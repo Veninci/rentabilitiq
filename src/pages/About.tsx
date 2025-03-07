@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Layout } from '@/components/layout/Layout';
 import GlassCard from '@/components/ui/GlassCard';
@@ -44,7 +45,7 @@ const About = () => {
                   <img 
                     src="/lovable-uploads/f10628aa-f2ee-42d3-9d80-c0513fee0296.png" 
                     alt="Lucas Da Silva Venancio, fondateur de RentabilitiQ" 
-                    className="w-full h-full object-cover object-center filter grayscale hover:grayscale-0 transition-all duration-500"
+                    className="w-full h-full object-cover object-top filter grayscale hover:grayscale-0 transition-all duration-500"
                   />
                 </div>
               </div>
