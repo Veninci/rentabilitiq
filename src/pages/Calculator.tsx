@@ -62,7 +62,8 @@ const Calculator = () => {
     trackCalculatorUsage();
     
     // Update remaining calculations
-    setRemainingCalculations(getRemainingCalculations());
+    const remaining = getRemainingCalculations();
+    setRemainingCalculations(remaining);
     
     // Enregistrer la ville sélectionnée
     setSelectedCity(data.city);
@@ -82,15 +83,16 @@ const Calculator = () => {
     setTimeout(() => {
       document.getElementById('results')?.scrollIntoView({ behavior: 'smooth' });
       
-      // After showing the results, set a timeout to redirect to pricing page
-      // This will happen once they've had a chance to see their calculation results
-      setTimeout(() => {
-        toast({
-          title: "Essai terminé",
-          description: "Vous avez utilisé votre calcul gratuit. Découvrez nos offres pour des calculs illimités.",
-        });
-        navigate('/pricing');
-      }, 300000); // Redirect after 5 minutes (300 seconds) of showing results
+      // Only redirect to pricing page if they've used their last calculation
+      if (remaining === 0) {
+        setTimeout(() => {
+          toast({
+            title: "Essai terminé",
+            description: "Vous avez utilisé votre calcul gratuit. Découvrez nos offres pour des calculs illimités.",
+          });
+          navigate('/pricing');
+        }, 300000); // Redirect after 5 minutes (300 seconds) of showing results
+      }
     }, 100);
   };
 
