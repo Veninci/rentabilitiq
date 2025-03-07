@@ -278,7 +278,7 @@ const CityMarketTrends: React.FC = () => {
                   <YAxis 
                     yAxisId="left" 
                     orientation="left" 
-                    tickFormatter={(value) => `${formatter.formatCurrency(value, false)}`}
+                    tickFormatter={(value) => `${formatter.formatCurrency(value, { maximumFractionDigits: 0 })}`}
                     tick={{ fontSize: 12 }}
                   />
                   <YAxis 
