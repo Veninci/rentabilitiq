@@ -19,7 +19,7 @@ const Calculator = () => {
   const [longTermResults, setLongTermResults] = useState<PropertyResults | null>(null);
   const [airbnbResults, setAirbnbResults] = useState<PropertyResults | null>(null);
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
-  const [remainingCalculations, setRemainingCalculations] = useState<number>(3);
+  const [remainingCalculations, setRemainingCalculations] = useState<number>(1);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -30,7 +30,7 @@ const Calculator = () => {
       // Show a toast and redirect to pricing after a short delay
       toast({
         title: "Limite atteinte",
-        description: "Vous avez atteint votre limite de 3 calculs par mois.",
+        description: "Vous avez atteint votre limite de 1 calcul par mois.",
         variant: "destructive",
       });
       
@@ -51,7 +51,7 @@ const Calculator = () => {
     if (hasReachedUsageLimit()) {
       toast({
         title: "Limite atteinte",
-        description: "Vous avez atteint votre limite de 3 calculs par mois. Passez à l'offre Pro pour des calculs illimités.",
+        description: "Vous avez atteint votre limite de 1 calcul par mois. Passez à l'offre Pro pour des calculs illimités.",
         variant: "destructive",
       });
       navigate('/pricing');
@@ -120,7 +120,7 @@ const Calculator = () => {
                   </div>
                   <h2 className="text-xl font-bold">Limite de calculs atteinte</h2>
                   <p className="text-muted-foreground mb-4 max-w-md">
-                    Vous avez utilisé vos 3 calculs gratuits pour ce mois-ci. Passez à l'offre Pro pour des calculs illimités.
+                    Vous avez utilisé votre calcul gratuit pour ce mois-ci. Passez à l'offre Pro pour des calculs illimités.
                   </p>
                   <Button 
                     onClick={() => navigate('/pricing')}

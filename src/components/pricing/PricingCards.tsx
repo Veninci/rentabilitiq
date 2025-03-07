@@ -20,7 +20,7 @@ const PricingCards = () => {
         yearly: 0,
       },
       features: [
-        '3 simulations par mois',
+        '1 simulation par mois',
         'Calculs basiques de rentabilité',
         'Comparaison location classique et Airbnb',
         'Accès à la calculatrice standard',
