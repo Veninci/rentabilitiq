@@ -8,8 +8,8 @@ import ResultsCard from '@/components/calculator/ResultsCard';
 import ComparisonChart from '@/components/calculator/ComparisonChart';
 import { PropertyData, PropertyResults } from '@/types/property';
 import { calculateResults, calculateAirbnbResults, calculateLongTermResults } from '@/lib/calculations';
-import { Calculator as CalculatorIcon, MapPin, Lock, AlertTriangle, Info as InfoIcon } from 'lucide-react';
-import { hasReachedUsageLimit, trackCalculatorUsage, getRemainingCalculations } from '@/lib/usageTracker';
+import { Calculator as CalculatorIcon, MapPin, Lock, AlertTriangle, Info as InfoIcon, CheckCircle } from 'lucide-react';
+import { hasReachedUsageLimit, trackCalculatorUsage, getRemainingCalculations, isSubscribed } from '@/lib/usageTracker';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -23,10 +23,13 @@ const Calculator = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  // Vérifier si l'utilisateur est abonné
+  const userIsSubscribed = isSubscribed();
+
   useEffect(() => {
     // Check usage limit on component mount
     const limitReached = hasReachedUsageLimit();
-    if (limitReached) {
+    if (limitReached && !userIsSubscribed) {
       // Show a toast notification about the limit
       toast({
         title: "Limite atteinte",
@@ -41,7 +44,7 @@ const Calculator = () => {
 
   const handleCalculate = (data: PropertyData) => {
     // Check if user has reached their limit
-    if (hasReachedUsageLimit()) {
+    if (hasReachedUsageLimit() && !userIsSubscribed) {
       toast({
         title: "Limite atteinte",
         description: "Vous avez atteint votre limite de 1 calcul par mois. Passez à l'offre Pro pour des calculs illimités.",
@@ -50,7 +53,7 @@ const Calculator = () => {
       return;
     }
     
-    // Track this calculation
+    // Track this calculation if not subscribed
     trackCalculatorUsage();
     
     // Update remaining calculations
@@ -98,14 +101,23 @@ const Calculator = () => {
                 Complétez les informations ci-dessous pour obtenir une analyse détaillée de votre investissement.
               </p>
               
-              {/* Display remaining calculations badge */}
-              <div className="mt-4 inline-flex items-center px-4 py-2 rounded-full bg-amber-100 text-amber-800 text-sm font-medium">
-                <AlertTriangle className="h-4 w-4 mr-2" />
-                <span>Il vous reste {remainingCalculations} calcul{remainingCalculations !== 1 ? 's' : ''} ce mois-ci</span>
+              {/* Display remaining calculations or subscription badge */}
+              <div className="mt-4 inline-flex items-center px-4 py-2 rounded-full text-sm font-medium">
+                {userIsSubscribed ? (
+                  <div className="bg-green-100 text-green-800 px-4 py-2 rounded-full flex items-center">
+                    <CheckCircle className="h-4 w-4 mr-2" />
+                    <span>Calculs illimités (Abonnement actif)</span>
+                  </div>
+                ) : (
+                  <div className="bg-amber-100 text-amber-800 px-4 py-2 rounded-full flex items-center">
+                    <AlertTriangle className="h-4 w-4 mr-2" />
+                    <span>Il vous reste {remainingCalculations} calcul{remainingCalculations !== 1 ? 's' : ''} ce mois-ci</span>
+                  </div>
+                )}
               </div>
             </div>
             
-            {hasReachedUsageLimit() ? (
+            {hasReachedUsageLimit() && !userIsSubscribed ? (
               <Card className="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 text-center">
                 <div className="flex flex-col items-center gap-4 py-6">
                   <div className="rounded-full bg-amber-100 p-3 w-12 h-12 flex items-center justify-center">

@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
+import { setUserSubscription } from '@/lib/usageTracker';
 
 interface PaymentFormProps {
   planId: string;
@@ -34,6 +35,11 @@ const PaymentForm = ({ planId, planName, amount, billingCycle }: PaymentFormProp
     // Cette partie serait normalement connectée à un backend pour créer une intention de paiement
     // Simulation pour cette démonstration
     try {
+      // Enregistrer l'abonnement après un paiement réussi
+      if (planId === 'pro' || planId === 'expert') {
+        setUserSubscription(planId as 'pro' | 'expert');
+      }
+      
       toast({
         title: "Paiement simulé",
         description: `Abonnement ${planName} ${billingCycle} souscrit avec succès!`,

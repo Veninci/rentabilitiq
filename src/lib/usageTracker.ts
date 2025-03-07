@@ -7,14 +7,35 @@ interface UsageData {
   lastReset: string; // ISO date string
 }
 
+// Vérifier si l'utilisateur est abonné (Pro ou Expert)
+export const isSubscribed = (): boolean => {
+  const subscription = localStorage.getItem('user_subscription');
+  return subscription === 'pro' || subscription === 'expert';
+};
+
+// Si l'utilisateur est abonné, nous enregistrons son abonnement
+export const setUserSubscription = (plan: 'pro' | 'expert'): void => {
+  localStorage.setItem('user_subscription', plan);
+};
+
 // Check if the user has reached their free limit (1 calculation per month)
 export const hasReachedUsageLimit = (): boolean => {
+  // Les utilisateurs abonnés n'ont pas de limite
+  if (isSubscribed()) {
+    return false;
+  }
+  
   const currentUsage = getUsageData();
   return currentUsage.count >= 1;
 };
 
 // Increment the usage counter when a calculation is performed
 export const trackCalculatorUsage = (): void => {
+  // Les utilisateurs abonnés n'ont pas besoin de suivre l'utilisation
+  if (isSubscribed()) {
+    return;
+  }
+  
   const currentUsage = getUsageData();
   const updatedUsage: UsageData = {
     ...currentUsage,
@@ -61,7 +82,13 @@ export const getUsageData = (): UsageData => {
 
 // Get remaining free calculations this month
 export const getRemainingCalculations = (): number => {
+  // Les utilisateurs abonnés ont des calculs illimités
+  if (isSubscribed()) {
+    return Infinity; // Représente un nombre illimité
+  }
+  
   const currentUsage = getUsageData();
   const remaining = Math.max(0, 1 - currentUsage.count);
   return remaining;
 };
+
