@@ -7,10 +7,10 @@ interface UsageData {
   lastReset: string; // ISO date string
 }
 
-// Check if the user has reached their free limit (1 calculation per month)
+// Check if the user has reached their free limit (2 calculations per month)
 export const hasReachedUsageLimit = (): boolean => {
   const currentUsage = getUsageData();
-  return currentUsage.count >= 1;
+  return currentUsage.count >= 2;
 };
 
 // Increment the usage counter when a calculation is performed
@@ -62,6 +62,6 @@ export const getUsageData = (): UsageData => {
 // Get remaining free calculations this month
 export const getRemainingCalculations = (): number => {
   const currentUsage = getUsageData();
-  const remaining = Math.max(0, 1 - currentUsage.count);
+  const remaining = Math.max(0, 2 - currentUsage.count);
   return remaining;
 };
