@@ -4,15 +4,19 @@ import { Settings } from 'lucide-react';
 
 const CalculatorForm: React.FC = () => {
   return (
-    <div className="col-span-1 md:col-span-2 bg-white rounded-xl shadow-sm p-3 md:p-6 flex flex-col">
+    <div className="col-span-1 md:col-span-2 bg-white rounded-xl shadow-sm p-3 md:p-6 flex flex-col transition-all duration-300 hover:shadow-md">
       <div className="flex items-center justify-between mb-3 md:mb-5">
-        <div className="text-xs md:text-base font-medium flex items-center">
+        <div className="text-xs md:text-base font-medium flex items-center text-gray-700">
           <Settings className="h-3 w-3 md:h-5 md:w-5 mr-1 md:mr-2 text-primary" /> 
           Paramètres du bien
         </div>
         <div className="flex space-x-1 md:space-x-2">
-          <div className="px-1.5 md:px-3 py-0.5 md:py-1.5 bg-primary/10 rounded text-[10px] md:text-sm text-primary font-medium">Appartement</div>
-          <div className="px-1.5 md:px-3 py-0.5 md:py-1.5 bg-gray-100 rounded text-[10px] md:text-sm text-gray-500 font-medium">Lyon</div>
+          <div className="px-1.5 md:px-3 py-0.5 md:py-1.5 bg-primary/10 rounded-lg text-[10px] md:text-sm text-primary font-medium transition-colors hover:bg-primary/15">
+            Appartement
+          </div>
+          <div className="px-1.5 md:px-3 py-0.5 md:py-1.5 bg-gray-100 rounded-lg text-[10px] md:text-sm text-gray-500 font-medium transition-colors hover:bg-gray-200">
+            Lyon
+          </div>
         </div>
       </div>
       
