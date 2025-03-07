@@ -1,4 +1,3 @@
-
 import { toast } from "sonner";
 
 interface OpenAIApiResponse {
@@ -76,6 +75,8 @@ const CITY_PRICE_REFERENCES: Record<string, number> = {
 export class OpenAIService {
   private static API_KEY_STORAGE_KEY = 'openai_api_key';
   private static CITIES_DATA_KEY = 'french_cities_data';
+  private static CITIES_DATA_TIMESTAMP_KEY = 'french_cities_data_timestamp';
+  private static DATA_EXPIRY_TIME = 7 * 24 * 60 * 60 * 1000; // 7 jours en millisecondes
 
   static saveApiKey(apiKey: string): void {
     localStorage.setItem(this.API_KEY_STORAGE_KEY, apiKey);
@@ -100,6 +101,28 @@ export class OpenAIService {
     const citiesData = this.getAllCachedCitiesData();
     citiesData[cityName] = data;
     localStorage.setItem(this.CITIES_DATA_KEY, JSON.stringify(citiesData));
+    
+    // Save timestamp for this city
+    const timestamps = this.getCityTimestamps();
+    timestamps[cityName] = new Date().getTime();
+    localStorage.setItem(this.CITIES_DATA_TIMESTAMP_KEY, JSON.stringify(timestamps));
+  }
+  
+  static getCityTimestamps(): Record<string, number> {
+    const timestampsString = localStorage.getItem(this.CITIES_DATA_TIMESTAMP_KEY);
+    return timestampsString ? JSON.parse(timestampsString) : {};
+  }
+  
+  static isCityDataExpired(cityName: string): boolean {
+    const timestamps = this.getCityTimestamps();
+    const timestamp = timestamps[cityName];
+    
+    if (!timestamp) {
+      return true;
+    }
+    
+    const now = new Date().getTime();
+    return now - timestamp > this.DATA_EXPIRY_TIME;
   }
 
   // Obtenir le prix de référence pour une ville
@@ -143,13 +166,9 @@ export class OpenAIService {
 
     // Check if we already have cached data for this city
     const cachedData = this.getCachedCityData(cityName);
-    if (cachedData) {
-      // Check if the data is from today
-      const today = new Date().toLocaleDateString('fr-FR');
-      if (localStorage.getItem(`city_${cityName}_date`) === today) {
-        console.log(`Using cached data for ${cityName}`);
-        return cachedData;
-      }
+    if (cachedData && !this.isCityDataExpired(cityName)) {
+      console.log(`Using cached data for ${cityName}`);
+      return cachedData;
     }
 
     try {
@@ -185,6 +204,8 @@ export class OpenAIService {
         Les valeurs doivent être cohérentes et réalistes pour ${cityName}.
       `;
 
+      console.log(`Requesting data for ${cityName} with reference price ${referencePrice}€`);
+      
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -233,7 +254,6 @@ export class OpenAIService {
         
         // Save to cache with timestamp
         this.saveCityData(cityName, cityData);
-        localStorage.setItem(`city_${cityName}_date`, new Date().toLocaleDateString('fr-FR'));
         
         return cityData;
       } catch (jsonError) {

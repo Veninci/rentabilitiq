@@ -144,6 +144,20 @@ const CityMarketTrends: React.FC = () => {
         ...formattedCachedData
       }));
     }
+    
+    // Check if we need to update specific cities mentioned by the user
+    const citiesToCheck = ["Montpellier", "Reims", "Nantes"];
+    const apiKey = OpenAIService.getApiKey();
+    
+    if (apiKey) {
+      citiesToCheck.forEach(async (cityName) => {
+        // Check if we don't have this city's data or if it's using default data
+        if (!cachedData[cityName]) {
+          console.log(`Fetching data for ${cityName}...`);
+          updateCityData(cityName);
+        }
+      });
+    }
   }, []);
 
   // Filter cities based on search query
@@ -179,24 +193,29 @@ const CityMarketTrends: React.FC = () => {
       }
 
       setIsUpdating(true);
-      const newCityData = await OpenAIService.updateCityPrices(customCity);
+      await updateCityData(customCity);
       setIsUpdating(false);
-
-      if (newCityData) {
-        // Add the new city data to our cityData object, ensuring it has the name property
-        const updatedCityData = {
-          ...allCitiesData,
-          [customCity]: {
-            name: customCity,
-            ...newCityData
-          }
-        };
-        setAllCitiesData(updatedCityData);
-        setSelectedCity(customCity);
-        setShowCustomInput(false);
-        setSearchQuery("");  // Reset search query after submission
-      }
+      setSelectedCity(customCity);
+      setShowCustomInput(false);
+      setSearchQuery("");  // Reset search query after submission
     }
+  };
+
+  const updateCityData = async (cityToUpdate: string) => {
+    const newCityData = await OpenAIService.updateCityPrices(cityToUpdate);
+    
+    if (newCityData) {
+      // Add the new city data to our cityData object, ensuring it has the name property
+      setAllCitiesData(prevData => ({
+        ...prevData,
+        [cityToUpdate]: {
+          name: cityToUpdate,
+          ...newCityData
+        }
+      }));
+      return true;
+    }
+    return false;
   };
 
   const handleUpdateCityData = async () => {
@@ -208,20 +227,8 @@ const CityMarketTrends: React.FC = () => {
     }
 
     setIsUpdating(true);
-    const updatedData = await OpenAIService.updateCityPrices(selectedCity);
+    await updateCityData(selectedCity);
     setIsUpdating(false);
-
-    if (updatedData) {
-      // Update the city data with the new values, ensuring it maintains the name property
-      const newCityData = {
-        ...allCitiesData,
-        [selectedCity]: {
-          name: selectedCity,
-          ...updatedData
-        }
-      };
-      setAllCitiesData(newCityData);
-    }
   };
 
   const handleSaveApiKey = () => {
@@ -229,9 +236,48 @@ const CityMarketTrends: React.FC = () => {
       OpenAIService.saveApiKey(apiKey.trim());
       toast.success("Clé API OpenAI enregistrée avec succès");
       setShowApiKeyInput(false);
+      
+      // Now that we have an API key, let's update Montpellier, Reims and Nantes data
+      const citiesToUpdate = ["Montpellier", "Reims", "Nantes"];
+      toast.info("Mise à jour des données pour les villes principales...");
+      
+      setIsUpdating(true);
+      
+      // Use Promise.all to update all cities concurrently
+      Promise.all(citiesToUpdate.map(city => updateCityData(city)))
+        .then(() => {
+          setIsUpdating(false);
+          toast.success("Données des villes mises à jour avec succès");
+        })
+        .catch(error => {
+          console.error("Error updating cities:", error);
+          setIsUpdating(false);
+          toast.error("Erreur lors de la mise à jour des données");
+        });
     } else {
       toast.error("Veuillez entrer une clé API valide");
     }
+  };
+
+  // Function to update all major cities
+  const handleUpdateAllCities = async () => {
+    const apiKey = OpenAIService.getApiKey();
+    if (!apiKey) {
+      toast.error("Veuillez configurer votre clé API OpenAI pour accéder à cette fonctionnalité");
+      setShowApiKeyInput(true);
+      return;
+    }
+
+    setIsUpdating(true);
+    toast.info("Mise à jour des données pour toutes les villes...");
+    
+    // Update cities in sequence to avoid rate limits
+    for (const cityName of MAJOR_CITIES) {
+      await updateCityData(cityName);
+    }
+    
+    setIsUpdating(false);
+    toast.success("Données de toutes les villes mises à jour avec succès");
   };
 
   return (
@@ -340,9 +386,20 @@ const CityMarketTrends: React.FC = () => {
                     Enregistrer
                   </Button>
                 </div>
-                <p className="text-xs text-muted-foreground">
-                  Cette clé est nécessaire pour mettre à jour les données immobilières en temps réel.
-                </p>
+                <div className="flex justify-between items-center">
+                  <p className="text-xs text-muted-foreground">
+                    Cette clé est nécessaire pour mettre à jour les données immobilières en temps réel.
+                  </p>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={handleUpdateAllCities} 
+                    disabled={isUpdating || !OpenAIService.getApiKey()}
+                    className="text-xs"
+                  >
+                    Mettre à jour toutes les villes
+                  </Button>
+                </div>
               </div>
             </div>
           )}
