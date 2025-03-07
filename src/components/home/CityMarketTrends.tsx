@@ -129,9 +129,19 @@ const CityMarketTrends: React.FC = () => {
   useEffect(() => {
     const cachedData = OpenAIService.getAllCachedCitiesData();
     if (Object.keys(cachedData).length > 0) {
+      // Ensure we map the cached data to include the name property
+      const formattedCachedData: Record<string, CityData> = {};
+      
+      Object.keys(cachedData).forEach(cityName => {
+        formattedCachedData[cityName] = {
+          name: cityName,
+          ...cachedData[cityName]
+        };
+      });
+      
       setAllCitiesData(prev => ({
         ...prev,
-        ...cachedData
+        ...formattedCachedData
       }));
     }
   }, []);
@@ -173,7 +183,7 @@ const CityMarketTrends: React.FC = () => {
       setIsUpdating(false);
 
       if (newCityData) {
-        // Add the new city data to our cityData object
+        // Add the new city data to our cityData object, ensuring it has the name property
         const updatedCityData = {
           ...allCitiesData,
           [customCity]: {
@@ -184,6 +194,7 @@ const CityMarketTrends: React.FC = () => {
         setAllCitiesData(updatedCityData);
         setSelectedCity(customCity);
         setShowCustomInput(false);
+        setSearchQuery("");  // Reset search query after submission
       }
     }
   };
@@ -201,13 +212,12 @@ const CityMarketTrends: React.FC = () => {
     setIsUpdating(false);
 
     if (updatedData) {
-      // Update the city data with the new values
+      // Update the city data with the new values, ensuring it maintains the name property
       const newCityData = {
         ...allCitiesData,
         [selectedCity]: {
-          ...allCitiesData[selectedCity],
-          ...updatedData,
-          name: selectedCity
+          name: selectedCity,
+          ...updatedData
         }
       };
       setAllCitiesData(newCityData);
@@ -250,17 +260,28 @@ const CityMarketTrends: React.FC = () => {
                       </SelectTrigger>
                       <SelectContent>
                         <div className="py-2 px-3">
-                          <Input
-                            placeholder="Rechercher une ville..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="mb-2"
-                          />
+                          <div className="relative">
+                            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground/70" />
+                            <Input
+                              placeholder="Rechercher une ville..."
+                              value={searchQuery}
+                              onChange={(e) => setSearchQuery(e.target.value)}
+                              className="pl-8 mb-2"
+                            />
+                          </div>
                         </div>
-                        {filteredCities.map(city => (
-                          <SelectItem key={city} value={city}>{city}</SelectItem>
-                        ))}
-                        <SelectItem value="custom">Autre ville...</SelectItem>
+                        <div className="max-h-[200px] overflow-y-auto">
+                          {filteredCities.length > 0 ? (
+                            filteredCities.map(city => (
+                              <SelectItem key={city} value={city}>{city}</SelectItem>
+                            ))
+                          ) : (
+                            <div className="py-2 px-3 text-sm text-muted-foreground text-center">
+                              Aucune ville trouvée
+                            </div>
+                          )}
+                          <SelectItem value="custom">Autre ville...</SelectItem>
+                        </div>
                       </SelectContent>
                     </Select>
                   </div>
