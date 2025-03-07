@@ -7,6 +7,7 @@ export interface PropertyData {
   renovationCost: number;
   notaryFees: number;
   otherCosts: number;
+  propertySize: number; // Added property size in m²
   
   // Financement
   downPayment: number;
@@ -40,5 +41,7 @@ export interface PropertyResults {
   netYield: number;
   roi: number;
   paybackPeriod: number;
-  monthlyMortgage?: number;
+  monthlyMortgage: number;
+  pricePerSqm: number; // Added price per m²
+  rentPerSqm: number;  // Added rent per m²
 }

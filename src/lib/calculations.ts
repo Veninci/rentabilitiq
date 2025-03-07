@@ -54,13 +54,28 @@ export const calculateResults = (data: PropertyData): PropertyResults => {
   const grossYield = totalInvestment > 0 ? (annualIncome / totalInvestment) * 100 : 0;
   const netYield = totalInvestment > 0 ? (annualCashFlow / totalInvestment) * 100 : 0;
   
-  // ROI (Return On Investment)
+  // ROI (Return On Investment) - Calculé sur l'apport personnel pour plus de précision
   // Éviter la division par zéro
   const roi = data.downPayment > 0 ? (annualCashFlow / data.downPayment) * 100 : 0;
   
   // Période de récupération de l'investissement (en années)
   // Si le cash flow est négatif ou nul, l'investissement ne sera jamais rentabilisé
   const paybackPeriod = (annualCashFlow > 0) ? (totalInvestment / annualCashFlow) : Infinity;
+  
+  // Calcul du prix au m²
+  const pricePerSqm = data.propertySize > 0 ? data.purchasePrice / data.propertySize : 0;
+  
+  // Calcul du loyer au m²
+  let rentPerSqm = 0;
+  if (data.propertySize > 0) {
+    if (data.rentalType === 'long-term') {
+      rentPerSqm = data.monthlyRent / data.propertySize;
+    } else {
+      // Pour Airbnb, on calcule un loyer mensuel équivalent
+      const monthlyEquivalent = annualIncome / 12;
+      rentPerSqm = monthlyEquivalent / data.propertySize;
+    }
+  }
   
   return {
     totalInvestment: Math.round(totalInvestment * 100) / 100,
@@ -73,6 +88,8 @@ export const calculateResults = (data: PropertyData): PropertyResults => {
     roi: Math.round(roi * 100) / 100,
     paybackPeriod: Math.round(paybackPeriod * 100) / 100,
     monthlyMortgage: Math.round(monthlyMortgage * 100) / 100,
+    pricePerSqm: Math.round(pricePerSqm * 100) / 100,
+    rentPerSqm: Math.round(rentPerSqm * 100) / 100,
   };
 };
 

@@ -10,7 +10,8 @@ import {
   Home, 
   Landmark, 
   PercentCircle,
-  MapPin
+  MapPin,
+  SquareIcon
 } from 'lucide-react';
 import { PropertyData, RentalType } from '@/types/property';
 import { 
@@ -58,6 +59,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
     renovationCost: 10000,
     notaryFees: 15000,
     otherCosts: 5000,
+    propertySize: 50, // Default property size: 50m²
     
     // Financement
     downPayment: 40000,
@@ -167,6 +169,19 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
                 onChange={handleInputChange}
                 min="0"
                 step="1000"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="propertySize">Surface (m²)</Label>
+              <Input
+                id="propertySize"
+                name="propertySize"
+                type="number"
+                value={propertyData.propertySize}
+                onChange={handleInputChange}
+                min="1"
+                step="1"
               />
             </div>
             
@@ -499,3 +514,4 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
 };
 
 export default PropertyForm;
+

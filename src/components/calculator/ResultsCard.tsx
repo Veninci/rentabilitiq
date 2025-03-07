@@ -2,7 +2,7 @@
 import React from 'react';
 import { PropertyResults } from '@/types/property';
 import GlassCard from '../ui/GlassCard';
-import { ArrowDownUp, CalendarDays, CircleDollarSign, LineChart, TrendingUp } from 'lucide-react';
+import { ArrowDownUp, CalendarDays, CircleDollarSign, LineChart, TrendingUp, SquareIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { formatter } from '@/lib/formatter';
 
@@ -22,6 +22,8 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
     roi,
     paybackPeriod,
     monthlyMortgage,
+    pricePerSqm,
+    rentPerSqm
   } = results;
 
   return (
@@ -94,6 +96,28 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
       <div className="bg-primary/5 rounded-xl p-4 mb-4">
         <div className="flex items-center space-x-3 mb-3">
           <div className="bg-primary/10 h-8 w-8 rounded-lg flex items-center justify-center">
+            <SquareIcon className="h-4 w-4 text-primary" />
+          </div>
+          <div className="font-medium">Indicateurs au m²</div>
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <ResultItem 
+            label="Prix au m²" 
+            value={`${formatter.formatCurrency(pricePerSqm)}/m²`}
+            color="text-foreground" 
+          />
+          <ResultItem 
+            label="Loyer au m²" 
+            value={`${formatter.formatCurrency(rentPerSqm)}/m²`} 
+            color="text-foreground"
+          />
+        </div>
+      </div>
+      
+      <div className="bg-primary/5 rounded-xl p-4 mb-4">
+        <div className="flex items-center space-x-3 mb-3">
+          <div className="bg-primary/10 h-8 w-8 rounded-lg flex items-center justify-center">
             <ArrowDownUp className="h-4 w-4 text-primary" />
           </div>
           <div className="font-medium">Flux financiers</div>
@@ -128,7 +152,7 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
         
         <ResultItem 
           label="Durée de remboursement" 
-          value={`${paybackPeriod.toFixed(1)} ans`} 
+          value={paybackPeriod === Infinity ? "Jamais" : `${paybackPeriod.toFixed(1)} ans`} 
           color="text-foreground"
         />
       </div>
