@@ -4,6 +4,7 @@ import { CheckCircle, TrendingUp, CircleDollarSign, FileText, Calculator, Clock 
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import GlassCard from '../ui/GlassCard';
+import CityMarketTrends from './CityMarketTrends';
 
 const Features = () => {
   return (
@@ -108,7 +109,7 @@ const Features = () => {
                     <div className="text-xs text-muted-foreground">Mise à jour en temps réel</div>
                   </div>
                 </div>
-                <Button variant="ghost" size="sm">Détails</Button>
+                <CityMarketTrends />
               </div>
               
               <div className="space-y-4">
@@ -169,3 +170,4 @@ const FeatureCard = ({ icon, title, description }: FeatureCardProps) => {
 };
 
 export default Features;
+
