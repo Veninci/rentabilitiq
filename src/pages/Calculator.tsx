@@ -8,7 +8,7 @@ import ResultsCard from '@/components/calculator/ResultsCard';
 import ComparisonChart from '@/components/calculator/ComparisonChart';
 import { PropertyData, PropertyResults } from '@/types/property';
 import { calculateResults, calculateAirbnbResults, calculateLongTermResults } from '@/lib/calculations';
-import { Calculator as CalculatorIcon, MapPin, Lock, AlertTriangle } from 'lucide-react';
+import { Calculator as CalculatorIcon, MapPin, Lock, AlertTriangle, Info as InfoIcon } from 'lucide-react';
 import { hasReachedUsageLimit, trackCalculatorUsage, getRemainingCalculations } from '@/lib/usageTracker';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
