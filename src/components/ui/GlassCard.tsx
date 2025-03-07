@@ -1,0 +1,43 @@
+
+import React from 'react';
+import { cn } from '@/lib/utils';
+
+interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
+  className?: string;
+  variant?: 'default' | 'elevated' | 'subtle';
+  noPadding?: boolean;
+}
+
+const GlassCard = ({
+  children,
+  className,
+  variant = 'default',
+  noPadding = false,
+  ...props
+}: GlassCardProps) => {
+  const variantClasses = {
+    default: 'bg-white/80 backdrop-blur-md border border-white/20 shadow-md',
+    elevated: 'bg-white/90 backdrop-blur-lg border border-white/30 shadow-lg',
+    subtle: 'bg-white/60 backdrop-blur-sm border border-white/10 shadow-sm',
+  };
+
+  const paddingClass = noPadding ? '' : 'p-6';
+
+  return (
+    <div
+      className={cn(
+        'rounded-2xl transition-all duration-300',
+        variantClasses[variant],
+        paddingClass,
+        'animate-scale-in',
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+};
+
+export default GlassCard;
