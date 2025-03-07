@@ -1,12 +1,15 @@
 
-import React from 'react';
-import { ArrowRight, BarChart4, PieChart, Calculator, Maximize2, Home, Building, Wallet, TrendingUp, Landmark, Settings } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowRight, BarChart4, PieChart, Calculator, Maximize2, Home, Building, Wallet, TrendingUp, Landmark, Settings, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import GlassCard from '../ui/GlassCard';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Dialog, DialogContent, DialogClose } from '@/components/ui/dialog';
 
 const Hero = () => {
+  const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
+
   return (
     <section className="relative pt-24 md:pt-32 pb-10 md:pb-24 overflow-hidden px-4 md:px-0">
       {/* Background gradient */}
@@ -71,7 +74,7 @@ const Hero = () => {
                           <Settings className="h-3 w-3 md:h-5 md:w-5 mr-1 md:mr-2 text-primary" /> 
                           <span className="hidden md:inline">Paramètres du bien</span>
                         </div>
-                        <div className="flex space-x-1 md:space-x-2">
+                        <div className="hidden md:flex space-x-1 md:space-x-2">
                           <div className="px-1.5 md:px-2.5 py-0.5 md:py-1.5 bg-primary/10 rounded text-[10px] md:text-sm text-primary font-medium">Appartement</div>
                           <div className="px-1.5 md:px-2.5 py-0.5 md:py-1.5 bg-gray-100 rounded text-[10px] md:text-sm text-gray-500 font-medium">Lyon</div>
                         </div>
@@ -158,9 +161,23 @@ const Hero = () => {
               </div>
               
               <div className="absolute bottom-2 md:bottom-4 right-2 md:right-4">
-                <Button variant="ghost" size="icon" className="rounded-full bg-white/80 shadow-sm h-6 w-6 md:h-8 md:w-8">
-                  <Maximize2 className="h-3 w-3 md:h-4 md:w-4" />
-                </Button>
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button 
+                        variant="ghost" 
+                        size="icon" 
+                        className="rounded-full bg-white/80 hover:bg-white shadow-sm h-6 w-6 md:h-8 md:w-8 transition-all duration-300"
+                        onClick={() => setIsCalculatorOpen(true)}
+                      >
+                        <Maximize2 className="h-3 w-3 md:h-4 md:w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Agrandir le calculateur</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
             </div>
           </GlassCard>
@@ -195,6 +212,129 @@ const Hero = () => {
           </div>
         </div>
       </div>
+
+      {/* Expanded Calculator Modal */}
+      <Dialog open={isCalculatorOpen} onOpenChange={setIsCalculatorOpen}>
+        <DialogContent className="sm:max-w-[90vw] md:max-w-[80vw] p-0 bg-transparent border-none shadow-none">
+          <div className="relative">
+            <DialogClose className="absolute right-2 top-2 z-10">
+              <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full bg-white/80 hover:bg-white/90">
+                <X className="h-4 w-4" />
+              </Button>
+              <span className="sr-only">Fermer</span>
+            </DialogClose>
+            
+            <GlassCard variant="elevated" className="w-full overflow-hidden p-4 md:p-6">
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden">
+                <div className="p-4 md:p-8">
+                  <div className="flex items-center justify-between mb-6 md:mb-8">
+                    <div className="flex items-center space-x-3 md:space-x-5">
+                      <div className="bg-primary/10 h-12 w-12 md:h-16 md:w-16 rounded-xl flex items-center justify-center">
+                        <Calculator className="h-6 w-6 md:h-8 md:w-8 text-primary" />
+                      </div>
+                      <div className="text-xl md:text-2xl font-medium">Calculateur de rentabilité</div>
+                    </div>
+                    <div className="bg-amber-100 text-amber-700 text-sm md:text-base font-medium py-1.5 px-3 md:px-4 rounded-full">
+                      Exemple
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+                    <div className="col-span-1 md:col-span-2 bg-white rounded-xl shadow-md p-4 md:p-6">
+                      <div className="flex items-center justify-between mb-4 md:mb-6">
+                        <div className="text-base md:text-lg font-medium flex items-center">
+                          <Settings className="h-5 w-5 md:h-6 md:w-6 mr-2 text-primary" /> 
+                          <span>Paramètres du bien</span>
+                        </div>
+                        <div className="flex space-x-2 md:space-x-3">
+                          <div className="px-2.5 md:px-3.5 py-1 md:py-1.5 bg-primary/10 rounded text-sm md:text-base text-primary font-medium">Appartement</div>
+                          <div className="px-2.5 md:px-3.5 py-1 md:py-1.5 bg-gray-100 rounded text-sm md:text-base text-gray-500 font-medium">Lyon</div>
+                        </div>
+                      </div>
+                      
+                      <div className="grid grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
+                        <div className="space-y-2">
+                          <div className="text-sm md:text-base text-gray-500">Prix d'achat</div>
+                          <div className="h-10 md:h-12 bg-gray-100 rounded-md flex items-center px-4 text-base md:text-lg font-medium">210 000 €</div>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="text-sm md:text-base text-gray-500">Surface</div>
+                          <div className="h-10 md:h-12 bg-gray-100 rounded-md flex items-center px-4 text-base md:text-lg font-medium">45 m²</div>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="text-sm md:text-base text-gray-500">Loyer mensuel</div>
+                          <div className="h-10 md:h-12 bg-gray-100 rounded-md flex items-center px-4 text-base md:text-lg font-medium">850 €</div>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="text-sm md:text-base text-gray-500">Type de location</div>
+                          <div className="h-10 md:h-12 bg-gray-100 rounded-md flex items-center px-4 text-base md:text-lg font-medium">Longue durée</div>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="text-sm md:text-base text-gray-500">Apport</div>
+                          <div className="h-10 md:h-12 bg-gray-100 rounded-md flex items-center px-4 text-base md:text-lg font-medium">40 000 €</div>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="text-sm md:text-base text-gray-500">Taux d'intérêt</div>
+                          <div className="h-10 md:h-12 bg-gray-100 rounded-md flex items-center px-4 text-base md:text-lg font-medium">3.5%</div>
+                        </div>
+                      </div>
+                      <div className="flex justify-end">
+                        <div className="h-10 md:h-12 w-40 md:w-48 bg-primary rounded-md flex items-center justify-center text-white text-sm md:text-base font-medium hover:bg-primary/90 transition-colors cursor-pointer">
+                          Calculer
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-white rounded-xl shadow-md p-4 md:p-6 flex flex-col">
+                      <div className="flex items-center justify-between mb-4 md:mb-6">
+                        <div className="text-lg md:text-xl font-medium">Dashboard</div>
+                      </div>
+                      
+                      <div className="space-y-4 md:space-y-6 flex-grow">
+                        <div className="flex items-center justify-between bg-gray-50 p-4 rounded-lg">
+                          <div className="flex items-center">
+                            <TrendingUp className="h-5 w-5 text-primary mr-3" />
+                            <div className="text-sm md:text-base text-muted-foreground">Rendement brut</div>
+                          </div>
+                          <div className="font-medium text-primary text-lg">5.8%</div>
+                        </div>
+                        
+                        <div className="flex items-center justify-between bg-gray-50 p-4 rounded-lg">
+                          <div className="flex items-center">
+                            <Wallet className="h-5 w-5 text-green-500 mr-3" />
+                            <div className="text-sm md:text-base text-muted-foreground">Cash-flow mensuel</div>
+                          </div>
+                          <div className="font-medium text-green-500 text-lg">387 €</div>
+                        </div>
+                        
+                        <div className="flex items-center justify-between bg-gray-50 p-4 rounded-lg">
+                          <div className="flex items-center">
+                            <Landmark className="h-5 w-5 text-blue-500 mr-3" />
+                            <div className="text-sm md:text-base text-muted-foreground">Mensualité crédit</div>
+                          </div>
+                          <div className="font-medium text-blue-500 text-lg">614 €</div>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-6 h-40 bg-gray-50 rounded-lg flex items-center justify-center relative">
+                        <PieChart className="h-24 w-24 text-primary/30 absolute" />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="bg-white rounded-full h-28 w-28 flex items-center justify-center shadow-md">
+                            <div className="text-center">
+                              <div className="text-3xl font-bold text-primary">4.2%</div>
+                              <div className="text-sm text-gray-500">Rendement</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </GlassCard>
+          </div>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };
