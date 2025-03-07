@@ -38,7 +38,7 @@ const CityMarketTrends: React.FC = () => {
       <DialogTrigger asChild>
         <Button variant="ghost" size="sm">Détails</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[700px]">
+      <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto w-[95vw]">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold mb-4">Évolution du marché immobilier</DialogTitle>
         </DialogHeader>

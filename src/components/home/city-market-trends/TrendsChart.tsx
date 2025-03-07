@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { formatter } from '@/lib/formatter';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { CityData } from './city-data';
@@ -14,24 +14,14 @@ interface TrendsChartProps {
 const TrendsChart: React.FC<TrendsChartProps> = ({ city, activeTab, onTabChange }) => {
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <h3 className="text-md font-medium">Évolution sur 5 ans - {city.name}</h3>
-        <div className="flex space-x-2">
-          <Button 
-            variant={activeTab === "yearly" ? "default" : "outline"} 
-            size="sm" 
-            onClick={() => onTabChange("yearly")}
-          >
-            Annuelle
-          </Button>
-          <Button 
-            variant={activeTab === "monthly" ? "default" : "outline"} 
-            size="sm" 
-            onClick={() => onTabChange("monthly")}
-          >
-            Mensuelle
-          </Button>
-        </div>
+        <Tabs value={activeTab} onValueChange={(value) => onTabChange(value as "monthly" | "yearly")} className="w-full sm:w-auto">
+          <TabsList className="grid grid-cols-2 w-full sm:w-auto">
+            <TabsTrigger value="yearly">Annuelle</TabsTrigger>
+            <TabsTrigger value="monthly">Mensuelle</TabsTrigger>
+          </TabsList>
+        </Tabs>
       </div>
       
       <div className="bg-white rounded-lg p-4 h-[250px]">

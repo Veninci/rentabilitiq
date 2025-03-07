@@ -24,7 +24,7 @@ const CitySelector: React.FC<CitySelectorProps> = ({
   onCustomCitySubmit
 }) => {
   return (
-    <div className="grid grid-cols-2 gap-4 items-end">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-end">
       <div className="space-y-2">
         <Label htmlFor="city-select">Ville</Label>
         <Select value={selectedCity} onValueChange={onCityChange}>

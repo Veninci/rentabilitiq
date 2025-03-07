@@ -10,7 +10,7 @@ interface MarketSummaryProps {
 
 const MarketSummary: React.FC<MarketSummaryProps> = ({ city }) => {
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div className="bg-white rounded-lg p-4 shadow-sm">
         <div className="text-sm text-muted-foreground mb-1">Prix moyen au m²</div>
         <div className="text-xl font-semibold">{formatter.formatCurrency(city.pricePerSqm)}</div>

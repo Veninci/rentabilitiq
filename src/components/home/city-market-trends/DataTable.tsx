@@ -16,20 +16,20 @@ const DataTable: React.FC<DataTableProps> = ({ city, activeTab }) => {
         <div className="space-y-4">
           <h3 className="text-md font-medium">Données mensuelles - {city.name}</h3>
           
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto rounded-lg border">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b">
-                  <th className="text-left py-2 px-2">Mois</th>
-                  <th className="text-right py-2 px-2">Prix au m²</th>
-                  <th className="text-right py-2 px-2">Évolution</th>
-                  <th className="text-right py-2 px-2">Rendement</th>
-                  <th className="text-right py-2 px-2">Évolution</th>
+                <tr className="bg-muted/50">
+                  <th className="text-left py-2 px-2 font-medium">Mois</th>
+                  <th className="text-right py-2 px-2 font-medium">Prix au m²</th>
+                  <th className="text-right py-2 px-2 font-medium">Évolution</th>
+                  <th className="text-right py-2 px-2 font-medium">Rendement</th>
+                  <th className="text-right py-2 px-2 font-medium">Évolution</th>
                 </tr>
               </thead>
               <tbody>
                 {city.monthlyTrends.map((month, index) => (
-                  <tr key={index} className="border-b last:border-0">
+                  <tr key={index} className="border-t hover:bg-muted/20">
                     <td className="py-2 px-2">{month.month}</td>
                     <td className="text-right py-2 px-2">{formatter.formatCurrency(month.pricePerSqm)}</td>
                     <td className={`text-right py-2 px-2 ${month.pricePerSqmTrend >= 0 ? 'text-green-500' : 'text-red-500'}`}>
@@ -52,18 +52,18 @@ const DataTable: React.FC<DataTableProps> = ({ city, activeTab }) => {
         <div className="space-y-4">
           <h3 className="text-md font-medium">Données annuelles - {city.name}</h3>
           
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto rounded-lg border">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b">
-                  <th className="text-left py-2 px-2">Année</th>
-                  <th className="text-right py-2 px-2">Prix au m²</th>
-                  <th className="text-right py-2 px-2">Rendement</th>
+                <tr className="bg-muted/50">
+                  <th className="text-left py-2 px-2 font-medium">Année</th>
+                  <th className="text-right py-2 px-2 font-medium">Prix au m²</th>
+                  <th className="text-right py-2 px-2 font-medium">Rendement</th>
                 </tr>
               </thead>
               <tbody>
                 {city.yearlyTrends.map((year, index) => (
-                  <tr key={index} className="border-b last:border-0">
+                  <tr key={index} className="border-t hover:bg-muted/20">
                     <td className="py-2 px-2">{year.year}</td>
                     <td className="text-right py-2 px-2">{formatter.formatCurrency(year.pricePerSqm)}</td>
                     <td className="text-right py-2 px-2">{year.averageYield}%</td>
