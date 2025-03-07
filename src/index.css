@@ -106,10 +106,77 @@
   .transition-all-fast {
     @apply transition-all duration-300 ease-in-out;
   }
+  
+  /* Responsive typography */
+  h1, .h1 {
+    @apply text-2xl md:text-3xl lg:text-4xl font-bold;
+  }
+  
+  h2, .h2 {
+    @apply text-xl md:text-2xl lg:text-3xl font-bold;
+  }
+  
+  h3, .h3 {
+    @apply text-lg md:text-xl lg:text-2xl font-semibold;
+  }
+  
+  .section-padding {
+    @apply py-12 md:py-16 lg:py-20 px-4 md:px-8 lg:px-12;
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  
+  /* Responsive utilities */
+  .mobile-full {
+    @apply w-full sm:w-auto;
+  }
+  
+  .mobile-stack {
+    @apply flex-col sm:flex-row;
+  }
+  
+  .mobile-hidden {
+    @apply hidden sm:block;
+  }
+  
+  .desktop-hidden {
+    @apply block sm:hidden;
+  }
+  
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+}
+
+/* Responsive layouts */
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .row-to-col {
+    flex-direction: column;
+  }
+  
+  .col-to-row {
+    flex-direction: row;
+  }
+  
+  .compact-spacing > * {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .compact-spacing > *:first-child {
+    margin-top: 0;
+  }
+  
+  .compact-spacing > *:last-child {
+    margin-bottom: 0;
   }
 }

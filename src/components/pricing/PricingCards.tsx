@@ -82,12 +82,12 @@ const PricingCards = () => {
 
   return (
     <div className="animate-slide-up">
-      <div className="flex justify-center mb-10">
+      <div className="flex justify-center mb-8 md:mb-10">
         <div className="flex items-center bg-muted p-1 rounded-full">
           <button
             onClick={() => setBillingCycle('monthly')}
             className={cn(
-              "px-6 py-2 rounded-full text-sm font-medium transition-all",
+              "px-4 md:px-6 py-2 rounded-full text-sm font-medium transition-all",
               billingCycle === 'monthly' 
                 ? "bg-white text-foreground shadow-sm" 
                 : "text-muted-foreground"
@@ -98,7 +98,7 @@ const PricingCards = () => {
           <button
             onClick={() => setBillingCycle('yearly')}
             className={cn(
-              "px-6 py-2 rounded-full text-sm font-medium transition-all",
+              "px-4 md:px-6 py-2 rounded-full text-sm font-medium transition-all",
               billingCycle === 'yearly' 
                 ? "bg-white text-foreground shadow-sm" 
                 : "text-muted-foreground"
@@ -109,7 +109,7 @@ const PricingCards = () => {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
         {pricingPlans.map((plan) => (
           <GlassCard 
             key={plan.name}
@@ -125,14 +125,14 @@ const PricingCards = () => {
               </div>
             )}
             
-            <div className="mb-6">
+            <div className="mb-4 md:mb-6">
               <h3 className="text-xl font-bold">{plan.name}</h3>
               <p className="text-muted-foreground mt-1">{plan.description}</p>
             </div>
             
-            <div className="mb-6">
+            <div className="mb-4 md:mb-6">
               <div className="flex items-end gap-2">
-                <span className="text-4xl font-bold">
+                <span className="text-3xl md:text-4xl font-bold">
                   {formatter.formatCurrency(
                     plan.price[billingCycle], 
                     { maximumFractionDigits: 2 }
@@ -150,26 +150,26 @@ const PricingCards = () => {
               )}
             </div>
             
-            <div className="mb-6">
-              <ul className="space-y-3">
+            <div className="mb-4 md:mb-6">
+              <ul className="space-y-2 md:space-y-3">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-2">
                     <Check className="text-green-500 shrink-0 mt-0.5" size={16} />
-                    <span>{feature}</span>
+                    <span className="text-sm md:text-base">{feature}</span>
                   </li>
                 ))}
                 
                 {plan.limitations.map((limitation) => (
                   <li key={limitation} className="flex items-start gap-2 text-muted-foreground">
                     <X className="text-muted-foreground/70 shrink-0 mt-0.5" size={16} />
-                    <span>{limitation}</span>
+                    <span className="text-sm md:text-base">{limitation}</span>
                   </li>
                 ))}
               </ul>
             </div>
             
             <Button 
-              className="w-full mt-4" 
+              className="w-full mt-4 touch-target" 
               variant={plan.highlighted ? "default" : "outline"}
             >
               {plan.cta}
@@ -178,8 +178,8 @@ const PricingCards = () => {
         ))}
       </div>
       
-      <div className="text-center text-muted-foreground mt-12">
-        <p>
+      <div className="text-center text-muted-foreground mt-8 md:mt-12">
+        <p className="text-sm md:text-base">
           Des questions sur nos offres ? <a href="#faq" className="text-primary hover:underline">Consultez notre FAQ</a> ou <a href="#contact" className="text-primary hover:underline">contactez-nous</a>.
         </p>
       </div>
