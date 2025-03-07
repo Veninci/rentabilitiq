@@ -8,9 +8,9 @@ const CalculatorForm: React.FC = () => {
       <div className="flex items-center justify-between mb-3 md:mb-5">
         <div className="text-xs md:text-base font-medium flex items-center text-gray-700">
           <Settings className="h-3 w-3 md:h-5 md:w-5 mr-1 md:mr-2 text-primary" /> 
-          Paramètres du bien
+          <span className="hidden md:inline">Paramètres du bien</span>
         </div>
-        <div className="flex space-x-1 md:space-x-2">
+        <div className="hidden md:flex space-x-1 md:space-x-2">
           <div className="px-1.5 md:px-3 py-0.5 md:py-1.5 bg-primary/10 rounded-lg text-[10px] md:text-sm text-primary font-medium transition-colors hover:bg-primary/15">
             Appartement
           </div>
