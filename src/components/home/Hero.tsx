@@ -4,6 +4,7 @@ import { ArrowRight, BarChart4, PieChart, Calculator, Maximize2, Home, Building,
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import GlassCard from '../ui/GlassCard';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const Hero = () => {
   return (
@@ -51,11 +52,16 @@ const Hero = () => {
               <div className="absolute inset-0 flex items-center justify-center">
                 {/* Interface mockup */}
                 <div className="w-full h-full p-6 flex flex-col">
-                  <div className="flex items-center space-x-4 mb-6">
-                    <div className="bg-primary/10 h-10 w-10 rounded-lg flex items-center justify-center">
-                      <Calculator className="h-5 w-5 text-primary" />
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center space-x-4">
+                      <div className="bg-primary/10 h-10 w-10 rounded-lg flex items-center justify-center">
+                        <Calculator className="h-5 w-5 text-primary" />
+                      </div>
+                      <div className="text-lg font-medium">Calculateur de rentabilité</div>
                     </div>
-                    <div className="text-lg font-medium">Calculateur de rentabilité</div>
+                    <div className="bg-amber-100 text-amber-700 text-xs font-medium py-1 px-3 rounded-full">
+                      Exemple
+                    </div>
                   </div>
                   
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 flex-grow">
@@ -161,6 +167,9 @@ const Hero = () => {
               </div>
             </div>
           </GlassCard>
+          <div className="text-center mt-2 text-sm text-muted-foreground animate-fade-in" style={{ animationDelay: "400ms" }}>
+            L'interface ci-dessus est un exemple à titre illustratif. Essayez le calculateur pour des résultats personnalisés.
+          </div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-12 animate-fade-in" style={{ animationDelay: "400ms" }}>
