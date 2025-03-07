@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ArrowRight, BarChart4, PieChart, Calculator, Maximize2 } from 'lucide-react';
+import { ArrowRight, BarChart4, PieChart, Calculator, Maximize2, Home, Building, Wallet, TrendingUp, Landmark, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import GlassCard from '../ui/GlassCard';
@@ -60,38 +60,94 @@ const Hero = () => {
                   
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 flex-grow">
                     <div className="col-span-2 bg-white rounded-xl shadow-sm p-4 flex flex-col">
-                      <div className="text-sm font-medium mb-3">Paramètres du bien</div>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="text-sm font-medium flex items-center">
+                          <Settings className="h-4 w-4 mr-2 text-primary" /> 
+                          Paramètres du bien
+                        </div>
+                        <div className="flex space-x-2">
+                          <div className="px-2 py-1 bg-primary/10 rounded text-xs text-primary font-medium">Appartement</div>
+                          <div className="px-2 py-1 bg-gray-100 rounded text-xs text-gray-500 font-medium">Lyon</div>
+                        </div>
+                      </div>
+                      
                       <div className="grid grid-cols-2 gap-3 mb-3">
-                        <div className="h-8 bg-gray-100 rounded-md"></div>
-                        <div className="h-8 bg-gray-100 rounded-md"></div>
-                        <div className="h-8 bg-gray-100 rounded-md"></div>
-                        <div className="h-8 bg-gray-100 rounded-md"></div>
-                        <div className="h-8 bg-gray-100 rounded-md"></div>
-                        <div className="h-8 bg-gray-100 rounded-md"></div>
+                        <div className="space-y-1.5">
+                          <div className="text-xs text-gray-500">Prix d'achat</div>
+                          <div className="h-8 bg-gray-100 rounded-md flex items-center px-3 text-sm font-medium">210 000 €</div>
+                        </div>
+                        <div className="space-y-1.5">
+                          <div className="text-xs text-gray-500">Surface</div>
+                          <div className="h-8 bg-gray-100 rounded-md flex items-center px-3 text-sm font-medium">45 m²</div>
+                        </div>
+                        <div className="space-y-1.5">
+                          <div className="text-xs text-gray-500">Loyer mensuel</div>
+                          <div className="h-8 bg-gray-100 rounded-md flex items-center px-3 text-sm font-medium">850 €</div>
+                        </div>
+                        <div className="space-y-1.5">
+                          <div className="text-xs text-gray-500">Type de location</div>
+                          <div className="h-8 bg-gray-100 rounded-md flex items-center px-3 text-sm font-medium">Longue durée</div>
+                        </div>
+                        <div className="space-y-1.5">
+                          <div className="text-xs text-gray-500">Apport</div>
+                          <div className="h-8 bg-gray-100 rounded-md flex items-center px-3 text-sm font-medium">40 000 €</div>
+                        </div>
+                        <div className="space-y-1.5">
+                          <div className="text-xs text-gray-500">Taux d'intérêt</div>
+                          <div className="h-8 bg-gray-100 rounded-md flex items-center px-3 text-sm font-medium">3.5%</div>
+                        </div>
                       </div>
                       <div className="mt-auto flex justify-end">
-                        <div className="h-8 w-28 bg-primary rounded-md"></div>
+                        <div className="h-8 w-36 bg-primary rounded-md flex items-center justify-center text-white text-sm font-medium">
+                          Calculer
+                        </div>
                       </div>
                     </div>
                     
                     <div className="bg-white rounded-xl shadow-sm p-4 flex flex-col">
-                      <div className="text-sm font-medium mb-3">Résultats</div>
-                      <div className="space-y-4 flex-grow">
-                        <div className="flex items-center justify-between">
-                          <div className="text-xs text-muted-foreground">Rendement brut</div>
-                          <div className="font-medium text-primary">5.8%</div>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div className="text-xs text-muted-foreground">Rendement net</div>
-                          <div className="font-medium text-primary">4.2%</div>
-                        </div>
-                        <div className="flex items-center justify-between">
-                          <div className="text-xs text-muted-foreground">Cash-flow mensuel</div>
-                          <div className="font-medium text-primary">387 €</div>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="text-sm font-medium flex items-center">
+                          <BarChart4 className="h-4 w-4 mr-2 text-primary" /> 
+                          Dashboard
                         </div>
                       </div>
-                      <div className="mt-4 h-24 bg-gray-50 rounded-lg flex items-center justify-center">
-                        <PieChart className="h-12 w-12 text-primary/30" />
+                      
+                      <div className="space-y-4 flex-grow">
+                        <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                          <div className="flex items-center">
+                            <TrendingUp className="h-4 w-4 text-primary mr-2" />
+                            <div className="text-xs text-muted-foreground">Rendement brut</div>
+                          </div>
+                          <div className="font-medium text-primary">5.8%</div>
+                        </div>
+                        
+                        <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                          <div className="flex items-center">
+                            <Wallet className="h-4 w-4 text-green-500 mr-2" />
+                            <div className="text-xs text-muted-foreground">Cash-flow mensuel</div>
+                          </div>
+                          <div className="font-medium text-green-500">387 €</div>
+                        </div>
+                        
+                        <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                          <div className="flex items-center">
+                            <Landmark className="h-4 w-4 text-blue-500 mr-2" />
+                            <div className="text-xs text-muted-foreground">Mensualité crédit</div>
+                          </div>
+                          <div className="font-medium text-blue-500">614 €</div>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-4 h-24 bg-gray-50 rounded-lg flex items-center justify-center relative">
+                        <PieChart className="h-12 w-12 text-primary/30 absolute" />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="bg-white rounded-full h-16 w-16 flex items-center justify-center shadow-sm">
+                            <div className="text-center">
+                              <div className="text-xl font-bold text-primary">4.2%</div>
+                              <div className="text-xs text-gray-500">Rendement</div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
