@@ -1,12 +1,14 @@
 
 import React, { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, TrendingUp, TrendingDown } from 'lucide-react';
+import { ArrowRight, TrendingUp, TrendingDown, RefreshCw, Settings } from 'lucide-react';
 import { formatter } from '@/lib/formatter';
+import { OpenAIService } from '@/services/openai';
+import { toast } from 'sonner';
 
 interface CityData {
   name: string;
@@ -105,6 +107,9 @@ const CityMarketTrends: React.FC = () => {
   const [selectedCity, setSelectedCity] = useState<string>("Paris");
   const [customCity, setCustomCity] = useState<string>("");
   const [showCustomInput, setShowCustomInput] = useState<boolean>(false);
+  const [isUpdating, setIsUpdating] = useState<boolean>(false);
+  const [showApiKeyInput, setShowApiKeyInput] = useState<boolean>(false);
+  const [apiKey, setApiKey] = useState<string>(OpenAIService.getApiKey() || "");
   
   const city = cityData[selectedCity] || cityData["Paris"];
 
@@ -117,11 +122,61 @@ const CityMarketTrends: React.FC = () => {
     }
   };
 
-  const handleCustomCitySubmit = () => {
+  const handleCustomCitySubmit = async () => {
     if (customCity.trim()) {
-      // In a real application, we would fetch data for this city
-      // For now, we'll just show a message that the city isn't in our database
-      alert(`Désolé, nous n'avons pas encore de données pour ${customCity}. Nous travaillons à élargir notre base de données.`);
+      const apiKey = OpenAIService.getApiKey();
+      if (!apiKey) {
+        toast.error("Veuillez configurer votre clé API OpenAI pour accéder à cette fonctionnalité");
+        setShowApiKeyInput(true);
+        return;
+      }
+
+      setIsUpdating(true);
+      const cityData = await OpenAIService.updateCityPrices(customCity);
+      setIsUpdating(false);
+
+      if (cityData) {
+        // Add the new city data to our cityData object
+        cityData[customCity] = {
+          name: customCity,
+          ...cityData
+        };
+        setSelectedCity(customCity);
+        setShowCustomInput(false);
+      }
+    }
+  };
+
+  const handleUpdateCityData = async () => {
+    const apiKey = OpenAIService.getApiKey();
+    if (!apiKey) {
+      toast.error("Veuillez configurer votre clé API OpenAI pour accéder à cette fonctionnalité");
+      setShowApiKeyInput(true);
+      return;
+    }
+
+    setIsUpdating(true);
+    const updatedData = await OpenAIService.updateCityPrices(selectedCity);
+    setIsUpdating(false);
+
+    if (updatedData) {
+      // Update the city data with the new values
+      cityData[selectedCity] = {
+        ...cityData[selectedCity],
+        ...updatedData
+      };
+      // Force a re-render
+      setSelectedCity(prev => prev);
+    }
+  };
+
+  const handleSaveApiKey = () => {
+    if (apiKey.trim()) {
+      OpenAIService.saveApiKey(apiKey.trim());
+      toast.success("Clé API OpenAI enregistrée avec succès");
+      setShowApiKeyInput(false);
+    } else {
+      toast.error("Veuillez entrer une clé API valide");
     }
   };
 
@@ -132,45 +187,93 @@ const CityMarketTrends: React.FC = () => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold mb-4">Évolution du marché immobilier</DialogTitle>
+          <DialogTitle className="text-xl font-bold mb-2">Évolution du marché immobilier</DialogTitle>
+          <DialogDescription className="text-sm text-muted-foreground">
+            Consultez les tendances du marché immobilier dans différentes villes françaises.
+          </DialogDescription>
         </DialogHeader>
         
         <div className="space-y-6">
-          <div className="grid grid-cols-2 gap-4 items-end">
-            <div className="space-y-2">
-              <Label htmlFor="city-select">Ville</Label>
-              <Select value={selectedCity} onValueChange={handleCityChange}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Sélectionnez une ville" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Paris">Paris</SelectItem>
-                  <SelectItem value="Lyon">Lyon</SelectItem>
-                  <SelectItem value="Bordeaux">Bordeaux</SelectItem>
-                  <SelectItem value="Marseille">Marseille</SelectItem>
-                  <SelectItem value="Strasbourg">Strasbourg</SelectItem>
-                  <SelectItem value="custom">Autre ville...</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            
-            {showCustomInput && (
+          <div className="flex justify-between items-center">
+            <div className="grid grid-cols-2 gap-4 items-end flex-1">
               <div className="space-y-2">
-                <Label htmlFor="custom-city">Nom de la ville</Label>
+                <Label htmlFor="city-select">Ville</Label>
+                <Select value={selectedCity} onValueChange={handleCityChange}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Sélectionnez une ville" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Paris">Paris</SelectItem>
+                    <SelectItem value="Lyon">Lyon</SelectItem>
+                    <SelectItem value="Bordeaux">Bordeaux</SelectItem>
+                    <SelectItem value="Marseille">Marseille</SelectItem>
+                    <SelectItem value="Strasbourg">Strasbourg</SelectItem>
+                    <SelectItem value="custom">Autre ville...</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              {showCustomInput && (
+                <div className="space-y-2">
+                  <Label htmlFor="custom-city">Nom de la ville</Label>
+                  <div className="flex space-x-2">
+                    <Input 
+                      id="custom-city" 
+                      value={customCity}
+                      onChange={(e) => setCustomCity(e.target.value)}
+                      placeholder="ex: Nantes"
+                    />
+                    <Button onClick={handleCustomCitySubmit} disabled={isUpdating}>
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="flex items-end space-x-2 ml-2">
+              <Button 
+                size="icon" 
+                variant="outline" 
+                onClick={handleUpdateCityData} 
+                disabled={isUpdating} 
+                title="Mettre à jour les données"
+              >
+                <RefreshCw className={`h-4 w-4 ${isUpdating ? 'animate-spin' : ''}`} />
+              </Button>
+              <Button 
+                size="icon" 
+                variant="outline" 
+                onClick={() => setShowApiKeyInput(!showApiKeyInput)} 
+                title="Configurer l'API"
+              >
+                <Settings className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+
+          {showApiKeyInput && (
+            <div className="p-4 border rounded-lg bg-muted/20">
+              <div className="space-y-2">
+                <Label htmlFor="api-key">Clé API OpenAI</Label>
                 <div className="flex space-x-2">
                   <Input 
-                    id="custom-city" 
-                    value={customCity}
-                    onChange={(e) => setCustomCity(e.target.value)}
-                    placeholder="ex: Nantes"
+                    id="api-key" 
+                    type="password"
+                    value={apiKey}
+                    onChange={(e) => setApiKey(e.target.value)}
+                    placeholder="sk-..."
                   />
-                  <Button onClick={handleCustomCitySubmit}>
-                    <ArrowRight className="h-4 w-4" />
+                  <Button onClick={handleSaveApiKey}>
+                    Enregistrer
                   </Button>
                 </div>
+                <p className="text-xs text-muted-foreground">
+                  Cette clé est nécessaire pour mettre à jour les données immobilières en temps réel.
+                </p>
               </div>
-            )}
-          </div>
+            </div>
+          )}
           
           <div className="grid grid-cols-2 gap-4">
             <div className="bg-white rounded-lg p-4 shadow-sm">
@@ -234,7 +337,7 @@ const CityMarketTrends: React.FC = () => {
           </div>
           
           <div className="text-xs text-muted-foreground">
-            <p>Données mises à jour au 1er juin 2023. Les prix et rendements affichés sont des moyennes et peuvent varier selon les quartiers et les caractéristiques des biens.</p>
+            <p>Données mises à jour au {new Date().toLocaleDateString('fr-FR')}. Les prix et rendements affichés sont des moyennes et peuvent varier selon les quartiers et les caractéristiques des biens.</p>
           </div>
         </div>
       </DialogContent>
