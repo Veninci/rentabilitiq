@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { CheckCircle, TrendingUp, CircleDollarSign, FileText, Calculator, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import GlassCard from '../ui/GlassCard';
-import CityMarketTrends from './CityMarketTrends';
+import CityMarketTrends from './city-market-trends';
 
 const Features = () => {
   return (
@@ -170,4 +169,3 @@ const FeatureCard = ({ icon, title, description }: FeatureCardProps) => {
 };
 
 export default Features;
-
