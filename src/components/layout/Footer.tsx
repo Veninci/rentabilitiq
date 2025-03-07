@@ -42,15 +42,15 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start space-x-3">
                 <Mail className="h-5 w-5 text-muted-foreground mt-0.5" />
-                <span className="text-muted-foreground text-sm">contact@rentabilitiq.fr</span>
+                <span className="text-muted-foreground text-sm">veninci.invest@gmail.com</span>
               </li>
               <li className="flex items-start space-x-3">
                 <Phone className="h-5 w-5 text-muted-foreground mt-0.5" />
-                <span className="text-muted-foreground text-sm">+33 1 23 45 67 89</span>
+                <span className="text-muted-foreground text-sm">06 33 46 56 41</span>
               </li>
               <li className="flex items-start space-x-3">
                 <MapPin className="h-5 w-5 text-muted-foreground mt-0.5" />
-                <span className="text-muted-foreground text-sm">75001 Paris, France</span>
+                <span className="text-muted-foreground text-sm">2 rue de la gravière, Kilstett 67840</span>
               </li>
             </ul>
           </div>
