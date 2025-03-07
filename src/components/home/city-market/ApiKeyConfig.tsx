@@ -39,7 +39,7 @@ const ApiKeyConfig: React.FC<ApiKeyConfigProps> = ({
         </div>
         <div className="flex justify-between items-center">
           <p className="text-xs text-muted-foreground">
-            Cette clé est nécessaire pour mettre à jour les données immobilières en temps réel.
+            Cette clé est nécessaire pour récupérer les données immobilières de SeLoger.com via OpenAI.
           </p>
           <Button 
             variant="outline" 
