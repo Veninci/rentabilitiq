@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Layout } from '@/components/layout/Layout';
 import GlassCard from '@/components/ui/GlassCard';
@@ -39,13 +38,13 @@ const About = () => {
             <div className="flex flex-col md:flex-row items-center gap-8">
               <div className="w-full md:w-1/3">
                 <div className={cn(
-                  "relative w-48 h-48 mx-auto overflow-hidden rounded-full border-4 border-primary/20",
+                  "relative w-44 h-44 mx-auto overflow-hidden rounded-full border-4 border-primary/20",
                   "hover:border-primary transition-all duration-300"
                 )}>
                   <img 
                     src="/lovable-uploads/f10628aa-f2ee-42d3-9d80-c0513fee0296.png" 
                     alt="Lucas Da Silva Venancio, fondateur de RentabilitiQ" 
-                    className="w-full h-full object-cover filter grayscale hover:grayscale-0 transition-all duration-500"
+                    className="w-full h-full object-cover object-center filter grayscale hover:grayscale-0 transition-all duration-500"
                   />
                 </div>
               </div>
@@ -54,10 +53,9 @@ const About = () => {
                 <p className="text-muted-foreground mb-1">Fondateur &amp; PDG</p>
                 <div className="w-20 h-1 bg-primary rounded-full mb-4"></div>
                 <p className="text-lg">
-                  Passionné par l'immobilier et l'analyse de données, Lucas a fondé RentabilitiQ avec une vision claire : 
-                  rendre l'investissement immobilier accessible à tous grâce à des outils simples mais puissants. Son expertise 
-                  dans le domaine de l'immobilier et sa connaissance approfondie du marché français font de lui un pionnier 
-                  dans le développement de solutions innovantes pour les investisseurs.
+                  Passionné par l'immobilier et l'analyse de données, Lucas a fondé RentabilitiQ avec l'objectif 
+                  de démocratiser l'investissement immobilier. Son expertise permet aujourd'hui d'offrir des outils 
+                  innovants et accessibles pour tous les investisseurs.
                 </p>
               </div>
             </div>
