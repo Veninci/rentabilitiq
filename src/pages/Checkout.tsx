@@ -29,8 +29,11 @@ const Checkout = () => {
   const stripeStatus = searchParams.get('status');
 
   useEffect(() => {
-    // Si l'utilisateur revient de Stripe avec succès
-    if (stripeStatus === 'success') {
+    // Vérifie si un paiement est en attente dans le localStorage
+    const pendingSubscription = localStorage.getItem('pending_subscription');
+    
+    // Si l'utilisateur revient de Stripe avec succès OU si un utilisateur a un abonnement en attente
+    if (stripeStatus === 'success' || pendingSubscription) {
       // Confirmer l'abonnement
       confirmSubscription();
       
