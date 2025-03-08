@@ -10,6 +10,24 @@ interface UsageData {
 // Délai d'expiration pour les paiements en attente (30 minutes en millisecondes)
 const PAYMENT_VERIFICATION_TIMEOUT = 30 * 60 * 1000;
 
+// Réinitialiser les données d'abonnement pour commencer en version Basic
+export const resetToBasic = (): void => {
+  // Supprimer toute information d'abonnement existante
+  localStorage.removeItem('user_subscription');
+  localStorage.removeItem('pending_subscription');
+  localStorage.removeItem('subscription_timestamp');
+  
+  // Réinitialiser le compteur d'utilisation pour avoir un seul essai
+  const resetUsage: UsageData = {
+    count: 0,
+    lastReset: new Date().toISOString()
+  };
+  localStorage.setItem('calculator_usage', JSON.stringify(resetUsage));
+};
+
+// Initialisation - exécuter automatiquement au chargement de l'application
+resetToBasic();
+
 // Vérifier si l'utilisateur est abonné (Pro ou Expert)
 export const isSubscribed = (): boolean => {
   const subscription = localStorage.getItem('user_subscription');

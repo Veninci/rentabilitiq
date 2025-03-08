@@ -28,8 +28,8 @@ const PaymentForm = ({ planId, planName, amount, billingCycle }: PaymentFormProp
     localStorage.setItem('pending_subscription', planId);
     localStorage.setItem('subscription_timestamp', Date.now().toString());
     
-    // Redirection vers le lien Stripe fourni
-    window.location.href = "https://buy.stripe.com/cN25mg3qHfXa3f2dQQ";
+    // Redirection vers le lien Stripe de test fourni
+    window.location.href = "https://buy.stripe.com/test_bIY8yl4p22a217a4gg";
     
     // Note: L'abonnement ne sera activé qu'après vérification du paiement
     // La redirection vers Stripe nous fait perdre le contrôle jusqu'au retour de l'utilisateur
