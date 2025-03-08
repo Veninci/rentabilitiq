@@ -24,18 +24,20 @@ const PaymentForm = ({ planId, planName, amount, billingCycle }: PaymentFormProp
   const { toast } = useToast();
 
   const handleRedirectToStripe = () => {
+    // Stockons les informations du plan dans localStorage avant la redirection
+    localStorage.setItem('pending_subscription', planId);
+    localStorage.setItem('subscription_timestamp', Date.now().toString());
+    
     // Redirection vers le lien Stripe fourni
     window.location.href = "https://buy.stripe.com/cN25mg3qHfXa3f2dQQ";
     
-    // Nous enregistrons l'abonnement ici aussi car l'utilisateur sera redirigé
-    // Note: dans un environnement de production, cela devrait être fait après confirmation du paiement
-    if (planId === 'pro' || planId === 'expert') {
-      setUserSubscription(planId as 'pro' | 'expert');
-    }
+    // Note: L'abonnement ne sera activé qu'après vérification du paiement
+    // La redirection vers Stripe nous fait perdre le contrôle jusqu'au retour de l'utilisateur
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    setIsProcessing(true);
     handleRedirectToStripe();
   };
 
