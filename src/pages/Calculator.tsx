@@ -24,7 +24,7 @@ const Calculator = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Vérifier le statut d'abonnement et les limites d'utilisation
+  // Vérifier le statut d'abonnement et les limites d'utilisation à chaque chargement de page
   useEffect(() => {
     // Check usage limit on component mount
     const usageLimitReached = hasReachedUsageLimit();

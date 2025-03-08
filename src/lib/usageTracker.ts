@@ -98,6 +98,12 @@ export const trackCalculatorUsage = (): void => {
   }
   
   const currentUsage = getUsageData();
+  
+  // Si l'utilisateur a déjà atteint sa limite, ne pas incrémenter
+  if (currentUsage.count >= 1) {
+    return;
+  }
+  
   const updatedUsage: UsageData = {
     ...currentUsage,
     count: currentUsage.count + 1
