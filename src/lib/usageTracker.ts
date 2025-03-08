@@ -25,9 +25,6 @@ export const resetToBasic = (): void => {
   localStorage.setItem('calculator_usage', JSON.stringify(resetUsage));
 };
 
-// Initialisation - exécuter automatiquement au chargement de l'application
-resetToBasic();
-
 // Vérifier si l'utilisateur est abonné (Pro ou Expert)
 export const isSubscribed = (): boolean => {
   const subscription = localStorage.getItem('user_subscription');
@@ -90,7 +87,7 @@ export const hasReachedUsageLimit = (): boolean => {
   }
   
   const currentUsage = getUsageData();
-  return currentUsage.count >= 1;
+  return currentUsage.count >= 1; // Strictement limité à 1 essai
 };
 
 // Increment the usage counter when a calculation is performed
@@ -120,7 +117,11 @@ export const getUsageData = (): UsageData => {
   try {
     // Get stored usage data
     const storedUsage = localStorage.getItem('calculator_usage');
-    if (!storedUsage) return emptyUsage;
+    if (!storedUsage) {
+      // Si aucune donnée n'existe, initialiser avec un usage vide et le sauvegarder
+      localStorage.setItem('calculator_usage', JSON.stringify(emptyUsage));
+      return emptyUsage;
+    }
     
     const usageData: UsageData = JSON.parse(storedUsage);
     
@@ -133,13 +134,21 @@ export const getUsageData = (): UsageData => {
       lastReset.getMonth() !== currentDate.getMonth() ||
       lastReset.getFullYear() !== currentDate.getFullYear()
     ) {
-      return emptyUsage;
+      // Réinitialiser pour le nouveau mois
+      const newUsage = {
+        count: 0,
+        lastReset: currentDate.toISOString()
+      };
+      localStorage.setItem('calculator_usage', JSON.stringify(newUsage));
+      return newUsage;
     }
     
     return usageData;
   } catch (error) {
     // If any parsing error occurs, return empty usage
     console.error('Error parsing usage data:', error);
+    // En cas d'erreur, initialiser avec un usage vide et le sauvegarder
+    localStorage.setItem('calculator_usage', JSON.stringify(emptyUsage));
     return emptyUsage;
   }
 };

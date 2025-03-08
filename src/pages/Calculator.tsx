@@ -19,21 +19,22 @@ const Calculator = () => {
   const [longTermResults, setLongTermResults] = useState<PropertyResults | null>(null);
   const [airbnbResults, setAirbnbResults] = useState<PropertyResults | null>(null);
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
-  const [remainingCalculations, setRemainingCalculations] = useState<number>(1);
+  const [remainingCalculations, setRemainingCalculations] = useState<number>(0);
+  const [limitReached, setLimitReached] = useState<boolean>(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Vérifier si l'utilisateur est abonné
-  const userIsSubscribed = isSubscribed();
-
+  // Vérifier le statut d'abonnement et les limites d'utilisation
   useEffect(() => {
     // Check usage limit on component mount
-    const limitReached = hasReachedUsageLimit();
-    if (limitReached && !userIsSubscribed) {
+    const usageLimitReached = hasReachedUsageLimit();
+    setLimitReached(usageLimitReached && !isSubscribed());
+    
+    if (usageLimitReached && !isSubscribed()) {
       // Show a toast notification about the limit
       toast({
         title: "Limite atteinte",
-        description: "Vous avez atteint votre limite de 1 calcul par mois.",
+        description: "Vous avez atteint votre limite de 1 calcul gratuit. Passez à l'offre Pro pour des calculs illimités.",
         variant: "destructive",
       });
     }
@@ -43,11 +44,12 @@ const Calculator = () => {
   }, [toast]);
 
   const handleCalculate = (data: PropertyData) => {
-    // Check if user has reached their limit
-    if (hasReachedUsageLimit() && !userIsSubscribed) {
+    // Vérifier à nouveau la limite au moment de calculer
+    if (hasReachedUsageLimit() && !isSubscribed()) {
+      setLimitReached(true);
       toast({
         title: "Limite atteinte",
-        description: "Vous avez atteint votre limite de 1 calcul par mois. Passez à l'offre Pro pour des calculs illimités.",
+        description: "Vous avez atteint votre limite de 1 calcul gratuit. Passez à l'offre Pro pour des calculs illimités.",
         variant: "destructive",
       });
       return;
@@ -56,9 +58,10 @@ const Calculator = () => {
     // Track this calculation if not subscribed
     trackCalculatorUsage();
     
-    // Update remaining calculations
+    // Update remaining calculations and limit status
     const remaining = getRemainingCalculations();
     setRemainingCalculations(remaining);
+    setLimitReached(remaining <= 0 && !isSubscribed());
     
     // Enregistrer la ville sélectionnée
     setSelectedCity(data.city);
@@ -103,21 +106,25 @@ const Calculator = () => {
               
               {/* Display remaining calculations or subscription badge */}
               <div className="mt-4 inline-flex items-center px-4 py-2 rounded-full text-sm font-medium">
-                {userIsSubscribed ? (
+                {isSubscribed() ? (
                   <div className="bg-green-100 text-green-800 px-4 py-2 rounded-full flex items-center">
                     <CheckCircle className="h-4 w-4 mr-2" />
                     <span>Calculs illimités (Abonnement actif)</span>
                   </div>
                 ) : (
-                  <div className="bg-amber-100 text-amber-800 px-4 py-2 rounded-full flex items-center">
+                  <div className={`${limitReached ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800'} px-4 py-2 rounded-full flex items-center`}>
                     <AlertTriangle className="h-4 w-4 mr-2" />
-                    <span>Il vous reste {remainingCalculations} calcul{remainingCalculations !== 1 ? 's' : ''} ce mois-ci</span>
+                    <span>
+                      {limitReached 
+                        ? "Limite atteinte - Passez à l'offre Pro" 
+                        : `Il vous reste ${remainingCalculations} calcul gratuit`}
+                    </span>
                   </div>
                 )}
               </div>
             </div>
             
-            {hasReachedUsageLimit() && !userIsSubscribed ? (
+            {limitReached ? (
               <Card className="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 text-center">
                 <div className="flex flex-col items-center gap-4 py-6">
                   <div className="rounded-full bg-amber-100 p-3 w-12 h-12 flex items-center justify-center">
