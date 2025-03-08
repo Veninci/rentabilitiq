@@ -16,6 +16,7 @@ export const resetToBasic = (): void => {
   localStorage.removeItem('user_subscription');
   localStorage.removeItem('pending_subscription');
   localStorage.removeItem('subscription_timestamp');
+  localStorage.removeItem('payment_confirmed');
   
   // Réinitialiser le compteur d'utilisation pour avoir un seul essai
   const resetUsage: UsageData = {
@@ -30,9 +31,15 @@ export const isSubscribed = (): boolean => {
   const subscription = localStorage.getItem('user_subscription');
   const pendingSubscription = localStorage.getItem('pending_subscription');
   const subscriptionTimestamp = localStorage.getItem('subscription_timestamp');
+  const paymentConfirmed = localStorage.getItem('payment_confirmed');
   
   // Si l'utilisateur a une souscription active confirmée
   if (subscription === 'pro' || subscription === 'expert') {
+    return true;
+  }
+  
+  // Un paiement n'est considéré confirmé que si le flag de confirmation est présent
+  if (pendingSubscription && paymentConfirmed === 'true') {
     return true;
   }
   
@@ -41,13 +48,8 @@ export const isSubscribed = (): boolean => {
     const timestamp = parseInt(subscriptionTimestamp, 10);
     const now = Date.now();
     
-    // Si le paiement est en attente depuis moins de 30 minutes, considérons l'utilisateur comme abonné temporairement
-    if (now - timestamp < PAYMENT_VERIFICATION_TIMEOUT) {
-      // L'utilisateur sera considéré comme abonné pendant 30 minutes après redirection vers Stripe
-      // C'est une solution temporaire en attendant de vérifier le paiement via webhook
-      return true;
-    } else {
-      // Si le délai est dépassé et que l'abonnement n'a pas été confirmé, nettoyons ces données
+    // Nettoyons les données de souscription en attente si le délai est dépassé
+    if (now - timestamp >= PAYMENT_VERIFICATION_TIMEOUT) {
       localStorage.removeItem('pending_subscription');
       localStorage.removeItem('subscription_timestamp');
     }
@@ -56,11 +58,14 @@ export const isSubscribed = (): boolean => {
   return false;
 };
 
-// Confirmer l'abonnement après vérification du paiement
+// Confirmer l'abonnement après vérification du paiement via Stripe
 export const confirmSubscription = (): void => {
   const pendingSubscription = localStorage.getItem('pending_subscription');
   
   if (pendingSubscription === 'pro' || pendingSubscription === 'expert') {
+    // Marquer le paiement comme confirmé
+    localStorage.setItem('payment_confirmed', 'true');
+    
     // Confirmer l'abonnement
     localStorage.setItem('user_subscription', pendingSubscription);
     
@@ -77,6 +82,7 @@ export const setUserSubscription = (plan: 'pro' | 'expert'): void => {
   // Nettoyer les données temporaires si elles existent
   localStorage.removeItem('pending_subscription');
   localStorage.removeItem('subscription_timestamp');
+  localStorage.removeItem('payment_confirmed');
 };
 
 // Check if the user has reached their free limit (1 calculation per month)

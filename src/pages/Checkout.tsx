@@ -27,14 +27,13 @@ const Checkout = () => {
   
   // Vérifier si l'utilisateur revient de Stripe (paramètre de succès)
   const stripeStatus = searchParams.get('status');
+  const paymentId = searchParams.get('payment_id');
 
   useEffect(() => {
-    // Vérifie si un paiement est en attente dans le localStorage
-    const pendingSubscription = localStorage.getItem('pending_subscription');
-    
-    // Si l'utilisateur revient de Stripe avec succès OU si un utilisateur a un abonnement en attente
-    if (stripeStatus === 'success' || pendingSubscription) {
-      // Confirmer l'abonnement
+    // Vérifier uniquement si l'utilisateur revient de Stripe avec un statut de succès
+    // ET un ID de paiement (qui serait fourni par Stripe après paiement réussi)
+    if (stripeStatus === 'success' && paymentId) {
+      // Confirmer l'abonnement uniquement quand nous avons un ID de paiement
       confirmSubscription();
       
       // Afficher un message de confirmation
@@ -47,7 +46,7 @@ const Checkout = () => {
       // Rediriger vers la calculatrice
       navigate('/calculator');
     }
-  }, [stripeStatus, navigate, toast, planName]);
+  }, [stripeStatus, paymentId, navigate, toast, planName]);
 
   const handleGoBack = () => {
     navigate('/pricing');

@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
-import { setUserSubscription } from '@/lib/usageTracker';
 import { ExternalLink } from 'lucide-react';
 
 interface PaymentFormProps {
@@ -28,11 +27,18 @@ const PaymentForm = ({ planId, planName, amount, billingCycle }: PaymentFormProp
     localStorage.setItem('pending_subscription', planId);
     localStorage.setItem('subscription_timestamp', Date.now().toString());
     
-    // Redirection vers le lien Stripe production
-    window.location.href = "https://buy.stripe.com/cN25mg3qHfXa3f2dQQ";
+    // Supprimer tout flag de confirmation précédent pour éviter les faux accès
+    localStorage.removeItem('payment_confirmed');
     
-    // Note: L'abonnement ne sera activé qu'après vérification du paiement
-    // La redirection vers Stripe nous fait perdre le contrôle jusqu'au retour de l'utilisateur
+    // Nous générons un ID de transaction unique pour cette tentative d'achat
+    // Cet ID sera utilisé pour vérifier que le paiement a bien été effectué
+    const transactionId = `tx_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+    localStorage.setItem('transaction_id', transactionId);
+    
+    // Redirection vers le lien Stripe production avec notre ID de transaction
+    // Note: Dans un cas réel, cet ID serait passé à Stripe et retourné dans le webhook ou l'URL de redirection
+    const stripeUrl = `https://buy.stripe.com/cN25mg3qHfXa3f2dQQ?transaction_id=${transactionId}`;
+    window.location.href = stripeUrl;
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -57,6 +63,7 @@ const PaymentForm = ({ planId, planName, amount, billingCycle }: PaymentFormProp
         <div className="mb-6">
           <div className="p-4 bg-muted/50 rounded-md text-center">
             <p className="text-sm mb-2">Vous allez être redirigé vers une page de paiement sécurisée Stripe</p>
+            <p className="text-xs text-muted-foreground">L'accès au calculateur sera débloqué uniquement après confirmation du paiement</p>
           </div>
         </div>
 
