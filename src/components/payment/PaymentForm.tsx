@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/card';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { setUserSubscription } from '@/lib/usageTracker';
+import { ExternalLink } from 'lucide-react';
 
 interface PaymentFormProps {
   planId: string;
@@ -22,37 +23,20 @@ const PaymentForm = ({ planId, planName, amount, billingCycle }: PaymentFormProp
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  const handleRedirectToStripe = () => {
+    // Redirection vers le lien Stripe fourni
+    window.location.href = "https://buy.stripe.com/cN25mg3qHfXa3f2dQQ";
+    
+    // Nous enregistrons l'abonnement ici aussi car l'utilisateur sera redirigé
+    // Note: dans un environnement de production, cela devrait être fait après confirmation du paiement
+    if (planId === 'pro' || planId === 'expert') {
+      setUserSubscription(planId as 'pro' | 'expert');
+    }
+  };
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-
-    if (!stripe || !elements) {
-      return;
-    }
-
-    setIsProcessing(true);
-    setError(null);
-
-    // Cette partie serait normalement connectée à un backend pour créer une intention de paiement
-    // Simulation pour cette démonstration
-    try {
-      // Enregistrer l'abonnement après un paiement réussi
-      if (planId === 'pro' || planId === 'expert') {
-        setUserSubscription(planId as 'pro' | 'expert');
-      }
-      
-      toast({
-        title: "Paiement simulé",
-        description: `Abonnement ${planName} ${billingCycle} souscrit avec succès!`,
-      });
-      
-      setTimeout(() => {
-        setIsProcessing(false);
-        navigate('/calculator');
-      }, 2000);
-    } catch (err) {
-      setError("Une erreur est survenue lors du traitement du paiement.");
-      setIsProcessing(false);
-    }
+    handleRedirectToStripe();
   };
 
   return (
@@ -69,36 +53,26 @@ const PaymentForm = ({ planId, planName, amount, billingCycle }: PaymentFormProp
         </div>
 
         <div className="mb-6">
-          <label className="block text-sm font-medium mb-2">
-            Informations de carte
-          </label>
-          <div className="p-3 border rounded-md">
-            <CardElement
-              options={{
-                style: {
-                  base: {
-                    fontSize: '16px',
-                    color: '#424770',
-                    '::placeholder': {
-                      color: '#aab7c4',
-                    },
-                  },
-                  invalid: {
-                    color: '#9e2146',
-                  },
-                },
-              }}
-            />
+          <div className="p-4 bg-muted/50 rounded-md text-center">
+            <p className="text-sm mb-2">Vous allez être redirigé vers une page de paiement sécurisée Stripe</p>
           </div>
-          {error && <p className="text-sm text-red-500 mt-2">{error}</p>}
         </div>
 
         <Button
           type="submit"
           className="w-full"
-          disabled={!stripe || isProcessing}
+          disabled={isProcessing}
         >
-          {isProcessing ? 'Traitement en cours...' : 'Payer maintenant'}
+          {isProcessing ? 'Redirection...' : 'Procéder au paiement'} <ExternalLink className="ml-1 h-4 w-4" />
+        </Button>
+        
+        <Button
+          type="button"
+          variant="outline"
+          className="w-full mt-3"
+          onClick={() => navigate('/pricing')}
+        >
+          Retour aux tarifs
         </Button>
         
         <p className="text-xs text-center text-muted-foreground mt-4">
