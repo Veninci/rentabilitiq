@@ -35,9 +35,13 @@ const PaymentForm = ({ planId, planName, amount, billingCycle }: PaymentFormProp
     const transactionId = `tx_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
     localStorage.setItem('transaction_id', transactionId);
     
-    // Redirection vers le lien Stripe production avec notre ID de transaction
-    // Note: Dans un cas réel, cet ID serait passé à Stripe et retourné dans le webhook ou l'URL de redirection
-    const stripeUrl = `https://buy.stripe.com/cN25mg3qHfXa3f2dQQ?transaction_id=${transactionId}`;
+    // Créer l'URL complète pour le retour après paiement
+    const currentDomain = window.location.origin; // Obtenir le domaine actuel (localhost ou production)
+    const successUrl = `${currentDomain}/checkout?status=success&payment_id=${transactionId}`;
+    
+    // Redirection vers le lien Stripe production avec notre ID de transaction et l'URL de retour
+    // En ajoutant un paramètre successUrl encodé dans l'URL de Stripe
+    const stripeUrl = `https://buy.stripe.com/cN25mg3qHfXa3f2dQQ?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
     window.location.href = stripeUrl;
   };
 
