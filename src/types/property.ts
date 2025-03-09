@@ -43,4 +43,10 @@ export interface PropertyResults {
   monthlyMortgage: number;
   pricePerSqm: number; // Added price per m²
   rentPerSqm: number;  // Added rent per m²
+  
+  // Adding missing properties that are used in the investment breakdown chart
+  notaryFees: number;
+  renovationCost: number;
+  otherCosts: number;
+  purchasePrice: number; // Property price (needed for breakdown)
 }

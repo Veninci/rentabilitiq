@@ -87,6 +87,12 @@ export const calculateResults = (data: PropertyData): PropertyResults => {
     monthlyMortgage: Math.round(monthlyMortgage * 100) / 100,
     pricePerSqm: Math.round(pricePerSqm * 100) / 100,
     rentPerSqm: Math.round(rentPerSqm * 100) / 100,
+    
+    // Add the additional properties needed for charts
+    notaryFees: data.notaryFees,
+    renovationCost: data.renovationCost,
+    otherCosts: data.otherCosts,
+    purchasePrice: data.purchasePrice
   };
 };
 
