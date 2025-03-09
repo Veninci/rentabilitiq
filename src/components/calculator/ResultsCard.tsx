@@ -5,6 +5,7 @@ import GlassCard from '../ui/GlassCard';
 import { ArrowDownUp, CalendarDays, CircleDollarSign, LineChart, TrendingUp, SquareIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { formatter } from '@/lib/formatter';
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 
 interface ResultsCardProps {
   results: PropertyResults;
@@ -25,6 +26,42 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
     rentPerSqm
   } = results;
 
+  // Données pour les graphiques circulaires
+  const revenuesVsExpensesData = [
+    { name: 'Revenus', value: annualIncome, color: '#10B981' },
+    { name: 'Charges', value: annualExpenses, color: '#EF4444' },
+  ];
+
+  const yieldData = [
+    { name: 'Rendement brut', value: grossYield, color: '#3B82F6' },
+    { name: 'Rendement net', value: netYield, color: '#8B5CF6' },
+  ];
+
+  const investmentBreakdownData = [
+    { name: 'Prix d\'achat', value: results.totalInvestment - results.notaryFees - results.otherCosts - results.renovationCost, color: '#F59E0B' },
+    { name: 'Frais de notaire', value: results.notaryFees, color: '#6366F1' },
+    { name: 'Travaux', value: results.renovationCost, color: '#EC4899' },
+    { name: 'Autres frais', value: results.otherCosts, color: '#14B8A6' },
+  ].filter(item => item.value > 0);
+
+  // Fonction pour formater les valeurs dans les tooltips
+  const CustomTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;
+      return (
+        <div className="bg-white p-2 rounded shadow-sm border border-gray-100 text-sm">
+          <p className="font-medium">{data.name}</p>
+          <p className="text-primary">
+            {data.name.includes('Rendement') 
+              ? formatter.formatPercent(data.value)
+              : formatter.formatCurrency(data.value)}
+          </p>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <GlassCard className="w-full animate-scale-in">
       <div className="mb-4 flex items-center justify-between">
@@ -43,7 +80,7 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
             <div className="font-medium">Rendements</div>
           </div>
           
-          <div className="space-y-3">
+          <div className="space-y-3 mb-4">
             <ResultItem 
               label="Rendement brut" 
               value={`${formatter.formatPercent(grossYield)}`} 
@@ -55,6 +92,27 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
               color="text-primary"
             />
           </div>
+          
+          <div className="h-56">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={yieldData}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  outerRadius={70}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {yieldData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip content={<CustomTooltip />} />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
         </div>
         
         <div className="bg-primary/5 rounded-xl p-4">
@@ -65,7 +123,7 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
             <div className="font-medium">Cash-flow</div>
           </div>
           
-          <div className="space-y-3">
+          <div className="space-y-3 mb-4">
             <ResultItem 
               label="Cash-flow mensuel" 
               value={formatter.formatCurrency(monthlyCashFlow)} 
@@ -76,13 +134,34 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
               value={formatter.formatCurrency(annualCashFlow)}
               color={annualCashFlow >= 0 ? "text-green-600" : "text-red-500"} 
             />
-            {monthlyMortgage && (
+            {monthlyMortgage > 0 && (
               <ResultItem 
                 label="Mensualité crédit" 
                 value={formatter.formatCurrency(monthlyMortgage)} 
                 color="text-foreground"
               />
             )}
+          </div>
+          
+          <div className="h-56">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={revenuesVsExpensesData}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  outerRadius={70}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {revenuesVsExpensesData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip content={<CustomTooltip />} />
+              </PieChart>
+            </ResponsiveContainer>
           </div>
         </div>
       </div>
@@ -117,7 +196,7 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
           <div className="font-medium">Flux financiers</div>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
           <ResultItem 
             label="Investissement total" 
             value={formatter.formatCurrency(totalInvestment)}
@@ -133,6 +212,36 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
             value={formatter.formatCurrency(annualExpenses)} 
             color="text-red-500"
           />
+        </div>
+        
+        <div className="h-64">
+          <ResponsiveContainer width="100%" height="100%">
+            <PieChart>
+              <Pie
+                data={investmentBreakdownData}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                outerRadius={80}
+                fill="#8884d8"
+                dataKey="value"
+              >
+                {investmentBreakdownData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color} />
+                ))}
+              </Pie>
+              <Tooltip content={<CustomTooltip />} />
+            </PieChart>
+          </ResponsiveContainer>
+          
+          <div className="flex flex-wrap justify-center gap-4 mt-4">
+            {investmentBreakdownData.map((entry, index) => (
+              <div key={index} className="flex items-center">
+                <div className="w-3 h-3 rounded-full mr-2" style={{ backgroundColor: entry.color }}></div>
+                <span className="text-sm text-muted-foreground">{entry.name}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       
