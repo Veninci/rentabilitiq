@@ -26,17 +26,7 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
     rentPerSqm
   } = results;
 
-  // Données pour les graphiques circulaires
-  const revenuesVsExpensesData = [
-    { name: 'Revenus', value: annualIncome, color: '#10B981' },
-    { name: 'Charges', value: annualExpenses, color: '#EF4444' },
-  ];
-
-  const yieldData = [
-    { name: 'Rendement brut', value: grossYield, color: '#3B82F6' },
-    { name: 'Rendement net', value: netYield, color: '#8B5CF6' },
-  ];
-
+  // Données pour le graphique circulaire d'investissement
   const investmentBreakdownData = [
     { name: 'Prix d\'achat', value: results.totalInvestment - results.notaryFees - results.otherCosts - results.renovationCost, color: '#F59E0B' },
     { name: 'Frais de notaire', value: results.notaryFees, color: '#6366F1' },
@@ -80,7 +70,7 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
             <div className="font-medium">Rendements</div>
           </div>
           
-          <div className="space-y-3 mb-4">
+          <div className="space-y-3">
             <ResultItem 
               label="Rendement brut" 
               value={`${formatter.formatPercent(grossYield)}`} 
@@ -92,27 +82,6 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
               color="text-primary"
             />
           </div>
-          
-          <div className="h-56">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={yieldData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  outerRadius={70}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {yieldData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip content={<CustomTooltip />} />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
         </div>
         
         <div className="bg-primary/5 rounded-xl p-4">
@@ -123,7 +92,7 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
             <div className="font-medium">Cash-flow</div>
           </div>
           
-          <div className="space-y-3 mb-4">
+          <div className="space-y-3">
             <ResultItem 
               label="Cash-flow mensuel" 
               value={formatter.formatCurrency(monthlyCashFlow)} 
@@ -141,27 +110,6 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
                 color="text-foreground"
               />
             )}
-          </div>
-          
-          <div className="h-56">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={revenuesVsExpensesData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  outerRadius={70}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {revenuesVsExpensesData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip content={<CustomTooltip />} />
-              </PieChart>
-            </ResponsiveContainer>
           </div>
         </div>
       </div>
