@@ -71,14 +71,9 @@ const Navbar = () => {
               </Link>
             ))}
           </div>
-          <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="sm" className="rounded-full px-4">
-              Connexion
-            </Button>
-            <Button size="sm" className="rounded-full px-4 animate-fade-in">
-              Essai gratuit
-            </Button>
-          </div>
+          <Button size="sm" className="rounded-full px-4 animate-fade-in">
+            Essai gratuit
+          </Button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -114,9 +109,6 @@ const Navbar = () => {
               </Link>
             ))}
             <div className="flex flex-col space-y-2 pt-2 border-t border-gray-100">
-              <Button variant="ghost" className="justify-start h-9 text-sm">
-                Connexion
-              </Button>
               <Button className="h-9 text-sm">Essai gratuit</Button>
             </div>
           </div>
