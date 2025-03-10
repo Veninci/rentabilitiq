@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { CheckCircle, TrendingUp, CircleDollarSign, FileText, Calculator, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -7,14 +8,14 @@ import CityMarketTrends from './city-market-trends';
 
 const Features = () => {
   return (
-    <section className="py-12 md:py-24 bg-gray-50 px-4 md:px-0">
+    <section className="py-12 md:py-24 bg-gray-50 px-4 md:px-0 dark:bg-gray-900">
       <div className="container mx-auto">
         <div className="max-w-xl mx-auto text-center mb-8 md:mb-16">
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-3 md:mb-4">
             <span>Fonctionnalités principales</span>
           </div>
           
-          <h2 className="text-2xl md:text-4xl font-bold mb-3 md:mb-4">
+          <h2 className="text-2xl md:text-4xl font-bold mb-3 md:mb-4 features-title dark:text-white">
             Tout ce dont vous avez besoin pour analyser vos investissements
           </h2>
           

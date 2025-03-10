@@ -111,6 +111,11 @@
   .dark .bg-white\/80, .dark .bg-white\/90, .dark .bg-white\/60 {
     @apply text-black;
   }
+  
+  /* Specifically target the features section title */
+  .dark .features-title {
+    @apply text-black;
+  }
 
   .transition-all-fast {
     @apply transition-all duration-300 ease-in-out;
