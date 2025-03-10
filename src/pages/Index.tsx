@@ -9,7 +9,7 @@ import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
+    <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
       <div className="fixed bottom-4 right-4 z-50">
         <ThemeToggle className="shadow-md bg-background/80 backdrop-blur-sm" />

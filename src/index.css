@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -95,31 +96,21 @@
   }
 
   .glass {
-    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-lg dark:bg-black/20 dark:backdrop-blur-md dark:border-white/10 dark:text-foreground;
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-lg;
   }
 
   .glass-dark {
-    @apply bg-black/20 backdrop-blur-md border border-white/10 shadow-lg dark:text-foreground;
-  }
-
-  .dark .glass,
-  .dark .glass-dark {
-    @apply text-foreground;
-  }
-
-  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6, 
-  .dark p, .dark span, .dark div {
-    @apply text-foreground;
+    @apply bg-black/20 backdrop-blur-md border border-white/10 shadow-lg;
   }
 
   .dark .bg-white {
-    @apply text-foreground;
+    @apply text-white;
   }
   
   .dark .bg-white\/80, 
   .dark .bg-white\/90, 
   .dark .bg-white\/60 {
-    @apply text-foreground bg-gray-800/90;
+    @apply text-white bg-gray-800/90;
   }
   
   .dark .calculator-results {
