@@ -21,19 +21,19 @@ const RentalSection: React.FC<RentalSectionProps> = ({
   return (
     <div className="space-y-4">
       <div>
-        <Label className="mb-2 block dark:text-white">Type de location</Label>
+        <Label className="mb-2 block text-white">Type de location</Label>
         <RadioGroup 
           value={rentalType} 
           onValueChange={handleRentalTypeChange}
           className="flex flex-col sm:flex-row gap-4"
         >
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="long-term" id="long-term" />
-            <Label htmlFor="long-term" className="cursor-pointer">Location longue durée</Label>
+            <RadioGroupItem value="long-term" id="long-term" className="text-white border-gray-600" />
+            <Label htmlFor="long-term" className="cursor-pointer text-white">Location longue durée</Label>
           </div>
           <div className="flex items-center space-x-2">
-            <RadioGroupItem value="airbnb" id="airbnb" />
-            <Label htmlFor="airbnb" className="cursor-pointer">Location courte durée (Airbnb)</Label>
+            <RadioGroupItem value="airbnb" id="airbnb" className="text-white border-gray-600" />
+            <Label htmlFor="airbnb" className="cursor-pointer text-white">Location courte durée (Airbnb)</Label>
           </div>
         </RadioGroup>
       </div>
@@ -41,7 +41,7 @@ const RentalSection: React.FC<RentalSectionProps> = ({
       {rentalType === 'long-term' ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="monthlyRent" className="dark:text-white">Loyer mensuel (€)</Label>
+            <Label htmlFor="monthlyRent" className="text-white">Loyer mensuel (€)</Label>
             <Input
               id="monthlyRent"
               name="monthlyRent"
@@ -50,12 +50,12 @@ const RentalSection: React.FC<RentalSectionProps> = ({
               onChange={handleInputChange}
               min="0"
               step="10"
-              className="dark:text-white dark:bg-background"
+              className="bg-gray-800 border-gray-700 text-white"
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="managementFees" className="dark:text-white">Frais de gestion (%)</Label>
+            <Label htmlFor="managementFees" className="text-white">Frais de gestion (%)</Label>
             <Input
               id="managementFees"
               name="managementFees"
@@ -65,14 +65,14 @@ const RentalSection: React.FC<RentalSectionProps> = ({
               min="0"
               max="100"
               step="0.5"
-              className="dark:text-white dark:bg-background"
+              className="bg-gray-800 border-gray-700 text-white"
             />
           </div>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="airbnbNightlyRate" className="dark:text-white">Tarif par nuit (€)</Label>
+            <Label htmlFor="airbnbNightlyRate" className="text-white">Tarif par nuit (€)</Label>
             <Input
               id="airbnbNightlyRate"
               name="airbnbNightlyRate"
@@ -81,12 +81,12 @@ const RentalSection: React.FC<RentalSectionProps> = ({
               onChange={handleInputChange}
               min="0"
               step="5"
-              className="dark:text-white dark:bg-background"
+              className="bg-gray-800 border-gray-700 text-white"
             />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="airbnbOccupancyRate" className="dark:text-white">Taux d'occupation (%)</Label>
+            <Label htmlFor="airbnbOccupancyRate" className="text-white">Taux d'occupation (%)</Label>
             <Input
               id="airbnbOccupancyRate"
               name="airbnbOccupancyRate"
@@ -96,12 +96,12 @@ const RentalSection: React.FC<RentalSectionProps> = ({
               min="0"
               max="100"
               step="1"
-              className="dark:text-white dark:bg-background"
+              className="bg-gray-800 border-gray-700 text-white"
             />
           </div>
           
           <div className="space-y-2 sm:col-span-2">
-            <Label htmlFor="managementFees" className="dark:text-white">Frais de gestion (%)</Label>
+            <Label htmlFor="managementFees" className="text-white">Frais de gestion (%)</Label>
             <Input
               id="managementFees"
               name="managementFees"
@@ -111,7 +111,7 @@ const RentalSection: React.FC<RentalSectionProps> = ({
               min="0"
               max="100"
               step="0.5"
-              className="dark:text-white dark:bg-background"
+              className="bg-gray-800 border-gray-700 text-white"
             />
           </div>
         </div>

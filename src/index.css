@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -164,6 +165,35 @@
   
   .dark .comparison-card {
     @apply bg-gray-800/60 text-white border-gray-700;
+  }
+  
+  /* Styles spécifiques pour le calculateur en mode noir */
+  .calculator-black-bg {
+    @apply bg-black text-white;
+  }
+  
+  .calculator-form-black {
+    @apply bg-gray-900 text-white;
+  }
+  
+  .calculator-input-black {
+    @apply bg-gray-800 border-gray-700 text-white;
+  }
+  
+  .calculator-label-black {
+    @apply text-white;
+  }
+  
+  .calculator-tabs-black {
+    @apply bg-gray-800;
+  }
+  
+  .calculator-tab-black {
+    @apply text-gray-300 data-[state=active]:bg-primary data-[state=active]:text-white;
+  }
+  
+  .calculator-results-light {
+    @apply bg-white text-gray-900;
   }
 }
 

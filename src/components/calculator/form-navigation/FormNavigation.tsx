@@ -23,6 +23,7 @@ const FormNavigation: React.FC<FormNavigationProps> = ({
           type="button" 
           variant="outline" 
           onClick={onPrevious}
+          className="border-gray-600 text-white hover:bg-gray-800"
         >
           Précédent
         </Button>
@@ -33,7 +34,7 @@ const FormNavigation: React.FC<FormNavigationProps> = ({
       {isLastStep ? (
         <Button 
           type="submit"
-          className="bg-primary"
+          className="bg-primary text-white"
         >
           Calculer la rentabilité
         </Button>
@@ -41,7 +42,7 @@ const FormNavigation: React.FC<FormNavigationProps> = ({
         <Button 
           type="button" 
           onClick={onNext}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 bg-primary text-white"
         >
           Suivant <ArrowRight className="h-4 w-4" />
         </Button>

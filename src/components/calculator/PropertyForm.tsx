@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { PropertyData, RentalType } from '@/types/property';
@@ -103,7 +102,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
   };
   
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 animate-fade-in dark:text-white">
+    <form onSubmit={handleSubmit} className="space-y-6 animate-fade-in text-white">
       <Tabs defaultValue="purchase" value={activeTab} onValueChange={setActiveTab} className="w-full">
         <FormTabs activeTab={activeTab} onTabChange={setActiveTab} />
         

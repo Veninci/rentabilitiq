@@ -88,7 +88,7 @@ const Calculator = () => {
       <Navbar />
       
       <main className="flex-grow pt-24">
-        <section className="py-12">
+        <section className="py-12 bg-black text-white">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center mb-12">
               <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
@@ -96,11 +96,11 @@ const Calculator = () => {
                 <span>Calculateur de rentabilité</span>
               </div>
               
-              <h1 className="text-3xl md:text-4xl font-bold mb-4">
+              <h1 className="text-3xl md:text-4xl font-bold mb-4 text-white">
                 Analysez la rentabilité de votre bien immobilier
               </h1>
               
-              <p className="text-muted-foreground">
+              <p className="text-gray-300">
                 Complétez les informations ci-dessous pour obtenir une analyse détaillée de votre investissement.
               </p>
               
@@ -125,13 +125,13 @@ const Calculator = () => {
             </div>
             
             {limitReached ? (
-              <Card className="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 text-center">
+              <Card className="max-w-4xl mx-auto bg-gray-900 rounded-2xl shadow-sm border border-gray-800 p-6 md:p-8 text-center">
                 <div className="flex flex-col items-center gap-4 py-6">
                   <div className="rounded-full bg-amber-100 p-3 w-12 h-12 flex items-center justify-center">
                     <Lock className="h-6 w-6 text-amber-600" />
                   </div>
-                  <h2 className="text-xl font-bold">Limite de calculs atteinte</h2>
-                  <p className="text-muted-foreground mb-4 max-w-md">
+                  <h2 className="text-xl font-bold text-white">Limite de calculs atteinte</h2>
+                  <p className="text-gray-300 mb-4 max-w-md">
                     Vous avez utilisé votre calcul gratuit pour ce mois-ci. Passez à l'offre Pro pour des calculs illimités.
                   </p>
                   <Button 
@@ -143,7 +143,7 @@ const Calculator = () => {
                 </div>
               </Card>
             ) : (
-              <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8">
+              <div className="max-w-4xl mx-auto bg-gray-900 rounded-2xl shadow-sm border border-gray-800 p-6 md:p-8">
                 <PropertyForm onCalculate={handleCalculate} />
               </div>
             )}
@@ -151,10 +151,10 @@ const Calculator = () => {
         </section>
         
         {results && longTermResults && airbnbResults && (
-          <section id="results" className="py-12 bg-gray-50">
+          <section id="results" className="py-12 bg-gray-100">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto text-center mb-12">
-                <h2 className="text-3xl font-bold mb-4">
+                <h2 className="text-3xl font-bold mb-4 text-gray-900">
                   Résultats de votre analyse
                 </h2>
                 
