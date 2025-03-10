@@ -22,6 +22,18 @@ const PaymentForm = ({ planId, planName, amount, billingCycle }: PaymentFormProp
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  // Associer les IDs de produit Stripe à chaque plan
+  const stripeProductIds = {
+    expert: {
+      monthly: 'prod_RushoaUut0nOTn', // ID du produit Expert mensuel
+      yearly: '' // À compléter quand disponible
+    },
+    pro: {
+      monthly: '', // À compléter quand disponible
+      yearly: ''  // À compléter quand disponible
+    }
+  };
+
   const handleRedirectToStripe = () => {
     // Stockons les informations du plan dans localStorage avant la redirection
     localStorage.setItem('pending_subscription', planId);
@@ -39,10 +51,18 @@ const PaymentForm = ({ planId, planName, amount, billingCycle }: PaymentFormProp
     const currentDomain = window.location.origin; // Obtenir le domaine actuel (localhost ou production)
     const successUrl = `${currentDomain}/checkout?status=success&payment_id=${transactionId}`;
     
-    // Redirection vers le lien Stripe production avec notre ID de transaction et l'URL de retour
-    // En ajoutant un paramètre successUrl encodé dans l'URL de Stripe
-    const stripeUrl = `https://buy.stripe.com/cN25mg3qHfXa3f2dQQ?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
-    window.location.href = stripeUrl;
+    // Vérifier si nous avons un ID de produit Stripe correspondant
+    const productId = stripeProductIds[planId as keyof typeof stripeProductIds]?.[billingCycle];
+    
+    if (productId) {
+      // Redirection vers le lien Stripe avec l'ID de produit spécifique
+      const stripeUrl = `https://buy.stripe.com/cN25mg3qHfXa3f2dQQ?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}&prefilled_promo_code=&client_reference_id=${productId}`;
+      window.location.href = stripeUrl;
+    } else {
+      // Fallback sur l'URL générique si l'ID de produit n'est pas trouvé
+      const stripeUrl = `https://buy.stripe.com/cN25mg3qHfXa3f2dQQ?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
+      window.location.href = stripeUrl;
+    }
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
