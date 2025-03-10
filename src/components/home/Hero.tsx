@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ArrowRight, BarChart4, PieChart, Calculator, Maximize2, Home, Building, Wallet, TrendingUp, Landmark, Settings, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -50,7 +51,7 @@ const Hero = () => {
         
         <div className="relative mt-8 md:mt-10 mb-6 md:mb-8 animate-blur-in" style={{ animationDelay: "300ms" }}>
           <GlassCard className="mx-auto max-w-6xl overflow-hidden">
-            <div className="relative aspect-[16/10] md:aspect-[16/9] bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden">
+            <div className="relative aspect-[16/10] md:aspect-[16/9] bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden dark:from-gray-900 dark:to-gray-800">
               <div className="absolute inset-0 flex items-center justify-center">
                 {/* Interface mockup */}
                 <div className="w-full h-full p-3 md:p-6 flex flex-col">
@@ -59,7 +60,7 @@ const Hero = () => {
                       <div className="bg-primary/10 h-8 w-8 md:h-12 md:w-12 rounded-lg flex items-center justify-center">
                         <Calculator className="h-4 w-4 md:h-6 md:w-6 text-primary" />
                       </div>
-                      <div className="text-sm md:text-xl font-medium">Calculateur de rentabilité</div>
+                      <div className="text-sm md:text-xl font-medium text-foreground">Calculateur de rentabilité</div>
                     </div>
                     <div className="bg-amber-100 text-amber-700 text-xs md:text-sm font-medium py-1 px-2 md:px-3 rounded-full">
                       Exemple
@@ -67,7 +68,7 @@ const Hero = () => {
                   </div>
                   
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6 flex-grow">
-                    <div className="col-span-1 md:col-span-2 bg-white rounded-xl shadow-sm p-3 md:p-5 flex flex-col">
+                    <div className="col-span-1 md:col-span-2 bg-white rounded-xl shadow-sm p-3 md:p-5 flex flex-col dark:bg-gray-800 dark:text-foreground">
                       <div className="flex items-center justify-between mb-3 md:mb-4">
                         <div className="text-xs md:text-base font-medium flex items-center">
                           <Settings className="h-3 w-3 md:h-5 md:w-5 mr-1 md:mr-2 text-primary" /> 
@@ -75,34 +76,34 @@ const Hero = () => {
                         </div>
                         <div className="hidden md:flex space-x-1 md:space-x-2">
                           <div className="px-1.5 md:px-2.5 py-0.5 md:py-1.5 bg-primary/10 rounded text-[10px] md:text-sm text-primary font-medium">Appartement</div>
-                          <div className="px-1.5 md:px-2.5 py-0.5 md:py-1.5 bg-gray-100 rounded text-[10px] md:text-sm text-gray-500 font-medium">Lyon</div>
+                          <div className="px-1.5 md:px-2.5 py-0.5 md:py-1.5 bg-gray-100 rounded text-[10px] md:text-sm text-gray-500 font-medium dark:bg-gray-700 dark:text-gray-300">Lyon</div>
                         </div>
                       </div>
                       
                       <div className="grid grid-cols-2 gap-2 md:gap-4 mb-2 md:mb-4">
                         <div className="space-y-1.5 md:space-y-2">
-                          <div className="text-xs md:text-sm text-gray-500">Prix d'achat</div>
-                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium">210 000 €</div>
+                          <div className="text-xs md:text-sm text-gray-500 dark:text-gray-300">Prix d'achat</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium dark:bg-gray-700 dark:text-gray-200">210 000 €</div>
                         </div>
                         <div className="space-y-1.5 md:space-y-2">
-                          <div className="text-xs md:text-sm text-gray-500">Surface</div>
-                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium">45 m²</div>
+                          <div className="text-xs md:text-sm text-gray-500 dark:text-gray-300">Surface</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium dark:bg-gray-700 dark:text-gray-200">45 m²</div>
                         </div>
                         <div className="space-y-1.5 md:space-y-2">
-                          <div className="text-xs md:text-sm text-gray-500">Loyer mensuel</div>
-                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium">850 €</div>
+                          <div className="text-xs md:text-sm text-gray-500 dark:text-gray-300">Loyer mensuel</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium dark:bg-gray-700 dark:text-gray-200">850 €</div>
                         </div>
                         <div className="space-y-1.5 md:space-y-2">
-                          <div className="text-xs md:text-sm text-gray-500">Type de location</div>
-                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium">Longue durée</div>
+                          <div className="text-xs md:text-sm text-gray-500 dark:text-gray-300">Type de location</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium dark:bg-gray-700 dark:text-gray-200">Longue durée</div>
                         </div>
                         <div className="space-y-1.5 md:space-y-2">
-                          <div className="text-xs md:text-sm text-gray-500">Apport</div>
-                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium">40 000 €</div>
+                          <div className="text-xs md:text-sm text-gray-500 dark:text-gray-300">Apport</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium dark:bg-gray-700 dark:text-gray-200">40 000 €</div>
                         </div>
                         <div className="space-y-1.5 md:space-y-2">
-                          <div className="text-xs md:text-sm text-gray-500">Taux d'intérêt</div>
-                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium">3.5%</div>
+                          <div className="text-xs md:text-sm text-gray-500 dark:text-gray-300">Taux d'intérêt</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium dark:bg-gray-700 dark:text-gray-200">3.5%</div>
                         </div>
                       </div>
                       <div className="mt-auto flex justify-end">
@@ -112,44 +113,44 @@ const Hero = () => {
                       </div>
                     </div>
                     
-                    <div className="hidden md:flex bg-white rounded-xl shadow-sm p-4 md:p-5 flex-col">
+                    <div className="hidden md:flex bg-white rounded-xl shadow-sm p-4 md:p-5 flex-col dark:bg-gray-800 dark:text-foreground">
                       <div className="flex items-center justify-between mb-4">
                         <div className="text-lg font-medium mb-2">Dashboard</div>
                       </div>
                       
                       <div className="space-y-4 flex-grow">
-                        <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                        <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg dark:bg-gray-700">
                           <div className="flex items-center">
                             <TrendingUp className="h-4 w-4 text-primary mr-2" />
-                            <div className="text-xs text-muted-foreground">Rendement brut</div>
+                            <div className="text-xs text-muted-foreground dark:text-gray-300">Rendement brut</div>
                           </div>
                           <div className="font-medium text-primary">5.8%</div>
                         </div>
                         
-                        <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                        <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg dark:bg-gray-700">
                           <div className="flex items-center">
                             <Wallet className="h-4 w-4 text-green-500 mr-2" />
-                            <div className="text-xs text-muted-foreground">Cash-flow mensuel</div>
+                            <div className="text-xs text-muted-foreground dark:text-gray-300">Cash-flow mensuel</div>
                           </div>
                           <div className="font-medium text-green-500">387 €</div>
                         </div>
                         
-                        <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
+                        <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg dark:bg-gray-700">
                           <div className="flex items-center">
                             <Landmark className="h-4 w-4 text-blue-500 mr-2" />
-                            <div className="text-xs text-muted-foreground">Mensualité crédit</div>
+                            <div className="text-xs text-muted-foreground dark:text-gray-300">Mensualité crédit</div>
                           </div>
                           <div className="font-medium text-blue-500">614 €</div>
                         </div>
                       </div>
                       
-                      <div className="mt-4 h-28 bg-gray-50 rounded-lg flex items-center justify-center relative">
+                      <div className="mt-4 h-28 bg-gray-50 rounded-lg flex items-center justify-center relative dark:bg-gray-700">
                         <PieChart className="h-16 w-16 text-primary/30 absolute" />
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="bg-white rounded-full h-20 w-20 flex items-center justify-center shadow-sm">
+                          <div className="bg-white rounded-full h-20 w-20 flex items-center justify-center shadow-sm dark:bg-gray-800">
                             <div className="text-center">
                               <div className="text-2xl font-bold text-primary">4.2%</div>
-                              <div className="text-xs text-gray-500">Rendement</div>
+                              <div className="text-xs text-gray-500 dark:text-gray-300">Rendement</div>
                             </div>
                           </div>
                         </div>
@@ -166,7 +167,7 @@ const Hero = () => {
                       <Button 
                         variant="ghost" 
                         size="icon" 
-                        className="rounded-full bg-white/80 hover:bg-white shadow-sm h-6 w-6 md:h-8 md:w-8 transition-all duration-300"
+                        className="rounded-full bg-white/80 hover:bg-white shadow-sm h-6 w-6 md:h-8 md:w-8 transition-all duration-300 dark:bg-gray-800/80 dark:hover:bg-gray-800"
                         onClick={() => setIsCalculatorOpen(true)}
                       >
                         <Maximize2 className="h-3 w-3 md:h-4 md:w-4" />
@@ -339,4 +340,3 @@ const Hero = () => {
 };
 
 export default Hero;
-

@@ -1,3 +1,4 @@
+
 #root {
   max-width: 100%;
   margin: 0 auto;
@@ -143,4 +144,18 @@
   input, select, textarea {
     font-size: 16px !important; /* Prevents iOS zoom on focus */
   }
+}
+
+/* Fix for dark mode text colors in calculator mockup */
+.dark .calculator-mockup .bg-gray-100,
+.dark .calculator-mockup .bg-white {
+  color: #000;
+}
+
+.dark .calculator-mockup .text-gray-500 {
+  color: #6b7280;
+}
+
+.dark .calculator-result-value {
+  color: #000;
 }
