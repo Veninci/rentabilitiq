@@ -22,34 +22,27 @@ const PaymentForm = ({ planId, planName, amount, billingCycle }: PaymentFormProp
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const getStripeUrl = () => {
-    // Store plan info in localStorage before redirection
+  const handleRedirectToStripe = () => {
+    // Stockons les informations du plan dans localStorage avant la redirection
     localStorage.setItem('pending_subscription', planId);
     localStorage.setItem('subscription_timestamp', Date.now().toString());
     
-    // Remove any previous confirmation flag to avoid false access
+    // Supprimer tout flag de confirmation précédent pour éviter les faux accès
     localStorage.removeItem('payment_confirmed');
     
-    // Generate a unique transaction ID for this purchase attempt
+    // Nous générons un ID de transaction unique pour cette tentative d'achat
+    // Cet ID sera utilisé pour vérifier que le paiement a bien été effectué
     const transactionId = `tx_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
     localStorage.setItem('transaction_id', transactionId);
     
-    // Create complete URL for return after payment
-    const currentDomain = window.location.origin; // Get current domain (localhost or production)
+    // Créer l'URL complète pour le retour après paiement
+    const currentDomain = window.location.origin; // Obtenir le domaine actuel (localhost ou production)
     const successUrl = `${currentDomain}/checkout?status=success&payment_id=${transactionId}`;
     
-    // Handle different plans
-    if (planId === 'expert' && billingCycle === 'monthly') {
-      // Use the specific price ID for the Expert monthly plan
-      return `https://buy.stripe.com/test_aEU03VgU2g3CeDC9AB?price_id=price_1R12vpCZGnejuMTL0OWBftPT&transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
-    }
-    
-    // Default Stripe URL for other plans (pro plan)
-    return `https://buy.stripe.com/cN25mg3qHfXa3f2dQQ?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
-  };
-
-  const handleRedirectToStripe = () => {
-    window.location.href = getStripeUrl();
+    // Redirection vers le lien Stripe production avec notre ID de transaction et l'URL de retour
+    // En ajoutant un paramètre successUrl encodé dans l'URL de Stripe
+    const stripeUrl = `https://buy.stripe.com/cN25mg3qHfXa3f2dQQ?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
+    window.location.href = stripeUrl;
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
