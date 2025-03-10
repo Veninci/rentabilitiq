@@ -59,6 +59,21 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
     notaryFees: 15000,
     otherCosts: 5000,
     propertySize: 50,
+    downPayment: 40000,
+    loanAmount: 160000,
+    interestRate: 3.5,
+    loanTerm: 20,
+    monthlyRent: 800,
+    airbnbNightlyRate: 80,
+    airbnbOccupancyRate: 70,
+    managementFees: 5,
+    propertyTax: 1200,
+    insurance: 400,
+    condoFees: 1200,
+    maintenanceCost: 1000,
+    otherExpenses: 500,
+    city: 'Paris',
+    rentalType: 'long-term'
   });
   
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

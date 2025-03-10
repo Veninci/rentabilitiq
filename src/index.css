@@ -103,46 +103,67 @@
   }
 
   .dark .bg-white {
-    @apply text-black;
-  }
-  
-  .dark .bg-white\/80, .dark .bg-white\/90, .dark .bg-white\/60 {
-    @apply text-black;
-  }
-  
-  .dark .pricing-page .text-3xl,
-  .dark .pricing-page .text-4xl,
-  .dark .pricing-page .text-xl,
-  .dark .pricing-page .font-bold {
     @apply text-white;
   }
   
-  .dark .rounded-full.bg-white {
-    @apply text-black;
+  .dark .bg-white\/80, 
+  .dark .bg-white\/90, 
+  .dark .bg-white\/60 {
+    @apply text-white bg-gray-800/90;
   }
   
-  .dark .features-title {
-    @apply text-black;
+  .dark .calculator-results {
+    @apply bg-gray-800/60 text-white;
+  }
+  
+  .dark .calculator-comparison {
+    @apply bg-gray-800/60 text-white;
   }
 
-  .transition-all-fast {
-    @apply transition-all duration-300 ease-in-out;
+  .dark input,
+  .dark select,
+  .dark textarea {
+    @apply bg-gray-800 border-gray-700 text-white;
   }
   
-  h1, .h1 {
-    @apply text-2xl md:text-3xl lg:text-4xl font-bold;
+  .dark [data-radix-select-trigger] {
+    @apply text-white;
   }
   
-  h2, .h2 {
-    @apply text-xl md:text-2xl lg:text-3xl font-bold;
+  .dark .select-trigger {
+    @apply text-white;
   }
   
-  h3, .h3 {
-    @apply text-lg md:text-xl lg:text-2xl font-semibold;
+  .dark input::placeholder {
+    @apply text-gray-400;
   }
   
-  .section-padding {
-    @apply py-12 md:py-16 lg:py-20 px-4 md:px-8 lg:px-12;
+  .dark [role="option"] {
+    @apply text-white;
+  }
+  
+  .dark .select-content {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .dark .calculator-form {
+    @apply bg-gray-800/90 text-white;
+  }
+  
+  .dark .calculator-form input {
+    @apply bg-gray-800 border-gray-700 text-white;
+  }
+  
+  .dark .calculator-form label {
+    @apply text-white;
+  }
+  
+  .dark .results-card {
+    @apply bg-gray-800/60 text-white border-gray-700;
+  }
+  
+  .dark .comparison-card {
+    @apply bg-gray-800/60 text-white border-gray-700;
   }
 }
 

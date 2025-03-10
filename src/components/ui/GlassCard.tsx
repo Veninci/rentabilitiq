@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   className?: string;
-  variant?: 'default' | 'elevated' | 'subtle';
+  variant?: 'default' | 'elevated' | 'subtle' | 'results';
   noPadding?: boolean;
 }
 
@@ -20,6 +20,7 @@ const GlassCard = ({
     default: 'bg-white/80 backdrop-blur-md border border-white/20 shadow-md dark:bg-black/40 dark:border-white/10 dark:text-white',
     elevated: 'bg-white/90 backdrop-blur-lg border border-white/30 shadow-lg dark:bg-black/50 dark:border-white/20 dark:text-white',
     subtle: 'bg-white/60 backdrop-blur-sm border border-white/10 shadow-sm dark:bg-black/30 dark:border-white/5 dark:text-white',
+    results: 'bg-white/95 backdrop-blur-lg border border-white/30 shadow-lg dark:bg-gray-800/95 dark:border-gray-700 dark:text-white'
   };
 
   const paddingClass = noPadding ? '' : 'p-4 md:p-6';

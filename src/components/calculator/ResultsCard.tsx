@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { PropertyResults } from '@/types/property';
 import GlassCard from '../ui/GlassCard';
@@ -26,7 +25,6 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
     rentPerSqm
   } = results;
 
-  // Données pour le graphique circulaire d'investissement
   const investmentBreakdownData = [
     { name: 'Prix d\'achat', value: results.totalInvestment - results.notaryFees - results.otherCosts - results.renovationCost, color: '#F59E0B' },
     { name: 'Frais de notaire', value: results.notaryFees, color: '#6366F1' },
@@ -34,7 +32,6 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
     { name: 'Autres frais', value: results.otherCosts, color: '#14B8A6' },
   ].filter(item => item.value > 0);
 
-  // Fonction pour formater les valeurs dans les tooltips
   const CustomTooltip = ({ active, payload }: any) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
@@ -53,7 +50,7 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
   };
 
   return (
-    <GlassCard className="w-full animate-scale-in">
+    <GlassCard variant="results" className="w-full animate-scale-in">
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-lg font-semibold">Résultats de l'analyse</h3>
         <Button variant="outline" size="sm">
