@@ -22,7 +22,7 @@ const PaymentForm = ({ planId, planName, amount, billingCycle }: PaymentFormProp
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const handleRedirectToStripe = () => {
+  const getStripeUrl = () => {
     // Stockons les informations du plan dans localStorage avant la redirection
     localStorage.setItem('pending_subscription', planId);
     localStorage.setItem('subscription_timestamp', Date.now().toString());
@@ -39,10 +39,17 @@ const PaymentForm = ({ planId, planName, amount, billingCycle }: PaymentFormProp
     const currentDomain = window.location.origin; // Obtenir le domaine actuel (localhost ou production)
     const successUrl = `${currentDomain}/checkout?status=success&payment_id=${transactionId}`;
     
-    // Redirection vers le lien Stripe production avec notre ID de transaction et l'URL de retour
-    // En ajoutant un paramètre successUrl encodé dans l'URL de Stripe
-    const stripeUrl = `https://buy.stripe.com/cN25mg3qHfXa3f2dQQ?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
-    window.location.href = stripeUrl;
+    // Redirection vers le lien Stripe correspondant au plan choisi
+    if (planId === 'expert') {
+      return `https://buy.stripe.com/aEUcOIbXd6mA8zm001?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
+    }
+    
+    // Lien par défaut pour le plan Pro
+    return `https://buy.stripe.com/cN25mg3qHfXa3f2dQQ?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
+  };
+
+  const handleRedirectToStripe = () => {
+    window.location.href = getStripeUrl();
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
