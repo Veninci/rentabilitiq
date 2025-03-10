@@ -101,7 +101,7 @@ const PricingCards = () => {
             className={cn(
               "px-4 md:px-6 py-2 rounded-full text-sm font-medium transition-all",
               billingCycle === 'monthly' 
-                ? "bg-white text-foreground shadow-sm" 
+                ? "bg-white text-foreground dark:text-black shadow-sm" 
                 : "text-muted-foreground"
             )}
           >
@@ -112,7 +112,7 @@ const PricingCards = () => {
             className={cn(
               "px-4 md:px-6 py-2 rounded-full text-sm font-medium transition-all",
               billingCycle === 'yearly' 
-                ? "bg-white text-foreground shadow-sm" 
+                ? "bg-white text-foreground dark:text-black shadow-sm" 
                 : "text-muted-foreground"
             )}
           >
@@ -156,7 +156,7 @@ const PricingCards = () => {
               </div>
               
               {plan.savePercent && billingCycle === 'yearly' && (
-                <div className="mt-2 inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded">
+                <div className="mt-2 inline-block bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100 text-xs px-2 py-1 rounded">
                   Économisez {plan.savePercent}%
                 </div>
               )}
@@ -166,7 +166,7 @@ const PricingCards = () => {
               <ul className="space-y-2 md:space-y-3">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-2">
-                    <Check className="text-green-500 shrink-0 mt-0.5" size={16} />
+                    <Check className="text-green-500 dark:text-green-400 shrink-0 mt-0.5" size={16} />
                     <span className={cn(
                       "text-sm md:text-base",
                       feature.includes("3 simulations") ? "font-medium" : ""

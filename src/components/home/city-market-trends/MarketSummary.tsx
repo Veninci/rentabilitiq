@@ -11,9 +11,9 @@ interface MarketSummaryProps {
 const MarketSummary: React.FC<MarketSummaryProps> = ({ city }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <div className="bg-white rounded-lg p-4 shadow-sm">
+      <div className="bg-white dark:bg-card rounded-lg p-4 shadow-sm">
         <div className="text-sm text-muted-foreground mb-1">Prix moyen au m²</div>
-        <div className="text-xl font-semibold">{formatter.formatCurrency(city.pricePerSqm)}</div>
+        <div className="text-xl font-semibold dark:text-foreground">{formatter.formatCurrency(city.pricePerSqm)}</div>
         <div className={`text-sm flex items-center mt-1 ${city.pricePerSqmTrend >= 0 ? 'text-green-500' : 'text-red-500'}`}>
           {city.pricePerSqmTrend >= 0 ? (
             <TrendingUp className="h-3 w-3 mr-1" />
@@ -24,9 +24,9 @@ const MarketSummary: React.FC<MarketSummaryProps> = ({ city }) => {
         </div>
       </div>
       
-      <div className="bg-white rounded-lg p-4 shadow-sm">
+      <div className="bg-white dark:bg-card rounded-lg p-4 shadow-sm">
         <div className="text-sm text-muted-foreground mb-1">Rendement moyen</div>
-        <div className="text-xl font-semibold">{city.averageYield}%</div>
+        <div className="text-xl font-semibold dark:text-foreground">{city.averageYield}%</div>
         <div className={`text-sm flex items-center mt-1 ${city.averageYieldTrend >= 0 ? 'text-green-500' : 'text-red-500'}`}>
           {city.averageYieldTrend >= 0 ? (
             <TrendingUp className="h-3 w-3 mr-1" />
