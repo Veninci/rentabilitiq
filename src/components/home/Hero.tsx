@@ -24,7 +24,7 @@ const Hero = () => {
             <span>Solution innovante pour investisseurs immobiliers</span>
           </div>
           
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 tracking-tight animate-slide-up" style={{ lineHeight: 1.1 }}>
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 tracking-tight animate-slide-up text-foreground" style={{ lineHeight: 1.1 }}>
             Optimisez la rentabilité de vos investissements immobiliers
           </h1>
           
@@ -339,4 +339,3 @@ const Hero = () => {
 };
 
 export default Hero;
-
