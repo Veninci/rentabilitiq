@@ -41,6 +41,12 @@ const PaymentForm = ({ planId, planName, amount, billingCycle }: PaymentFormProp
     
     // Redirection vers le lien Stripe correspondant au plan choisi
     if (planId === 'expert') {
+      // Si c'est un abonnement annuel
+      if (billingCycle === 'yearly') {
+        return `https://buy.stripe.com/28o160bXd6mA8zm7sv?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
+      }
+      
+      // Si c'est un abonnement mensuel
       return `https://buy.stripe.com/aEUcOIbXd6mA8zm001?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
     }
     
