@@ -54,33 +54,11 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
   const [rentalType, setRentalType] = useState<RentalType>('long-term');
   
   const [propertyData, setPropertyData] = useState<PropertyData>({
-    // Achat
     purchasePrice: 200000,
     renovationCost: 10000,
     notaryFees: 15000,
     otherCosts: 5000,
-    propertySize: 50, // Default property size: 50m²
-    
-    // Financement
-    downPayment: 40000,
-    loanAmount: 190000,
-    interestRate: 3.5,
-    loanTerm: 20,
-    
-    // Location
-    rentalType: 'long-term',
-    monthlyRent: 850,
-    airbnbNightlyRate: 80,
-    airbnbOccupancyRate: 70,
-    managementFees: 3,
-    city: "Paris",
-    
-    // Charges
-    propertyTax: 1200,
-    insurance: 400,
-    condoFees: 1200,
-    maintenanceCost: 800,
-    otherExpenses: 500,
+    propertySize: 50,
   });
   
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,7 +92,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
   };
   
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 animate-fade-in">
+    <form onSubmit={handleSubmit} className="space-y-6 animate-fade-in dark:text-white">
       <Tabs defaultValue="purchase" value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid grid-cols-4 mb-8">
           <TabsTrigger value="purchase" className="text-xs sm:text-sm flex flex-col sm:flex-row items-center gap-1 sm:gap-2 py-2 px-1 sm:px-3">
@@ -138,7 +116,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
         <TabsContent value="purchase" className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2 sm:col-span-2">
-              <Label htmlFor="city">Ville</Label>
+              <Label htmlFor="city" className="dark:text-white">Ville</Label>
               <Select
                 value={propertyData.city}
                 onValueChange={handleCityChange}
@@ -160,7 +138,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="purchasePrice">Prix d'achat (€)</Label>
+              <Label htmlFor="purchasePrice" className="dark:text-white">Prix d'achat (€)</Label>
               <Input
                 id="purchasePrice"
                 name="purchasePrice"
@@ -169,11 +147,12 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
                 onChange={handleInputChange}
                 min="0"
                 step="1000"
+                className="dark:text-white dark:bg-background"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="propertySize">Surface (m²)</Label>
+              <Label htmlFor="propertySize" className="dark:text-white">Surface (m²)</Label>
               <Input
                 id="propertySize"
                 name="propertySize"
@@ -182,11 +161,12 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
                 onChange={handleInputChange}
                 min="1"
                 step="1"
+                className="dark:text-white dark:bg-background"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="renovationCost">Coût des travaux (€)</Label>
+              <Label htmlFor="renovationCost" className="dark:text-white">Coût des travaux (€)</Label>
               <Input
                 id="renovationCost"
                 name="renovationCost"
@@ -195,11 +175,12 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
                 onChange={handleInputChange}
                 min="0"
                 step="100"
+                className="dark:text-white dark:bg-background"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="notaryFees">Frais de notaire (€)</Label>
+              <Label htmlFor="notaryFees" className="dark:text-white">Frais de notaire (€)</Label>
               <Input
                 id="notaryFees"
                 name="notaryFees"
@@ -208,11 +189,12 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
                 onChange={handleInputChange}
                 min="0"
                 step="100"
+                className="dark:text-white dark:bg-background"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="otherCosts">Autres frais d'acquisition (€)</Label>
+              <Label htmlFor="otherCosts" className="dark:text-white">Autres frais d'acquisition (€)</Label>
               <Input
                 id="otherCosts"
                 name="otherCosts"
@@ -221,6 +203,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
                 onChange={handleInputChange}
                 min="0"
                 step="100"
+                className="dark:text-white dark:bg-background"
               />
             </div>
           </div>
@@ -239,7 +222,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
         <TabsContent value="financing" className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="downPayment">Apport personnel (€)</Label>
+              <Label htmlFor="downPayment" className="dark:text-white">Apport personnel (€)</Label>
               <Input
                 id="downPayment"
                 name="downPayment"
@@ -248,11 +231,12 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
                 onChange={handleInputChange}
                 min="0"
                 step="1000"
+                className="dark:text-white dark:bg-background"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="loanAmount">Montant du prêt (€)</Label>
+              <Label htmlFor="loanAmount" className="dark:text-white">Montant du prêt (€)</Label>
               <Input
                 id="loanAmount"
                 name="loanAmount"
@@ -261,11 +245,12 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
                 onChange={handleInputChange}
                 min="0"
                 step="1000"
+                className="dark:text-white dark:bg-background"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="interestRate">Taux d'intérêt (%)</Label>
+              <Label htmlFor="interestRate" className="dark:text-white">Taux d'intérêt (%)</Label>
               <Input
                 id="interestRate"
                 name="interestRate"
@@ -275,11 +260,12 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
                 min="0"
                 step="0.05"
                 max="15"
+                className="dark:text-white dark:bg-background"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="loanTerm">Durée du prêt (années)</Label>
+              <Label htmlFor="loanTerm" className="dark:text-white">Durée du prêt (années)</Label>
               <Input
                 id="loanTerm"
                 name="loanTerm"
@@ -289,6 +275,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
                 min="5"
                 max="30"
                 step="1"
+                className="dark:text-white dark:bg-background"
               />
             </div>
           </div>
@@ -314,7 +301,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
         <TabsContent value="rental" className="space-y-4">
           <div className="space-y-4">
             <div>
-              <Label className="mb-2 block">Type de location</Label>
+              <Label className="mb-2 block dark:text-white">Type de location</Label>
               <RadioGroup 
                 value={rentalType} 
                 onValueChange={handleRentalTypeChange}
@@ -334,7 +321,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
             {rentalType === 'long-term' ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="monthlyRent">Loyer mensuel (€)</Label>
+                  <Label htmlFor="monthlyRent" className="dark:text-white">Loyer mensuel (€)</Label>
                   <Input
                     id="monthlyRent"
                     name="monthlyRent"
@@ -343,11 +330,12 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
                     onChange={handleInputChange}
                     min="0"
                     step="10"
+                    className="dark:text-white dark:bg-background"
                   />
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="managementFees">Frais de gestion (%)</Label>
+                  <Label htmlFor="managementFees" className="dark:text-white">Frais de gestion (%)</Label>
                   <Input
                     id="managementFees"
                     name="managementFees"
@@ -357,13 +345,14 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
                     min="0"
                     max="100"
                     step="0.5"
+                    className="dark:text-white dark:bg-background"
                   />
                 </div>
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="airbnbNightlyRate">Tarif par nuit (€)</Label>
+                  <Label htmlFor="airbnbNightlyRate" className="dark:text-white">Tarif par nuit (€)</Label>
                   <Input
                     id="airbnbNightlyRate"
                     name="airbnbNightlyRate"
@@ -372,11 +361,12 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
                     onChange={handleInputChange}
                     min="0"
                     step="5"
+                    className="dark:text-white dark:bg-background"
                   />
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="airbnbOccupancyRate">Taux d'occupation (%)</Label>
+                  <Label htmlFor="airbnbOccupancyRate" className="dark:text-white">Taux d'occupation (%)</Label>
                   <Input
                     id="airbnbOccupancyRate"
                     name="airbnbOccupancyRate"
@@ -386,11 +376,12 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
                     min="0"
                     max="100"
                     step="1"
+                    className="dark:text-white dark:bg-background"
                   />
                 </div>
                 
                 <div className="space-y-2 sm:col-span-2">
-                  <Label htmlFor="managementFees">Frais de gestion (%)</Label>
+                  <Label htmlFor="managementFees" className="dark:text-white">Frais de gestion (%)</Label>
                   <Input
                     id="managementFees"
                     name="managementFees"
@@ -400,6 +391,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
                     min="0"
                     max="100"
                     step="0.5"
+                    className="dark:text-white dark:bg-background"
                   />
                 </div>
               </div>
@@ -427,7 +419,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
         <TabsContent value="expenses" className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="propertyTax">Taxe foncière (€/an)</Label>
+              <Label htmlFor="propertyTax" className="dark:text-white">Taxe foncière (€/an)</Label>
               <Input
                 id="propertyTax"
                 name="propertyTax"
@@ -436,11 +428,12 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
                 onChange={handleInputChange}
                 min="0"
                 step="10"
+                className="dark:text-white dark:bg-background"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="insurance">Assurance PNO (€/an)</Label>
+              <Label htmlFor="insurance" className="dark:text-white">Assurance PNO (€/an)</Label>
               <Input
                 id="insurance"
                 name="insurance"
@@ -449,11 +442,12 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
                 onChange={handleInputChange}
                 min="0"
                 step="10"
+                className="dark:text-white dark:bg-background"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="condoFees">Charges de copropriété (€/an)</Label>
+              <Label htmlFor="condoFees" className="dark:text-white">Charges de copropriété (€/an)</Label>
               <Input
                 id="condoFees"
                 name="condoFees"
@@ -462,11 +456,12 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
                 onChange={handleInputChange}
                 min="0"
                 step="10"
+                className="dark:text-white dark:bg-background"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="maintenanceCost">Entretien et réparations (€/an)</Label>
+              <Label htmlFor="maintenanceCost" className="dark:text-white">Entretien et réparations (€/an)</Label>
               <Input
                 id="maintenanceCost"
                 name="maintenanceCost"
@@ -475,11 +470,12 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
                 onChange={handleInputChange}
                 min="0"
                 step="10"
+                className="dark:text-white dark:bg-background"
               />
             </div>
             
             <div className="space-y-2 sm:col-span-2">
-              <Label htmlFor="otherExpenses">Autres dépenses (€/an)</Label>
+              <Label htmlFor="otherExpenses" className="dark:text-white">Autres dépenses (€/an)</Label>
               <Input
                 id="otherExpenses"
                 name="otherExpenses"
@@ -488,6 +484,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
                 onChange={handleInputChange}
                 min="0"
                 step="10"
+                className="dark:text-white dark:bg-background"
               />
             </div>
           </div>
@@ -514,4 +511,3 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
 };
 
 export default PropertyForm;
-
