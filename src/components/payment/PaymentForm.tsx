@@ -44,7 +44,18 @@ const PaymentForm = ({ planId, planName, amount, billingCycle }: PaymentFormProp
       return `https://buy.stripe.com/aEUcOIbXd6mA8zm001?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
     }
     
-    // Lien par défaut pour le plan Pro
+    // Différents liens pour le plan Pro en fonction du cycle de facturation
+    if (planId === 'pro') {
+      // Si c'est un abonnement annuel
+      if (billingCycle === 'yearly') {
+        return `https://buy.stripe.com/3cs7uo7GXcKY4j68wy?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
+      }
+      
+      // Si c'est un abonnement mensuel (par défaut)
+      return `https://buy.stripe.com/cN25mg3qHfXa3f2dQQ?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
+    }
+    
+    // Lien par défaut pour le plan Pro mensuel si aucune correspondance n'est trouvée
     return `https://buy.stripe.com/cN25mg3qHfXa3f2dQQ?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
   };
 
