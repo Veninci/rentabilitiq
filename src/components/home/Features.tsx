@@ -105,8 +105,8 @@ const Features = () => {
                     <TrendingUp className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <div className="text-sm font-medium dark:text-black">Évolution du marché</div>
-                    <div className="text-xs text-muted-foreground dark:text-black">Mise à jour en temps réel</div>
+                    <div className="text-sm font-medium">Évolution du marché</div>
+                    <div className="text-xs text-muted-foreground">Mise à jour en temps réel</div>
                   </div>
                 </div>
                 <CityMarketTrends />

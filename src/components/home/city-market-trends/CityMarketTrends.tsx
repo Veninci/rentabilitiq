@@ -36,11 +36,11 @@ const CityMarketTrends: React.FC = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="sm" className="dark:text-black dark:bg-white/80 dark:hover:bg-white/90">Détails</Button>
+        <Button variant="ghost" size="sm">Détails</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto w-[95vw]">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold mb-4 dark:text-black">Évolution du marché immobilier</DialogTitle>
+          <DialogTitle className="text-xl font-bold mb-4">Évolution du marché immobilier</DialogTitle>
         </DialogHeader>
         
         <div className="space-y-6">

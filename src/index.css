@@ -116,21 +116,12 @@
   .dark .features-title {
     @apply text-black;
   }
-  
-  /* Market trends dialog title should be black in dark mode */
-  .dark .dialog-title, .dark [data-radix-dialog-title] {
-    @apply text-black;
-  }
-
-  /* Make "Mise à jour en temps réel" text black in dark mode */
-  .dark .text-muted-foreground.dark\:text-black {
-    @apply text-black;
-  }
 
   .transition-all-fast {
     @apply transition-all duration-300 ease-in-out;
   }
   
+  /* Responsive typography */
   h1, .h1 {
     @apply text-2xl md:text-3xl lg:text-4xl font-bold;
   }
@@ -153,6 +144,7 @@
     text-wrap: balance;
   }
   
+  /* Responsive utilities */
   .mobile-full {
     @apply w-full sm:w-auto;
   }
@@ -174,6 +166,7 @@
   }
 }
 
+/* Responsive layouts */
 @media (max-width: 640px) {
   .container {
     padding-left: 1rem;
@@ -201,6 +194,7 @@
     margin-bottom: 0;
   }
   
+  /* Adjustments for the slogan on mobile */
   .hero-slogan {
     margin-top: -12px !important;
   }
