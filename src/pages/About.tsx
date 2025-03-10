@@ -35,7 +35,7 @@ const About = () => {
           </GlassCard>
           
           <GlassCard>
-            <h2 className="text-2xl font-semibold mb-6">Notre fondateur</h2>
+            <h2 className="text-2xl font-semibold mb-6">Fondateur de RentabilitiQ</h2>
             <div className="flex flex-col md:flex-row items-center gap-8">
               <div className="w-full md:w-1/3">
                 <div className={cn(
@@ -51,7 +51,7 @@ const About = () => {
               </div>
               <div className="w-full md:w-2/3">
                 <h3 className="text-xl font-medium mb-2">Lucas Da Silva Venancio</h3>
-                <p className="text-muted-foreground mb-1">Fondateur &amp; PDG</p>
+                <p className="text-muted-foreground mb-1">Fondateur</p>
                 <div className="w-20 h-1 bg-primary rounded-full mb-4"></div>
                 <p className="text-lg">
                   Passionné par l'immobilier et l'analyse de données, Lucas a fondé RentabilitiQ avec l'objectif 
