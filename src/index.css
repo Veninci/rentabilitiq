@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -118,6 +119,11 @@
   
   /* Market trends dialog title should be black in dark mode */
   .dark .dialog-title, .dark [data-radix-dialog-title] {
+    @apply text-black;
+  }
+
+  /* Make "Mise à jour en temps réel" text black in dark mode */
+  .dark .text-muted-foreground.dark\:text-black {
     @apply text-black;
   }
 
