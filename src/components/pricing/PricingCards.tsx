@@ -144,7 +144,7 @@ const PricingCards = () => {
             
             <div className="mb-4 md:mb-6">
               <div className="flex items-end gap-2">
-                <span className="text-3xl md:text-4xl font-bold">
+                <span className="text-3xl md:text-4xl font-bold dark:text-foreground">
                   {formatter.formatCurrency(
                     plan.price[billingCycle], 
                     { maximumFractionDigits: 2 }

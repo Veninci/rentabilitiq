@@ -112,6 +112,19 @@
     @apply text-black;
   }
   
+  /* Pricing specific dark mode fixes */
+  .dark .pricing-page .text-3xl,
+  .dark .pricing-page .text-4xl,
+  .dark .pricing-page .text-xl,
+  .dark .pricing-page .font-bold {
+    @apply text-white;
+  }
+  
+  /* Fix for pricing toggle buttons in dark mode */
+  .dark .rounded-full.bg-white {
+    @apply text-black;
+  }
+  
   /* Specifically target the features section title */
   .dark .features-title {
     @apply text-black;
