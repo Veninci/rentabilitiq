@@ -1,21 +1,16 @@
 import React from 'react';
 import { PropertyResults } from '@/types/property';
 import GlassCard from '../ui/GlassCard';
-import { ArrowDownUp, CalendarDays, CircleDollarSign, LineChart, TrendingUp, SquareIcon, Download } from 'lucide-react';
+import { ArrowDownUp, CalendarDays, CircleDollarSign, LineChart, TrendingUp, SquareIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { formatter } from '@/lib/formatter';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
-import { exportResultsToPdf } from '@/lib/pdfExport';
-import { useToast } from '@/hooks/use-toast';
 
 interface ResultsCardProps {
   results: PropertyResults;
-  city?: string | null;
 }
 
-const ResultsCard: React.FC<ResultsCardProps> = ({ results, city }) => {
-  const { toast } = useToast();
-  
+const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
   const {
     totalInvestment,
     annualIncome,
@@ -54,36 +49,12 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results, city }) => {
     return null;
   };
 
-  const handleExport = async () => {
-    toast({
-      title: "Préparation du PDF...",
-      description: "Votre rapport est en cours de génération.",
-    });
-    
-    try {
-      await exportResultsToPdf(results, city);
-      toast({
-        title: "PDF généré avec succès",
-        description: "Votre rapport a été téléchargé.",
-        variant: "success",
-      });
-    } catch (error) {
-      console.error("Erreur lors de l'exportation PDF:", error);
-      toast({
-        title: "Erreur d'exportation",
-        description: "Impossible de générer le PDF. Veuillez réessayer.",
-        variant: "destructive",
-      });
-    }
-  };
-
   return (
     <GlassCard variant="results" className="w-full animate-scale-in">
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-lg font-semibold">Résultats de l'analyse</h3>
-        <Button variant="outline" size="sm" onClick={handleExport}>
-          <Download className="mr-2 h-4 w-4" />
-          Exporter PDF
+        <Button variant="outline" size="sm">
+          Exporter
         </Button>
       </div>
 
