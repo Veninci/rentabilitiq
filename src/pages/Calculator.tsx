@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
@@ -24,14 +23,11 @@ const Calculator = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  // Vérifier le statut d'abonnement et les limites d'utilisation à chaque chargement de page
   useEffect(() => {
-    // Check usage limit on component mount
     const usageLimitReached = hasReachedUsageLimit();
     setLimitReached(usageLimitReached && !isSubscribed());
     
     if (usageLimitReached && !isSubscribed()) {
-      // Show a toast notification about the limit
       toast({
         title: "Limite atteinte",
         description: "Vous avez atteint votre limite de 1 calcul gratuit. Passez à l'offre Pro pour des calculs illimités.",
@@ -39,12 +35,10 @@ const Calculator = () => {
       });
     }
     
-    // Update remaining calculations
     setRemainingCalculations(getRemainingCalculations());
   }, [toast]);
 
   const handleCalculate = (data: PropertyData) => {
-    // Vérifier à nouveau la limite au moment de calculer
     if (hasReachedUsageLimit() && !isSubscribed()) {
       setLimitReached(true);
       toast({
@@ -55,29 +49,23 @@ const Calculator = () => {
       return;
     }
     
-    // Track this calculation if not subscribed
     trackCalculatorUsage();
     
-    // Update remaining calculations and limit status
     const remaining = getRemainingCalculations();
     setRemainingCalculations(remaining);
     setLimitReached(remaining <= 0 && !isSubscribed());
     
-    // Enregistrer la ville sélectionnée
     setSelectedCity(data.city);
     
-    // Calculer les résultats pour le type de location sélectionné
     const calculatedResults = calculateResults(data);
     setResults(calculatedResults);
     
-    // Calculer les résultats pour les deux types de location pour la comparaison
     const calculatedLongTermResults = calculateLongTermResults(data);
     setLongTermResults(calculatedLongTermResults);
     
     const calculatedAirbnbResults = calculateAirbnbResults(data);
     setAirbnbResults(calculatedAirbnbResults);
     
-    // Faire défiler jusqu'aux résultats
     setTimeout(() => {
       document.getElementById('results')?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
@@ -104,7 +92,6 @@ const Calculator = () => {
                 Complétez les informations ci-dessous pour obtenir une analyse détaillée de votre investissement.
               </p>
               
-              {/* Display remaining calculations or subscription badge */}
               <div className="mt-4 inline-flex items-center px-4 py-2 rounded-full text-sm font-medium">
                 {isSubscribed() ? (
                   <div className="bg-green-100 text-green-800 px-4 py-2 rounded-full flex items-center">
@@ -173,7 +160,7 @@ const Calculator = () => {
               </div>
               
               <div className="max-w-4xl mx-auto space-y-8">
-                <ResultsCard results={results} />
+                <ResultsCard results={results} city={selectedCity} />
                 
                 <ComparisonChart 
                   longTerm={longTermResults} 
