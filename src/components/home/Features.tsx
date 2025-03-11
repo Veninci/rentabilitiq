@@ -1,11 +1,14 @@
+
 import React from 'react';
 import { CheckCircle, TrendingUp, CircleDollarSign, FileText, Calculator, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import GlassCard from '../ui/GlassCard';
 import CityMarketTrends from './city-market-trends';
 
 const Features = () => {
+  const navigate = useNavigate();
+
   return (
     <section className="py-12 md:py-24 bg-gray-50 px-4 md:px-0 dark:bg-gray-900">
       <div className="container mx-auto">

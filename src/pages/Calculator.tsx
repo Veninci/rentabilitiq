@@ -37,11 +37,16 @@ const Calculator = () => {
         description: "Vous avez atteint votre limite de 1 calcul gratuit. Passez à l'offre Pro pour des calculs illimités.",
         variant: "destructive",
       });
+      
+      // Redirect to pricing page after a short delay
+      setTimeout(() => {
+        navigate('/pricing');
+      }, 2000);
     }
     
     // Update remaining calculations
     setRemainingCalculations(getRemainingCalculations());
-  }, [toast]);
+  }, [toast, navigate]);
 
   const handleCalculate = (data: PropertyData) => {
     // Vérifier à nouveau la limite au moment de calculer
@@ -52,6 +57,12 @@ const Calculator = () => {
         description: "Vous avez atteint votre limite de 1 calcul gratuit. Passez à l'offre Pro pour des calculs illimités.",
         variant: "destructive",
       });
+      
+      // Redirect to pricing page after a short delay
+      setTimeout(() => {
+        navigate('/pricing');
+      }, 2000);
+      
       return;
     }
     
@@ -81,6 +92,20 @@ const Calculator = () => {
     setTimeout(() => {
       document.getElementById('results')?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
+    
+    // Si c'est le dernier calcul gratuit, informer l'utilisateur et rediriger après un court délai
+    if (remaining === 0 && !isSubscribed()) {
+      toast({
+        title: "Dernier calcul gratuit",
+        description: "Vous venez d'utiliser votre calcul gratuit. Passez à l'offre Pro pour des calculs illimités.",
+        variant: "default",
+      });
+      
+      // Rediriger vers la page de tarifs après un court délai pour permettre à l'utilisateur de voir les résultats
+      setTimeout(() => {
+        navigate('/pricing');
+      }, 8000);
+    }
   };
 
   return (

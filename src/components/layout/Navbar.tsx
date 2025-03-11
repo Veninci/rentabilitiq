@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Calculator } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -9,6 +9,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,6 +32,10 @@ const Navbar = () => {
   ];
 
   const isActive = (path: string) => location.pathname === path;
+
+  const handleFreeTrialClick = () => {
+    navigate('/calculator');
+  };
 
   return (
     <nav
@@ -71,7 +76,7 @@ const Navbar = () => {
               </Link>
             ))}
           </div>
-          <Button size="sm" className="rounded-full px-4 animate-fade-in">
+          <Button size="sm" className="rounded-full px-4 animate-fade-in" onClick={handleFreeTrialClick}>
             Essai gratuit
           </Button>
         </div>
@@ -109,7 +114,7 @@ const Navbar = () => {
               </Link>
             ))}
             <div className="flex flex-col space-y-2 pt-2 border-t border-gray-100">
-              <Button className="h-9 text-sm">Essai gratuit</Button>
+              <Button className="h-9 text-sm" onClick={handleFreeTrialClick}>Essai gratuit</Button>
             </div>
           </div>
         </div>
