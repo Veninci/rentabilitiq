@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { CheckCircle, TrendingUp, CircleDollarSign, FileText, Calculator, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -162,7 +161,7 @@ const FeatureCard = ({ icon, title, description }: FeatureCardProps) => {
       <div className="bg-primary/10 h-10 w-10 rounded-lg flex items-center justify-center mb-3 md:mb-4">
         <div className="text-primary">{icon}</div>
       </div>
-      <h3 className="text-base md:text-lg font-medium mb-1 md:mb-2 text-black dark:text-black">{title}</h3>
+      <h3 className="text-base md:text-lg font-medium mb-1 md:mb-2 text-black dark:text-white">{title}</h3>
       <p className="text-muted-foreground text-xs md:text-sm dark:text-gray-300">{description}</p>
     </div>
   );
