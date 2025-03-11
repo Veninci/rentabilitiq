@@ -23,25 +23,25 @@ const Features = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 mb-8 md:mb-16">
-          <FeatureCard 
-            icon={<Calculator />}
-            title="Calcul de rendement"
-            description="Calculez facilement le rendement brut et net de vos investissements en prenant en compte tous les facteurs pertinents."
-          />
-          
-          <FeatureCard 
-            icon={<TrendingUp />}
-            title="Simulation de cash-flow"
-            description="Visualisez vos flux de trésorerie mensuels et annuels pour anticiper la rentabilité à long terme de vos investissements."
-          />
-          
-          <FeatureCard 
-            icon={<CircleDollarSign />}
-            title="Analyse des coûts"
-            description="Identifiez et analysez tous les coûts d'acquisition et d'exploitation pour une vision claire de votre investissement."
-          />
-          
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 mb-8 md:mb-16">
+        <FeatureCard 
+          icon={<Calculator />}
+          title="Calcul précis"
+          description="Calculez facilement le rendement brut et net de vos investissements en prenant en compte tous les facteurs pertinents."
+        />
+        
+        <FeatureCard 
+          icon={<TrendingUp />}
+          title="Analyse complète"
+          description="Visualisez vos flux de trésorerie mensuels et annuels pour anticiper la rentabilité à long terme de vos investissements."
+        />
+        
+        <FeatureCard 
+          icon={<CircleDollarSign />}
+          title="Comparaison visuelle"
+          description="Identifiez et analysez tous les coûts d'acquisition et d'exploitation pour une vision claire de votre investissement."
+        />
+        
           <FeatureCard 
             icon={<CheckCircle />}
             title="Comparaison location"
@@ -161,7 +161,7 @@ const FeatureCard = ({ icon, title, description }: FeatureCardProps) => {
       <div className="bg-primary/10 h-10 w-10 rounded-lg flex items-center justify-center mb-3 md:mb-4">
         <div className="text-primary">{icon}</div>
       </div>
-      <h3 className="text-base md:text-lg font-medium mb-1 md:mb-2 text-black dark:text-white">{title}</h3>
+      <h3 className="text-base md:text-lg font-medium mb-1 md:mb-2 text-black">{title}</h3>
       <p className="text-muted-foreground text-xs md:text-sm dark:text-gray-300">{description}</p>
     </div>
   );
