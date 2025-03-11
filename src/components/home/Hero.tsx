@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ArrowRight, BarChart4, PieChart, Calculator, Maximize2, Home, Building, Wallet, TrendingUp, Landmark, Settings, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -83,27 +82,27 @@ const Hero = () => {
                       <div className="grid grid-cols-2 gap-2 md:gap-4 mb-2 md:mb-4">
                         <div className="space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm text-gray-500 dark:text-gray-300">Prix d'achat</div>
-                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium dark:bg-gray-700 dark:text-gray-200">210 000 €</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">210 000 €</div>
                         </div>
                         <div className="space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm text-gray-500 dark:text-gray-300">Surface</div>
-                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium dark:bg-gray-700 dark:text-gray-200">45 m²</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">45 m²</div>
                         </div>
                         <div className="space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm text-gray-500 dark:text-gray-300">Loyer mensuel</div>
-                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium dark:bg-gray-700 dark:text-gray-200">850 €</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">850 €</div>
                         </div>
                         <div className="space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm text-gray-500 dark:text-gray-300">Type de location</div>
-                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium dark:bg-gray-700 dark:text-gray-200">Longue durée</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">Longue durée</div>
                         </div>
                         <div className="space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm text-gray-500 dark:text-gray-300">Apport</div>
-                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium dark:bg-gray-700 dark:text-gray-200">40 000 €</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">40 000 €</div>
                         </div>
                         <div className="space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm text-gray-500 dark:text-gray-300">Taux d'intérêt</div>
-                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base font-medium dark:bg-gray-700 dark:text-gray-200">3.5%</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">3.5%</div>
                         </div>
                       </div>
                       <div className="mt-auto flex justify-end">
@@ -255,27 +254,27 @@ const Hero = () => {
                       <div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:gap-6 mb-3 sm:mb-4 md:mb-5 lg:mb-6">
                         <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm lg:text-base text-gray-500">Prix d'achat</div>
-                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium">210 000 €</div>
+                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">210 000 €</div>
                         </div>
                         <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm lg:text-base text-gray-500">Surface</div>
-                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium">45 m²</div>
+                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">45 m²</div>
                         </div>
                         <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm lg:text-base text-gray-500">Loyer mensuel</div>
-                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium">850 €</div>
+                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">850 €</div>
                         </div>
                         <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm lg:text-base text-gray-500">Type de location</div>
-                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium">Longue durée</div>
+                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">Longue durée</div>
                         </div>
                         <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm lg:text-base text-gray-500">Apport</div>
-                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium">40 000 €</div>
+                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">40 000 €</div>
                         </div>
                         <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm lg:text-base text-gray-500">Taux d'intérêt</div>
-                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium">3.5%</div>
+                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">3.5%</div>
                         </div>
                       </div>
                       <div className="flex justify-end">

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { CheckCircle, TrendingUp, CircleDollarSign, FileText, Calculator, Clock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -62,7 +61,7 @@ const Features = () => {
           />
         </div>
         
-        <div className="flex flex-col lg:flex-row items-center bg-white rounded-xl md:rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div className="flex flex-col lg:flex-row items-center bg-white rounded-xl md:rounded-2xl shadow-sm border border-gray-100 overflow-hidden dark:bg-gray-800">
           <div className="w-full lg:w-1/2 p-6 md:p-12">
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4 md:mb-6">
               <span>Version Premium</span>
@@ -76,7 +75,7 @@ const Features = () => {
               Passez à la version premium pour accéder à des outils encore plus puissants et optimiser davantage vos investissements.
             </p>
             
-            <ul className="space-y-2 md:space-y-3 mb-6 md:mb-8 text-sm md:text-base">
+            <ul className="space-y-2 md:space-y-3 mb-6 md:mb-8 text-sm md:text-base text-black dark:text-white">
               {[
                 "Suivi des revenus en temps réel",
                 "Alertes personnalisées sur le marché",
@@ -123,18 +122,18 @@ const Features = () => {
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white rounded-lg p-4 shadow-sm">
-                    <div className="text-xs text-muted-foreground mb-1">Prix moyen au m²</div>
-                    <div className="text-lg font-semibold">4 523 €</div>
+                  <div className="bg-white rounded-lg p-4 shadow-sm dark:bg-gray-700">
+                    <div className="text-xs text-muted-foreground mb-1 dark:text-gray-300">Prix moyen au m²</div>
+                    <div className="text-lg font-semibold text-black dark:text-white">4 523 €</div>
                     <div className="text-xs text-green-500 flex items-center mt-1">
                       <TrendingUp className="h-3 w-3 mr-1" />
                       +2.1% ce mois
                     </div>
                   </div>
                   
-                  <div className="bg-white rounded-lg p-4 shadow-sm">
-                    <div className="text-xs text-muted-foreground mb-1">Rendement moyen</div>
-                    <div className="text-lg font-semibold">5.2%</div>
+                  <div className="bg-white rounded-lg p-4 shadow-sm dark:bg-gray-700">
+                    <div className="text-xs text-muted-foreground mb-1 dark:text-gray-300">Rendement moyen</div>
+                    <div className="text-lg font-semibold text-black dark:text-white">5.2%</div>
                     <div className="text-xs text-red-500 flex items-center mt-1">
                       <TrendingUp className="h-3 w-3 mr-1 transform rotate-180" />
                       -0.3% ce mois
@@ -158,12 +157,12 @@ interface FeatureCardProps {
 
 const FeatureCard = ({ icon, title, description }: FeatureCardProps) => {
   return (
-    <div className="bg-white rounded-xl border border-gray-100 p-4 md:p-6 transition-all duration-300 hover:shadow-md">
+    <div className="bg-white rounded-xl border border-gray-100 p-4 md:p-6 transition-all duration-300 hover:shadow-md dark:bg-gray-800 dark:border-gray-700">
       <div className="bg-primary/10 h-10 w-10 rounded-lg flex items-center justify-center mb-3 md:mb-4">
         <div className="text-primary">{icon}</div>
       </div>
-      <h3 className="text-base md:text-lg font-medium mb-1 md:mb-2">{title}</h3>
-      <p className="text-muted-foreground text-xs md:text-sm">{description}</p>
+      <h3 className="text-base md:text-lg font-medium mb-1 md:mb-2 text-black dark:text-white">{title}</h3>
+      <p className="text-muted-foreground text-xs md:text-sm dark:text-gray-300">{description}</p>
     </div>
   );
 };
