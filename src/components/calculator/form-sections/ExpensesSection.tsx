@@ -17,7 +17,7 @@ const ExpensesSection: React.FC<ExpensesSectionProps> = ({
     <div className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="propertyTax" className="text-white">Taxe foncière (€/an)</Label>
+          <Label>Taxe foncière (€/an)</Label>
           <Input
             id="propertyTax"
             name="propertyTax"
@@ -26,12 +26,11 @@ const ExpensesSection: React.FC<ExpensesSectionProps> = ({
             onChange={handleInputChange}
             min="0"
             step="10"
-            className="bg-gray-800 border-gray-700 text-white"
           />
         </div>
         
         <div className="space-y-2">
-          <Label htmlFor="insurance" className="text-white">Assurance PNO (€/an)</Label>
+          <Label>Assurance PNO (€/an)</Label>
           <Input
             id="insurance"
             name="insurance"
@@ -40,12 +39,11 @@ const ExpensesSection: React.FC<ExpensesSectionProps> = ({
             onChange={handleInputChange}
             min="0"
             step="10"
-            className="bg-gray-800 border-gray-700 text-white"
           />
         </div>
         
         <div className="space-y-2">
-          <Label htmlFor="condoFees" className="text-white">Charges de copropriété (€/an)</Label>
+          <Label>Charges de copropriété (€/an)</Label>
           <Input
             id="condoFees"
             name="condoFees"
@@ -54,12 +52,11 @@ const ExpensesSection: React.FC<ExpensesSectionProps> = ({
             onChange={handleInputChange}
             min="0"
             step="10"
-            className="bg-gray-800 border-gray-700 text-white"
           />
         </div>
         
         <div className="space-y-2">
-          <Label htmlFor="maintenanceCost" className="text-white">Entretien et réparations (€/an)</Label>
+          <Label>Entretien et réparations (€/an)</Label>
           <Input
             id="maintenanceCost"
             name="maintenanceCost"
@@ -68,12 +65,11 @@ const ExpensesSection: React.FC<ExpensesSectionProps> = ({
             onChange={handleInputChange}
             min="0"
             step="10"
-            className="bg-gray-800 border-gray-700 text-white"
           />
         </div>
         
         <div className="space-y-2 sm:col-span-2">
-          <Label htmlFor="otherExpenses" className="text-white">Autres dépenses (€/an)</Label>
+          <Label>Autres dépenses (€/an)</Label>
           <Input
             id="otherExpenses"
             name="otherExpenses"
@@ -82,7 +78,6 @@ const ExpensesSection: React.FC<ExpensesSectionProps> = ({
             onChange={handleInputChange}
             min="0"
             step="10"
-            className="bg-gray-800 border-gray-700 text-white"
           />
         </div>
       </div>
