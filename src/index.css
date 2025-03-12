@@ -103,14 +103,15 @@
     @apply bg-black/20 backdrop-blur-md border border-white/10 shadow-lg;
   }
 
+  /* Text color fixes for light and dark mode */
   .dark .bg-white {
-    @apply text-white;
+    @apply text-gray-900;
   }
   
   .dark .bg-white\/80, 
   .dark .bg-white\/90, 
   .dark .bg-white\/60 {
-    @apply text-white bg-gray-800/90;
+    @apply text-gray-900;
   }
   
   .dark .calculator-results {
@@ -165,6 +166,46 @@
   
   .dark .comparison-card {
     @apply bg-gray-800/60 text-white border-gray-700;
+  }
+  
+  /* Fixed contrast for light mode */
+  .light .bg-white, 
+  .light .bg-background {
+    @apply text-gray-900;
+  }
+  
+  .light .bg-white\/80, 
+  .light .bg-white\/90, 
+  .light .bg-white\/60 {
+    @apply text-gray-900;
+  }
+  
+  .light .calculator-results {
+    @apply bg-white text-gray-900;
+  }
+  
+  .light .calculator-comparison {
+    @apply bg-white text-gray-900;
+  }
+  
+  .light .calculator-form {
+    @apply bg-white text-gray-900;
+  }
+  
+  .light .calculator-form input {
+    @apply bg-white border-gray-300 text-gray-900;
+  }
+  
+  .light .calculator-form label {
+    @apply text-gray-900;
+  }
+  
+  .light .results-card {
+    @apply bg-white text-gray-900 border-gray-200;
+  }
+  
+  .light .comparison-card {
+    @apply bg-white text-gray-900 border-gray-200;
   }
   
   /* Styles spécifiques pour le calculateur en mode noir */
