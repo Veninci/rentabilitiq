@@ -20,8 +20,8 @@ const Hero = () => {
       
       <div className="container mx-auto">
         <div className="max-w-4xl mx-auto text-center mb-8 md:mb-12">
-          <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-3 md:mb-6 animate-fade-in -mt-3 md:mt-0">
-            <span>Solution innovante pour investisseurs immobiliers</span>
+          <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-white text-sm font-medium mb-3 md:mb-6 animate-fade-in -mt-3 md:mt-0">
+            <span>Débloquez des fonctionnalités avancées</span>
           </div>
           
           <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 tracking-tight animate-slide-up" style={{ lineHeight: 1.1 }}>
