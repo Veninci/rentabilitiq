@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -102,15 +103,14 @@
     @apply bg-black/20 backdrop-blur-md border border-white/10 shadow-lg;
   }
 
-  /* Text color fixes for light and dark mode */
   .dark .bg-white {
-    color: rgb(17 24 39); /* text-gray-900 */
+    @apply text-white;
   }
   
   .dark .bg-white\/80, 
   .dark .bg-white\/90, 
   .dark .bg-white\/60 {
-    color: rgb(17 24 39); /* text-gray-900 */
+    @apply text-white bg-gray-800/90;
   }
   
   .dark .calculator-results {
@@ -165,49 +165,6 @@
   
   .dark .comparison-card {
     @apply bg-gray-800/60 text-white border-gray-700;
-  }
-  
-  /* Fixed contrast for light mode */
-  .light .bg-background,
-  .light [class*="bg-white"] {
-    color: rgb(17 24 39); /* text-gray-900 */
-  }
-  
-  .light .calculator-results {
-    background-color: rgb(255 255 255); /* bg-white */
-    color: rgb(17 24 39); /* text-gray-900 */
-  }
-  
-  .light .calculator-comparison {
-    background-color: rgb(255 255 255);
-    color: rgb(17 24 39);
-  }
-  
-  .light .calculator-form {
-    background-color: rgb(255 255 255);
-    color: rgb(17 24 39);
-  }
-  
-  .light .calculator-form input {
-    background-color: rgb(255 255 255);
-    border-color: rgb(209 213 219); /* border-gray-300 */
-    color: rgb(17 24 39);
-  }
-  
-  .light .calculator-form label {
-    color: rgb(17 24 39);
-  }
-  
-  .light .results-card {
-    background-color: rgb(255 255 255);
-    color: rgb(17 24 39);
-    border-color: rgb(229 231 235); /* border-gray-200 */
-  }
-  
-  .light .comparison-card {
-    background-color: rgb(255 255 255);
-    color: rgb(17 24 39);
-    border-color: rgb(229 231 235);
   }
   
   /* Styles spécifiques pour le calculateur en mode noir */
