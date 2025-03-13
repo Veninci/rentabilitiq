@@ -19,9 +19,9 @@ const RentalSection: React.FC<RentalSectionProps> = ({
   handleRentalTypeChange 
 }) => {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 text-black dark:text-white">
       <div>
-        <Label className="mb-2 block">Type de location</Label>
+        <Label className="mb-2 block text-black dark:text-white">Type de location</Label>
         <RadioGroup 
           value={rentalType} 
           onValueChange={handleRentalTypeChange}
@@ -29,11 +29,11 @@ const RentalSection: React.FC<RentalSectionProps> = ({
         >
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="long-term" id="long-term" />
-            <Label htmlFor="long-term" className="cursor-pointer">Location longue durée</Label>
+            <Label htmlFor="long-term" className="cursor-pointer text-black dark:text-white">Location longue durée</Label>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="airbnb" id="airbnb" />
-            <Label htmlFor="airbnb" className="cursor-pointer">Location courte durée (Airbnb)</Label>
+            <Label htmlFor="airbnb" className="cursor-pointer text-black dark:text-white">Location courte durée (Airbnb)</Label>
           </div>
         </RadioGroup>
       </div>
@@ -41,7 +41,7 @@ const RentalSection: React.FC<RentalSectionProps> = ({
       {rentalType === 'long-term' ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label>Loyer mensuel (€)</Label>
+            <Label className="text-black dark:text-white">Loyer mensuel (€)</Label>
             <Input
               id="monthlyRent"
               name="monthlyRent"
@@ -50,11 +50,12 @@ const RentalSection: React.FC<RentalSectionProps> = ({
               onChange={handleInputChange}
               min="0"
               step="10"
+              className="text-black dark:text-white"
             />
           </div>
           
           <div className="space-y-2">
-            <Label>Frais de gestion (%)</Label>
+            <Label className="text-black dark:text-white">Frais de gestion (%)</Label>
             <Input
               id="managementFees"
               name="managementFees"
@@ -64,13 +65,14 @@ const RentalSection: React.FC<RentalSectionProps> = ({
               min="0"
               max="100"
               step="0.5"
+              className="text-black dark:text-white"
             />
           </div>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label>Tarif par nuit (€)</Label>
+            <Label className="text-black dark:text-white">Tarif par nuit (€)</Label>
             <Input
               id="airbnbNightlyRate"
               name="airbnbNightlyRate"
@@ -79,11 +81,12 @@ const RentalSection: React.FC<RentalSectionProps> = ({
               onChange={handleInputChange}
               min="0"
               step="5"
+              className="text-black dark:text-white"
             />
           </div>
           
           <div className="space-y-2">
-            <Label>Taux d'occupation (%)</Label>
+            <Label className="text-black dark:text-white">Taux d'occupation (%)</Label>
             <Input
               id="airbnbOccupancyRate"
               name="airbnbOccupancyRate"
@@ -93,11 +96,12 @@ const RentalSection: React.FC<RentalSectionProps> = ({
               min="0"
               max="100"
               step="1"
+              className="text-black dark:text-white"
             />
           </div>
           
           <div className="space-y-2 sm:col-span-2">
-            <Label>Frais de gestion (%)</Label>
+            <Label className="text-black dark:text-white">Frais de gestion (%)</Label>
             <Input
               id="managementFees"
               name="managementFees"
@@ -107,6 +111,7 @@ const RentalSection: React.FC<RentalSectionProps> = ({
               min="0"
               max="100"
               step="0.5"
+              className="text-black dark:text-white"
             />
           </div>
         </div>

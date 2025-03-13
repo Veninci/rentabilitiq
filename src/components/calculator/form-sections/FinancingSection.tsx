@@ -14,10 +14,10 @@ const FinancingSection: React.FC<FinancingSectionProps> = ({
   handleInputChange 
 }) => {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 text-black dark:text-white">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label>Apport personnel (€)</Label>
+          <Label className="text-black dark:text-white">Apport personnel (€)</Label>
           <Input
             id="downPayment"
             name="downPayment"
@@ -26,11 +26,12 @@ const FinancingSection: React.FC<FinancingSectionProps> = ({
             onChange={handleInputChange}
             min="0"
             step="1000"
+            className="text-black dark:text-white"
           />
         </div>
         
         <div className="space-y-2">
-          <Label>Montant du prêt (€)</Label>
+          <Label className="text-black dark:text-white">Montant du prêt (€)</Label>
           <Input
             id="loanAmount"
             name="loanAmount"
@@ -39,11 +40,12 @@ const FinancingSection: React.FC<FinancingSectionProps> = ({
             onChange={handleInputChange}
             min="0"
             step="1000"
+            className="text-black dark:text-white"
           />
         </div>
         
         <div className="space-y-2">
-          <Label>Taux d'intérêt (%)</Label>
+          <Label className="text-black dark:text-white">Taux d'intérêt (%)</Label>
           <Input
             id="interestRate"
             name="interestRate"
@@ -53,11 +55,12 @@ const FinancingSection: React.FC<FinancingSectionProps> = ({
             min="0"
             step="0.05"
             max="15"
+            className="text-black dark:text-white"
           />
         </div>
         
         <div className="space-y-2">
-          <Label>Durée du prêt (années)</Label>
+          <Label className="text-black dark:text-white">Durée du prêt (années)</Label>
           <Input
             id="loanTerm"
             name="loanTerm"
@@ -67,6 +70,7 @@ const FinancingSection: React.FC<FinancingSectionProps> = ({
             min="5"
             max="30"
             step="1"
+            className="text-black dark:text-white"
           />
         </div>
       </div>

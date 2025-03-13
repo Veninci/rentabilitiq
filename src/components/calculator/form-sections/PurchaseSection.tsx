@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -29,15 +30,15 @@ const PurchaseSection: React.FC<PurchaseSectionProps> = ({
   handleCityChange 
 }) => {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 text-black dark:text-white">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2 sm:col-span-2">
-          <Label>Ville</Label>
+          <Label className="text-black dark:text-white">Ville</Label>
           <Select
             value={propertyData.city}
             onValueChange={handleCityChange}
           >
-            <SelectTrigger id="city" className="w-full">
+            <SelectTrigger id="city" className="w-full text-black dark:text-white">
               <SelectValue placeholder="Sélectionnez une ville" />
             </SelectTrigger>
             <SelectContent>
@@ -54,7 +55,7 @@ const PurchaseSection: React.FC<PurchaseSectionProps> = ({
         </div>
         
         <div className="space-y-2">
-          <Label>Prix d'achat (€)</Label>
+          <Label className="text-black dark:text-white">Prix d'achat (€)</Label>
           <Input
             id="purchasePrice"
             name="purchasePrice"
@@ -63,11 +64,12 @@ const PurchaseSection: React.FC<PurchaseSectionProps> = ({
             onChange={handleInputChange}
             min="0"
             step="1000"
+            className="text-black dark:text-white"
           />
         </div>
         
         <div className="space-y-2">
-          <Label>Surface (m²)</Label>
+          <Label className="text-black dark:text-white">Surface (m²)</Label>
           <Input
             id="propertySize"
             name="propertySize"
@@ -76,11 +78,12 @@ const PurchaseSection: React.FC<PurchaseSectionProps> = ({
             onChange={handleInputChange}
             min="1"
             step="1"
+            className="text-black dark:text-white"
           />
         </div>
         
         <div className="space-y-2">
-          <Label>Coût des travaux (€)</Label>
+          <Label className="text-black dark:text-white">Coût des travaux (€)</Label>
           <Input
             id="renovationCost"
             name="renovationCost"
@@ -89,11 +92,12 @@ const PurchaseSection: React.FC<PurchaseSectionProps> = ({
             onChange={handleInputChange}
             min="0"
             step="100"
+            className="text-black dark:text-white"
           />
         </div>
         
         <div className="space-y-2">
-          <Label>Frais de notaire (€)</Label>
+          <Label className="text-black dark:text-white">Frais de notaire (€)</Label>
           <Input
             id="notaryFees"
             name="notaryFees"
@@ -102,11 +106,12 @@ const PurchaseSection: React.FC<PurchaseSectionProps> = ({
             onChange={handleInputChange}
             min="0"
             step="100"
+            className="text-black dark:text-white"
           />
         </div>
         
         <div className="space-y-2">
-          <Label>Autres frais d'acquisition (€)</Label>
+          <Label className="text-black dark:text-white">Autres frais d'acquisition (€)</Label>
           <Input
             id="otherCosts"
             name="otherCosts"
@@ -115,6 +120,7 @@ const PurchaseSection: React.FC<PurchaseSectionProps> = ({
             onChange={handleInputChange}
             min="0"
             step="100"
+            className="text-black dark:text-white"
           />
         </div>
       </div>

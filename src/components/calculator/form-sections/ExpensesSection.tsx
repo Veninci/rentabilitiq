@@ -14,10 +14,10 @@ const ExpensesSection: React.FC<ExpensesSectionProps> = ({
   handleInputChange 
 }) => {
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 text-black dark:text-white">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label>Taxe foncière (€/an)</Label>
+          <Label className="text-black dark:text-white">Taxe foncière (€/an)</Label>
           <Input
             id="propertyTax"
             name="propertyTax"
@@ -26,11 +26,12 @@ const ExpensesSection: React.FC<ExpensesSectionProps> = ({
             onChange={handleInputChange}
             min="0"
             step="10"
+            className="text-black dark:text-white"
           />
         </div>
         
         <div className="space-y-2">
-          <Label>Assurance PNO (€/an)</Label>
+          <Label className="text-black dark:text-white">Assurance PNO (€/an)</Label>
           <Input
             id="insurance"
             name="insurance"
@@ -39,11 +40,12 @@ const ExpensesSection: React.FC<ExpensesSectionProps> = ({
             onChange={handleInputChange}
             min="0"
             step="10"
+            className="text-black dark:text-white"
           />
         </div>
         
         <div className="space-y-2">
-          <Label>Charges de copropriété (€/an)</Label>
+          <Label className="text-black dark:text-white">Charges de copropriété (€/an)</Label>
           <Input
             id="condoFees"
             name="condoFees"
@@ -52,11 +54,12 @@ const ExpensesSection: React.FC<ExpensesSectionProps> = ({
             onChange={handleInputChange}
             min="0"
             step="10"
+            className="text-black dark:text-white"
           />
         </div>
         
         <div className="space-y-2">
-          <Label>Entretien et réparations (€/an)</Label>
+          <Label className="text-black dark:text-white">Entretien et réparations (€/an)</Label>
           <Input
             id="maintenanceCost"
             name="maintenanceCost"
@@ -65,11 +68,12 @@ const ExpensesSection: React.FC<ExpensesSectionProps> = ({
             onChange={handleInputChange}
             min="0"
             step="10"
+            className="text-black dark:text-white"
           />
         </div>
         
         <div className="space-y-2 sm:col-span-2">
-          <Label>Autres dépenses (€/an)</Label>
+          <Label className="text-black dark:text-white">Autres dépenses (€/an)</Label>
           <Input
             id="otherExpenses"
             name="otherExpenses"
@@ -78,6 +82,7 @@ const ExpensesSection: React.FC<ExpensesSectionProps> = ({
             onChange={handleInputChange}
             min="0"
             step="10"
+            className="text-black dark:text-white"
           />
         </div>
       </div>
