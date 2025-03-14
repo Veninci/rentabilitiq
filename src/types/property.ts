@@ -50,3 +50,12 @@ export interface PropertyResults {
   otherCosts: number;
   purchasePrice: number; // Property price (needed for breakdown)
 }
+
+// New history interface to store calculation history
+export interface CalculationHistory {
+  id: string;
+  date: string;
+  propertyData: PropertyData;
+  results: PropertyResults;
+  city: string;
+}

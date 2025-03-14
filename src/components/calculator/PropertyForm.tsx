@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
 import { PropertyData, RentalType } from '@/types/property';
 import FormTabs from './form-navigation/FormTabs';
@@ -11,13 +11,15 @@ import ExpensesSection from './form-sections/ExpensesSection';
 
 interface PropertyFormProps {
   onCalculate: (data: PropertyData) => void;
+  initialData?: PropertyData | null;
 }
 
-const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
+const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate, initialData }) => {
   const [activeTab, setActiveTab] = useState('purchase');
   const [rentalType, setRentalType] = useState<RentalType>('long-term');
   
-  const [propertyData, setPropertyData] = useState<PropertyData>({
+  // Default property data
+  const defaultData: PropertyData = {
     purchasePrice: 200000,
     renovationCost: 10000,
     notaryFees: 15000,
@@ -38,7 +40,17 @@ const PropertyForm: React.FC<PropertyFormProps> = ({ onCalculate }) => {
     otherExpenses: 500,
     city: 'Paris',
     rentalType: 'long-term'
-  });
+  };
+  
+  const [propertyData, setPropertyData] = useState<PropertyData>(defaultData);
+  
+  // Set initial data if provided
+  useEffect(() => {
+    if (initialData) {
+      setPropertyData(initialData);
+      setRentalType(initialData.rentalType);
+    }
+  }, [initialData]);
   
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

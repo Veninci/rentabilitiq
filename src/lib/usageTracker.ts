@@ -1,4 +1,3 @@
-
 // Simple utility to track calculator usage and enforce limits for free users
 
 // Define the structure of our usage data
@@ -9,6 +8,9 @@ interface UsageData {
 
 // Délai d'expiration pour les paiements en attente (30 minutes en millisecondes)
 const PAYMENT_VERIFICATION_TIMEOUT = 30 * 60 * 1000;
+
+// Import types for calculation history
+import { CalculationHistory, PropertyData, PropertyResults } from "@/types/property";
 
 // Réinitialiser les données d'abonnement pour commencer en version Basic
 export const resetToBasic = (): void => {
@@ -175,4 +177,54 @@ export const getRemainingCalculations = (): number => {
   const currentUsage = getUsageData();
   const remaining = Math.max(0, 1 - currentUsage.count);
   return remaining;
+};
+
+// New functions for calculation history
+
+// Save a calculation to history
+export const saveCalculationToHistory = (
+  propertyData: PropertyData,
+  results: PropertyResults,
+  city: string
+): void => {
+  try {
+    const historyItem: CalculationHistory = {
+      id: generateId(),
+      date: new Date().toISOString(),
+      propertyData,
+      results,
+      city
+    };
+
+    const history = getCalculationHistory();
+    history.unshift(historyItem); // Add new item at the beginning
+
+    // Keep only the most recent 10 calculations to avoid using too much localStorage
+    const limitedHistory = history.slice(0, 10);
+    
+    localStorage.setItem('calculation_history', JSON.stringify(limitedHistory));
+  } catch (error) {
+    console.error('Error saving calculation to history:', error);
+  }
+};
+
+// Get calculation history
+export const getCalculationHistory = (): CalculationHistory[] => {
+  try {
+    const history = localStorage.getItem('calculation_history');
+    return history ? JSON.parse(history) : [];
+  } catch (error) {
+    console.error('Error retrieving calculation history:', error);
+    return [];
+  }
+};
+
+// Clear calculation history
+export const clearCalculationHistory = (): void => {
+  localStorage.removeItem('calculation_history');
+};
+
+// Helper function to generate a unique ID
+const generateId = (): string => {
+  return Date.now().toString(36) + Math.random().toString(36).substring(2);
 };

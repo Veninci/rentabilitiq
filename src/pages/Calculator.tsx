@@ -6,13 +6,23 @@ import Footer from '@/components/layout/Footer';
 import PropertyForm from '@/components/calculator/PropertyForm';
 import ResultsCard from '@/components/calculator/ResultsCard';
 import ComparisonChart from '@/components/calculator/ComparisonChart';
-import { PropertyData, PropertyResults } from '@/types/property';
+import CalculationHistoryCard from '@/components/calculator/CalculationHistoryCard';
+import { PropertyData, PropertyResults, CalculationHistory } from '@/types/property';
 import { calculateResults, calculateAirbnbResults, calculateLongTermResults } from '@/lib/calculations';
-import { Calculator as CalculatorIcon, MapPin, Lock, AlertTriangle, Info as InfoIcon, CheckCircle } from 'lucide-react';
-import { hasReachedUsageLimit, trackCalculatorUsage, getRemainingCalculations, isSubscribed } from '@/lib/usageTracker';
+import { Calculator as CalculatorIcon, MapPin, Lock, AlertTriangle, Info as InfoIcon, CheckCircle, History } from 'lucide-react';
+import { 
+  hasReachedUsageLimit, 
+  trackCalculatorUsage, 
+  getRemainingCalculations, 
+  isSubscribed,
+  saveCalculationToHistory,
+  getCalculationHistory,
+  clearCalculationHistory
+} from '@/lib/usageTracker';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 const Calculator = () => {
   const [results, setResults] = useState<PropertyResults | null>(null);
@@ -22,6 +32,9 @@ const Calculator = () => {
   const [remainingCalculations, setRemainingCalculations] = useState<number>(0);
   const [limitReached, setLimitReached] = useState<boolean>(false);
   const [redirectCountdown, setRedirectCountdown] = useState<number | null>(null);
+  const [calculationHistory, setCalculationHistory] = useState<CalculationHistory[]>([]);
+  const [selectedTab, setSelectedTab] = useState<string>('calculator');
+  const [propertyData, setPropertyData] = useState<PropertyData | null>(null);
   const redirectTimerRef = useRef<NodeJS.Timeout | null>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -48,6 +61,9 @@ const Calculator = () => {
     
     // Update remaining calculations
     setRemainingCalculations(getRemainingCalculations());
+
+    // Load calculation history
+    setCalculationHistory(getCalculationHistory());
 
     // Clean up any timers when component unmounts
     return () => {
@@ -88,6 +104,9 @@ const Calculator = () => {
       return;
     }
     
+    // Store property data
+    setPropertyData(data);
+    
     // Track this calculation if not subscribed
     trackCalculatorUsage();
     
@@ -109,6 +128,12 @@ const Calculator = () => {
     
     const calculatedAirbnbResults = calculateAirbnbResults(data);
     setAirbnbResults(calculatedAirbnbResults);
+    
+    // Save calculation to history
+    saveCalculationToHistory(data, calculatedResults, data.city);
+    
+    // Update history after saving
+    setCalculationHistory(getCalculationHistory());
     
     // Faire défiler jusqu'aux résultats
     setTimeout(() => {
@@ -146,6 +171,39 @@ const Calculator = () => {
     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
 
+  // Handle selecting an item from history
+  const handleSelectHistory = (item: CalculationHistory) => {
+    setPropertyData(item.propertyData);
+    setResults(item.results);
+    setSelectedCity(item.city);
+    
+    // Calculate comparison results for the selected history item
+    const longTermResults = calculateLongTermResults(item.propertyData);
+    setLongTermResults(longTermResults);
+    
+    const airbnbResults = calculateAirbnbResults(item.propertyData);
+    setAirbnbResults(airbnbResults);
+    
+    // Switch to the calculator tab to show results
+    setSelectedTab('calculator');
+    
+    // Scroll to results after a short delay
+    setTimeout(() => {
+      document.getElementById('results')?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  };
+
+  // Handle clearing history
+  const handleClearHistory = () => {
+    clearCalculationHistory();
+    setCalculationHistory([]);
+    toast({
+      title: "Historique effacé",
+      description: "Votre historique de calculs a été effacé avec succès.",
+      variant: "default",
+    });
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
@@ -153,7 +211,7 @@ const Calculator = () => {
       <main className="flex-grow pt-24">
         <section className="py-12 bg-background text-foreground">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center mb-12">
+            <div className="max-w-4xl mx-auto text-center mb-8">
               <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
                 <CalculatorIcon className="h-4 w-4 mr-2" />
                 <span>Calculateur de rentabilité</span>
@@ -194,29 +252,60 @@ const Calculator = () => {
               )}
             </div>
             
-            {limitReached ? (
-              <Card className="max-w-4xl mx-auto bg-card rounded-2xl shadow-sm border p-6 md:p-8 text-center">
-                <div className="flex flex-col items-center gap-4 py-6">
-                  <div className="rounded-full bg-amber-100 p-3 w-12 h-12 flex items-center justify-center">
-                    <Lock className="h-6 w-6 text-amber-600" />
-                  </div>
-                  <h2 className="text-xl font-bold">Limite de calculs atteinte</h2>
-                  <p className="text-muted-foreground mb-4 max-w-md">
-                    Vous avez utilisé votre calcul gratuit pour ce mois-ci. Passez à l'offre Pro pour des calculs illimités.
-                  </p>
-                  <Button 
-                    onClick={() => navigate('/pricing')}
-                    className="px-8"
-                  >
-                    Voir les offres
-                  </Button>
-                </div>
-              </Card>
-            ) : (
-              <div className="max-w-4xl mx-auto bg-card rounded-2xl shadow-sm border p-6 md:p-8">
-                <PropertyForm onCalculate={handleCalculate} />
-              </div>
-            )}
+            {/* Tabs for Calculator and History */}
+            <div className="max-w-4xl mx-auto mb-8">
+              <Tabs 
+                defaultValue="calculator" 
+                value={selectedTab} 
+                onValueChange={setSelectedTab} 
+                className="w-full"
+              >
+                <TabsList className="grid grid-cols-2 mb-4">
+                  <TabsTrigger value="calculator" className="flex items-center">
+                    <CalculatorIcon className="h-4 w-4 mr-2" />
+                    <span>Calculateur</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="history" className="flex items-center">
+                    <History className="h-4 w-4 mr-2" />
+                    <span>Historique ({calculationHistory.length})</span>
+                  </TabsTrigger>
+                </TabsList>
+                
+                <TabsContent value="calculator">
+                  {limitReached ? (
+                    <Card className="max-w-4xl mx-auto bg-card rounded-2xl shadow-sm border p-6 md:p-8 text-center">
+                      <div className="flex flex-col items-center gap-4 py-6">
+                        <div className="rounded-full bg-amber-100 p-3 w-12 h-12 flex items-center justify-center">
+                          <Lock className="h-6 w-6 text-amber-600" />
+                        </div>
+                        <h2 className="text-xl font-bold">Limite de calculs atteinte</h2>
+                        <p className="text-muted-foreground mb-4 max-w-md">
+                          Vous avez utilisé votre calcul gratuit pour ce mois-ci. Passez à l'offre Pro pour des calculs illimités.
+                        </p>
+                        <Button 
+                          onClick={() => navigate('/pricing')}
+                          className="px-8"
+                        >
+                          Voir les offres
+                        </Button>
+                      </div>
+                    </Card>
+                  ) : (
+                    <div className="bg-card rounded-2xl shadow-sm border p-6 md:p-8">
+                      <PropertyForm onCalculate={handleCalculate} initialData={propertyData} />
+                    </div>
+                  )}
+                </TabsContent>
+                
+                <TabsContent value="history">
+                  <CalculationHistoryCard 
+                    history={calculationHistory} 
+                    onSelectHistory={handleSelectHistory}
+                    onClearHistory={handleClearHistory}
+                  />
+                </TabsContent>
+              </Tabs>
+            </div>
           </div>
         </section>
         
