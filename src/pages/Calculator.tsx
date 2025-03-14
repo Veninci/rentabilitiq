@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -21,6 +21,8 @@ const Calculator = () => {
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
   const [remainingCalculations, setRemainingCalculations] = useState<number>(0);
   const [limitReached, setLimitReached] = useState<boolean>(false);
+  const [redirectCountdown, setRedirectCountdown] = useState<number | null>(null);
+  const redirectTimerRef = useRef<NodeJS.Timeout | null>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -46,7 +48,27 @@ const Calculator = () => {
     
     // Update remaining calculations
     setRemainingCalculations(getRemainingCalculations());
+
+    // Clean up any timers when component unmounts
+    return () => {
+      if (redirectTimerRef.current) {
+        clearTimeout(redirectTimerRef.current);
+      }
+    };
   }, [toast, navigate]);
+
+  // Effet pour gérer le compte à rebours de 10 minutes
+  useEffect(() => {
+    if (redirectCountdown !== null && redirectCountdown > 0) {
+      const interval = setInterval(() => {
+        setRedirectCountdown(prev => prev !== null ? prev - 1 : null);
+      }, 1000);
+      
+      return () => clearInterval(interval);
+    } else if (redirectCountdown === 0) {
+      navigate('/pricing');
+    }
+  }, [redirectCountdown, navigate]);
 
   const handleCalculate = (data: PropertyData) => {
     // Vérifier à nouveau la limite au moment de calculer
@@ -93,19 +115,35 @@ const Calculator = () => {
       document.getElementById('results')?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
     
-    // Si c'est le dernier calcul gratuit, informer l'utilisateur et rediriger après un court délai
+    // Annuler tout timer existant
+    if (redirectTimerRef.current) {
+      clearTimeout(redirectTimerRef.current);
+      redirectTimerRef.current = null;
+    }
+
+    // Si c'est le dernier calcul gratuit, informer l'utilisateur et configurer le compte à rebours de 10 minutes
     if (remaining === 0 && !isSubscribed()) {
       toast({
         title: "Dernier calcul gratuit",
-        description: "Vous venez d'utiliser votre calcul gratuit. Passez à l'offre Pro pour des calculs illimités.",
+        description: "Vous venez d'utiliser votre calcul gratuit. Vous serez redirigé vers la page des tarifs dans 10 minutes.",
         variant: "default",
       });
       
-      // Rediriger vers la page de tarifs après un court délai pour permettre à l'utilisateur de voir les résultats
-      setTimeout(() => {
+      // Démarrer le compte à rebours de 10 minutes (600 secondes)
+      setRedirectCountdown(600);
+      
+      // Configurer le timer pour rediriger après 10 minutes
+      redirectTimerRef.current = setTimeout(() => {
         navigate('/pricing');
-      }, 8000);
+      }, 600000); // 10 minutes en millisecondes
     }
+  };
+
+  // Fonction pour formater le temps (mm:ss)
+  const formatTime = (seconds: number): string => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
 
   return (
@@ -147,6 +185,13 @@ const Calculator = () => {
                   </div>
                 )}
               </div>
+              
+              {/* Afficher le compte à rebours si nécessaire */}
+              {redirectCountdown !== null && redirectCountdown > 0 && (
+                <div className="mt-2 text-amber-800 font-medium">
+                  Redirection vers la page des tarifs dans {formatTime(redirectCountdown)}
+                </div>
+              )}
             </div>
             
             {limitReached ? (
@@ -195,6 +240,13 @@ const Calculator = () => {
                 <p className="text-muted-foreground">
                   Voici l'analyse détaillée de la rentabilité de votre bien immobilier.
                 </p>
+                
+                {/* Afficher le compte à rebours dans la section des résultats aussi */}
+                {redirectCountdown !== null && redirectCountdown > 0 && (
+                  <div className="mt-4 text-amber-800 font-medium">
+                    Redirection vers la page des tarifs dans {formatTime(redirectCountdown)}
+                  </div>
+                )}
               </div>
               
               <div className="max-w-4xl mx-auto space-y-8">
