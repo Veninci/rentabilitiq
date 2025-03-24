@@ -1,6 +1,7 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Calculator, Mail, MapPin, Phone, ExternalLink, Instagram } from 'lucide-react';
+import { Calculator, Mail, Instagram } from 'lucide-react';
 const Footer = () => {
   return <footer className="bg-gray-50 border-t border-gray-100">
       <div className="container mx-auto px-4 py-12 md:py-16">
@@ -57,14 +58,6 @@ const Footer = () => {
               <li className="flex items-start space-x-3">
                 <Mail className="h-5 w-5 text-muted-foreground mt-0.5" />
                 <a href="mailto:veninci.invest@gmail.com" className="text-muted-foreground hover:text-primary text-sm">veninci.invest@gmail.com</a>
-              </li>
-              <li className="flex items-start space-x-3">
-                <Phone className="h-5 w-5 text-muted-foreground mt-0.5" />
-                <a href="tel:+33633465641" className="text-muted-foreground hover:text-primary text-sm">06 33 46 56 41</a>
-              </li>
-              <li className="flex items-start space-x-3">
-                <MapPin className="h-5 w-5 text-muted-foreground mt-0.5" />
-                <span className="text-muted-foreground text-sm">2 rue de la gravière, Kilstett 67840</span>
               </li>
             </ul>
           </div>
