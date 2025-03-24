@@ -5,12 +5,9 @@ import { Link } from 'react-router-dom';
 import GlassCard from '../ui/GlassCard';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Dialog, DialogContent, DialogClose } from '@/components/ui/dialog';
-
 const Hero = () => {
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
-
-  return (
-    <section className="relative pt-20 md:pt-32 pb-10 md:pb-24 overflow-hidden px-4 md:px-0">
+  return <section className="relative pt-20 md:pt-32 pb-10 md:pb-24 overflow-hidden px-4 md:px-0">
       {/* Background gradient */}
       <div className="absolute top-0 left-0 right-0 h-[70vh] bg-gradient-to-b from-primary/5 to-transparent -z-10"></div>
       
@@ -24,16 +21,22 @@ const Hero = () => {
             <span>Solution innovante pour investisseurs immobiliers</span>
           </div>
           
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 tracking-tight animate-slide-up" style={{ lineHeight: 1.1 }}>
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 tracking-tight animate-slide-up" style={{
+          lineHeight: 1.1
+        }}>
             Optimisez la rentabilité de vos investissements immobiliers
           </h1>
           
-          <p className="text-lg md:text-xl text-muted-foreground mb-6 md:mb-8 animate-slide-up" style={{ animationDelay: "100ms" }}>
+          <p className="text-lg md:text-xl text-muted-foreground mb-6 md:mb-8 animate-slide-up" style={{
+          animationDelay: "100ms"
+        }}>
             Calculez, analysez et comparez la rentabilité de vos biens locatifs en quelques clics.
             Une solution complète pour prendre des décisions éclairées.
           </p>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 animate-slide-up" style={{ animationDelay: "200ms" }}>
+          <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 animate-slide-up" style={{
+          animationDelay: "200ms"
+        }}>
             <Button asChild size="lg" className="w-full sm:w-auto rounded-full px-6 py-6 text-base">
               <Link to="/calculator">
                 Essayer le calculateur
@@ -48,7 +51,9 @@ const Hero = () => {
           </div>
         </div>
         
-        <div className="relative mt-8 md:mt-10 mb-6 md:mb-8 animate-blur-in" style={{ animationDelay: "300ms" }}>
+        <div className="relative mt-8 md:mt-10 mb-6 md:mb-8 animate-blur-in" style={{
+        animationDelay: "300ms"
+      }}>
           <GlassCard className="mx-auto max-w-6xl overflow-hidden">
             <div className="relative aspect-[16/10] md:aspect-[16/9] bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden dark:from-gray-900 dark:to-gray-800">
               <div className="absolute inset-0 flex items-center justify-center">
@@ -163,12 +168,7 @@ const Hero = () => {
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button 
-                        variant="ghost" 
-                        size="icon" 
-                        className="rounded-full bg-white/80 hover:bg-white shadow-sm h-6 w-6 md:h-8 md:w-8 transition-all duration-300 dark:bg-gray-800/80 dark:hover:bg-gray-800"
-                        onClick={() => setIsCalculatorOpen(true)}
-                      >
+                      <Button variant="ghost" size="icon" className="rounded-full bg-white/80 hover:bg-white shadow-sm h-6 w-6 md:h-8 md:w-8 transition-all duration-300 dark:bg-gray-800/80 dark:hover:bg-gray-800" onClick={() => setIsCalculatorOpen(true)}>
                         <Maximize2 className="h-3 w-3 md:h-4 md:w-4" />
                       </Button>
                     </TooltipTrigger>
@@ -180,17 +180,21 @@ const Hero = () => {
               </div>
             </div>
           </GlassCard>
-          <div className="text-center mt-2 text-xs md:text-sm text-muted-foreground animate-fade-in" style={{ animationDelay: "400ms" }}>
+          <div className="text-center mt-2 text-xs md:text-sm text-muted-foreground animate-fade-in" style={{
+          animationDelay: "400ms"
+        }}>
             L'interface ci-dessus est un exemple à titre illustratif. Essayez le calculateur pour des résultats personnalisés.
           </div>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto mt-8 md:mt-12 animate-fade-in px-2 sm:px-0" style={{ animationDelay: "400ms" }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto mt-8 md:mt-12 animate-fade-in px-2 sm:px-0" style={{
+        animationDelay: "400ms"
+      }}>
           <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm transition-all hover:shadow-md">
             <div className="bg-primary/10 h-10 w-10 rounded-lg flex items-center justify-center mb-4">
               <Calculator className="h-5 w-5 text-primary" />
             </div>
-            <h3 className="text-lg font-medium mb-2">Calcul précis</h3>
+            <h3 className="text-lg font-medium mb-2 text-slate-950">Calcul précis</h3>
             <p className="text-muted-foreground text-sm">Obtenez des calculs de rentabilité précis basés sur tous les paramètres pertinents de votre investissement.</p>
           </div>
           
@@ -198,7 +202,7 @@ const Hero = () => {
             <div className="bg-primary/10 h-10 w-10 rounded-lg flex items-center justify-center mb-4">
               <BarChart4 className="h-5 w-5 text-primary" />
             </div>
-            <h3 className="text-lg font-medium mb-2">Analyse complète</h3>
+            <h3 className="text-lg font-medium mb-2 text-slate-950">Analyse complète</h3>
             <p className="text-muted-foreground text-sm">Analysez en détail tous les aspects financiers de votre bien : revenus, charges, cash-flow et plus encore.</p>
           </div>
           
@@ -206,7 +210,7 @@ const Hero = () => {
             <div className="bg-primary/10 h-10 w-10 rounded-lg flex items-center justify-center mb-4">
               <PieChart className="h-5 w-5 text-primary" />
             </div>
-            <h3 className="text-lg font-medium mb-2">Comparaison visuelle</h3>
+            <h3 className="text-lg font-medium mb-2 text-slate-950">Comparaison visuelle</h3>
             <p className="text-muted-foreground text-sm">Comparez facilement différents scénarios d'investissement grâce à des visualisations claires et intuitives.</p>
           </div>
         </div>
@@ -334,8 +338,6 @@ const Hero = () => {
           </div>
         </DialogContent>
       </Dialog>
-    </section>
-  );
+    </section>;
 };
-
 export default Hero;
