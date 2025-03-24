@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ArrowRight, BarChart4, PieChart, Calculator, Maximize2, Home, Building, Wallet, TrendingUp, Landmark, Settings, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -9,7 +10,9 @@ import { Button as MovingBorderButton } from "@/components/ui/moving-border";
 
 const Hero = () => {
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
-  return <section className="relative pt-20 md:pt-32 pb-10 md:pb-24 overflow-hidden px-4 md:px-0">
+  
+  return (
+    <section className="relative pt-20 md:pt-32 pb-10 md:pb-24 overflow-hidden px-4 md:px-0">
       {/* Background gradient */}
       <div className="absolute top-0 left-0 right-0 h-[70vh] bg-gradient-to-b from-primary/5 to-transparent -z-10"></div>
       
@@ -347,56 +350,10 @@ const Hero = () => {
               </div>
             </GlassCard>
           </div>
-          <div className="text-center mt-2 text-xs md:text-sm text-muted-foreground animate-fade-in" style={{
-          animationDelay: "400ms"
-        }}>
-            L'interface ci-dessus est un exemple à titre illustratif. Essayez le calculateur pour des résultats personnalisés.
-          </div>
-        </div>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto mt-8 md:mt-12 animate-fade-in px-2 sm:px-0" style={{
-        animationDelay: "400ms"
-      }}>
-          <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm transition-all hover:shadow-md">
-            <div className="bg-primary/10 h-10 w-10 rounded-lg flex items-center justify-center mb-4">
-              <Calculator className="h-5 w-5 text-primary" />
-            </div>
-            <h3 className="text-lg font-medium mb-2 text-slate-950">Calcul précis</h3>
-            <p className="text-muted-foreground text-sm">Obtenez des calculs de rentabilité précis basés sur tous les paramètres pertinents de votre investissement.</p>
-          </div>
-          
-          <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm transition-all hover:shadow-md">
-            <div className="bg-primary/10 h-10 w-10 rounded-lg flex items-center justify-center mb-4">
-              <BarChart4 className="h-5 w-5 text-primary" />
-            </div>
-            <h3 className="text-lg font-medium mb-2 text-slate-950">Analyse complète</h3>
-            <p className="text-muted-foreground text-sm">Analysez en détail tous les aspects financiers de votre bien : revenus, charges, cash-flow et plus encore.</p>
-          </div>
-          
-          <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm transition-all hover:shadow-md">
-            <div className="bg-primary/10 h-10 w-10 rounded-lg flex items-center justify-center mb-4">
-              <PieChart className="h-5 w-5 text-primary" />
-            </div>
-            <h3 className="text-lg font-medium mb-2 text-slate-950">Comparaison visuelle</h3>
-            <p className="text-muted-foreground text-sm">Comparez facilement différents scénarios d'investissement grâce à des visualisations claires et intuitives.</p>
-          </div>
-        </div>
-      </div>
+        </DialogContent>
+      </Dialog>
+    </section>
+  );
+};
 
-      {/* Expanded Calculator Modal */}
-      <Dialog open={isCalculatorOpen} onOpenChange={setIsCalculatorOpen}>
-        <DialogContent className="sm:max-w-[90vw] md:max-w-[80vw] lg:max-w-[75vw] p-0 bg-transparent border-none shadow-none max-h-[90vh] overflow-y-auto">
-          <div className="relative">
-            <DialogClose className="absolute right-2 top-2 z-10">
-              <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full bg-white/80 hover:bg-white/90">
-                <X className="h-4 w-4" />
-              </Button>
-              <span className="sr-only">Fermer</span>
-            </DialogClose>
-            
-            <GlassCard variant="elevated" className="w-full overflow-hidden p-2 sm:p-3 md:p-4 lg:p-6">
-              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden">
-                <div className="p-3 sm:p-4 md:p-6 lg:p-8">
-                  <div className="flex items-center justify-between mb-4 sm:mb-6 md:mb-8">
-                    <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-5">
-                      <div className="bg-primary/10 h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 lg:h-16 lg:w-16 rounded-xl flex items-center justify-
+export default Hero;
