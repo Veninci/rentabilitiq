@@ -22,7 +22,7 @@ const Checkout = () => {
   
   const planId = searchParams.get('planId') || 'pro';
   const planName = searchParams.get('planName') || 'Pro';
-  const amount = parseFloat(searchParams.get('amount') || '8.99');
+  const amount = searchParams.get('amount') || '8.99';
   const billingCycle = (searchParams.get('cycle') || 'monthly') as 'monthly' | 'yearly';
   
   // Vérifier si l'utilisateur revient de Stripe (paramètre de succès)
@@ -52,6 +52,11 @@ const Checkout = () => {
     navigate('/pricing');
   };
 
+  // Déterminer le montant à afficher en fonction du cycle de facturation
+  const displayAmount = billingCycle === 'yearly' ? 
+    (planId === 'pro' ? '90' : '150') : 
+    amount;
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Navbar />
@@ -79,7 +84,7 @@ const Checkout = () => {
             <PaymentForm 
               planId={planId} 
               planName={planName} 
-              amount={amount} 
+              amount={parseFloat(displayAmount)} 
               billingCycle={billingCycle} 
             />
           </Elements>

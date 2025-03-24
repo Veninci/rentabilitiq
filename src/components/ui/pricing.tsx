@@ -67,6 +67,15 @@ export function Pricing({
     }
   };
 
+  // Generate checkout URL with billing cycle parameter
+  const getCheckoutUrl = (plan: PricingPlan) => {
+    if (plan.name === "Basic") return plan.href;
+    
+    const cycle = isMonthly ? "monthly" : "yearly";
+    const amount = isMonthly ? plan.price : plan.yearlyPrice;
+    return `${plan.href}&cycle=${cycle}`;
+  };
+
   return (
     <div className="container py-20">
       <div className="text-center space-y-4 mb-12">
@@ -154,11 +163,6 @@ export function Pricing({
                       minimumFractionDigits: 0,
                       maximumFractionDigits: 2,
                     }}
-                    formatter={(value) => `${value}€`}
-                    transformTiming={{
-                      duration: 500,
-                      easing: "ease-out",
-                    }}
                     willChange
                     className="font-variant-numeric: tabular-nums"
                   />
@@ -186,7 +190,7 @@ export function Pricing({
               <hr className="w-full my-4" />
 
               <Link
-                to={plan.href}
+                to={getCheckoutUrl(plan)}
                 className={cn(
                   buttonVariants({
                     variant: "outline",

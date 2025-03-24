@@ -40,7 +40,7 @@ const Pricing = () => {
       ],
       description: "Pour les investisseurs actifs",
       buttonText: "S'abonner maintenant",
-      href: "/checkout?planId=pro&planName=Pro&amount=8.99&cycle=monthly",
+      href: "/checkout?planId=pro&planName=Pro&amount=8.99",
       isPopular: true,
     },
     {
@@ -58,7 +58,7 @@ const Pricing = () => {
       ],
       description: "Pour les investisseurs professionnels",
       buttonText: "S'abonner maintenant",
-      href: "/checkout?planId=expert&planName=Expert&amount=13.99&cycle=monthly",
+      href: "/checkout?planId=expert&planName=Expert&amount=13.99",
       isPopular: false,
     },
   ];

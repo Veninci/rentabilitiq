@@ -39,26 +39,29 @@ const PaymentForm = ({ planId, planName, amount, billingCycle }: PaymentFormProp
     const currentDomain = window.location.origin; // Obtenir le domaine actuel (localhost ou production)
     const successUrl = `${currentDomain}/checkout?status=success&payment_id=${transactionId}`;
     
-    // Redirection vers le lien Stripe correspondant au plan choisi
-    if (planId === 'expert') {
-      // Si c'est un abonnement annuel
-      if (billingCycle === 'yearly') {
+    // Liens pour les abonnements annuels
+    if (billingCycle === 'yearly') {
+      // Plan Expert annuel
+      if (planId === 'expert') {
         return `https://buy.stripe.com/28o160bXd6mA8zm7sv?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
       }
       
-      // Si c'est un abonnement mensuel
-      return `https://buy.stripe.com/aEUcOIbXd6mA8zm001?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
-    }
-    
-    // Différents liens pour le plan Pro en fonction du cycle de facturation
-    if (planId === 'pro') {
-      // Si c'est un abonnement annuel
-      if (billingCycle === 'yearly') {
+      // Plan Pro annuel
+      if (planId === 'pro') {
         return `https://buy.stripe.com/3cs7uo7GXcKY4j68wy?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
       }
+    } else {
+      // Liens pour les abonnements mensuels
       
-      // Si c'est un abonnement mensuel (par défaut)
-      return `https://buy.stripe.com/cN25mg3qHfXa3f2dQQ?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
+      // Plan Expert mensuel
+      if (planId === 'expert') {
+        return `https://buy.stripe.com/aEUcOIbXd6mA8zm001?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
+      }
+      
+      // Plan Pro mensuel
+      if (planId === 'pro') {
+        return `https://buy.stripe.com/cN25mg3qHfXa3f2dQQ?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
+      }
     }
     
     // Lien par défaut pour le plan Pro mensuel si aucune correspondance n'est trouvée
@@ -75,6 +78,8 @@ const PaymentForm = ({ planId, planName, amount, billingCycle }: PaymentFormProp
     handleRedirectToStripe();
   };
 
+  const displayBillingCycle = billingCycle === 'monthly' ? 'Mensuel' : 'Annuel';
+
   return (
     <Card className="p-6 w-full max-w-md mx-auto">
       <form onSubmit={handleSubmit}>
@@ -84,7 +89,7 @@ const PaymentForm = ({ planId, planName, amount, billingCycle }: PaymentFormProp
         
         <div className="mb-6">
           <p className="text-sm text-muted-foreground mb-2">Détails du forfait:</p>
-          <p className="font-medium">{planName} - {billingCycle === 'monthly' ? 'Mensuel' : 'Annuel'}</p>
+          <p className="font-medium">{planName} - {displayBillingCycle}</p>
           <p className="text-lg font-semibold">{amount} € {billingCycle === 'monthly' ? '/mois' : '/an'}</p>
         </div>
 
