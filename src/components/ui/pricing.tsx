@@ -1,4 +1,3 @@
-
 import { useState, useRef } from "react";
 import { Check, Star } from "lucide-react";
 import { motion } from "framer-motion";
@@ -87,8 +86,9 @@ export function Pricing({
         </p>
       </div>
 
-      <div className="flex justify-center mb-10">
-        <label className="relative inline-flex items-center cursor-pointer">
+      <div className="flex justify-center mb-10 items-center">
+        <span className="mr-2 font-semibold">Mensuel</span>
+        <label className="relative inline-flex items-center cursor-pointer mx-3">
           <Label>
             <Switch
               ref={switchRef as any}
@@ -99,7 +99,7 @@ export function Pricing({
           </Label>
         </label>
         <span className="ml-2 font-semibold">
-          Annual billing <span className="text-primary">(Save 20%)</span>
+          Annual billing <span className="text-primary dark:text-white">(Save 20%)</span>
         </span>
       </div>
 
