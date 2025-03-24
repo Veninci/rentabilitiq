@@ -1,3 +1,4 @@
+
 import { useState, useRef } from "react";
 import { Check, Star } from "lucide-react";
 import { motion } from "framer-motion";
@@ -98,7 +99,7 @@ export function Pricing({
           </Label>
         </label>
         <span className="ml-2 font-semibold">
-          Annual billing <span className="text-primary dark:text-white">(Save 20%)</span>
+          Annual billing <span className="text-primary">(Save 20%)</span>
         </span>
       </div>
 
