@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import GlassCard from '../ui/GlassCard';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Dialog, DialogContent, DialogClose } from '@/components/ui/dialog';
+import { Button as MovingBorderButton } from "@/components/ui/moving-border";
+
 const Hero = () => {
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
   return <section className="relative pt-20 md:pt-32 pb-10 md:pb-24 overflow-hidden px-4 md:px-0">
@@ -37,17 +39,26 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 animate-slide-up" style={{
           animationDelay: "200ms"
         }}>
-            <Button asChild size="lg" className="w-full sm:w-auto rounded-full px-6 py-6 text-base">
-              <Link to="/calculator">
-                Essayer le calculateur
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" size="lg" className="w-full sm:w-auto rounded-full px-6 py-6 text-base">
-              <Link to="/pricing">
-                Voir les tarifs
-              </Link>
-            </Button>
+            <MovingBorderButton
+              as={Link}
+              to="/calculator"
+              borderRadius="2rem"
+              containerClassName="w-full sm:w-auto"
+              className="text-base py-2 px-6 font-medium"
+            >
+              Essayer le calculateur
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </MovingBorderButton>
+
+            <MovingBorderButton
+              as={Link}
+              to="/pricing"
+              borderRadius="2rem"
+              containerClassName="w-full sm:w-auto"
+              className="bg-white/10 text-base py-2 px-6 font-medium"
+            >
+              Voir les tarifs
+            </MovingBorderButton>
           </div>
         </div>
         
@@ -336,8 +347,56 @@ const Hero = () => {
               </div>
             </GlassCard>
           </div>
-        </DialogContent>
-      </Dialog>
-    </section>;
-};
-export default Hero;
+          <div className="text-center mt-2 text-xs md:text-sm text-muted-foreground animate-fade-in" style={{
+          animationDelay: "400ms"
+        }}>
+            L'interface ci-dessus est un exemple à titre illustratif. Essayez le calculateur pour des résultats personnalisés.
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto mt-8 md:mt-12 animate-fade-in px-2 sm:px-0" style={{
+        animationDelay: "400ms"
+      }}>
+          <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm transition-all hover:shadow-md">
+            <div className="bg-primary/10 h-10 w-10 rounded-lg flex items-center justify-center mb-4">
+              <Calculator className="h-5 w-5 text-primary" />
+            </div>
+            <h3 className="text-lg font-medium mb-2 text-slate-950">Calcul précis</h3>
+            <p className="text-muted-foreground text-sm">Obtenez des calculs de rentabilité précis basés sur tous les paramètres pertinents de votre investissement.</p>
+          </div>
+          
+          <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm transition-all hover:shadow-md">
+            <div className="bg-primary/10 h-10 w-10 rounded-lg flex items-center justify-center mb-4">
+              <BarChart4 className="h-5 w-5 text-primary" />
+            </div>
+            <h3 className="text-lg font-medium mb-2 text-slate-950">Analyse complète</h3>
+            <p className="text-muted-foreground text-sm">Analysez en détail tous les aspects financiers de votre bien : revenus, charges, cash-flow et plus encore.</p>
+          </div>
+          
+          <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm transition-all hover:shadow-md">
+            <div className="bg-primary/10 h-10 w-10 rounded-lg flex items-center justify-center mb-4">
+              <PieChart className="h-5 w-5 text-primary" />
+            </div>
+            <h3 className="text-lg font-medium mb-2 text-slate-950">Comparaison visuelle</h3>
+            <p className="text-muted-foreground text-sm">Comparez facilement différents scénarios d'investissement grâce à des visualisations claires et intuitives.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Expanded Calculator Modal */}
+      <Dialog open={isCalculatorOpen} onOpenChange={setIsCalculatorOpen}>
+        <DialogContent className="sm:max-w-[90vw] md:max-w-[80vw] lg:max-w-[75vw] p-0 bg-transparent border-none shadow-none max-h-[90vh] overflow-y-auto">
+          <div className="relative">
+            <DialogClose className="absolute right-2 top-2 z-10">
+              <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full bg-white/80 hover:bg-white/90">
+                <X className="h-4 w-4" />
+              </Button>
+              <span className="sr-only">Fermer</span>
+            </DialogClose>
+            
+            <GlassCard variant="elevated" className="w-full overflow-hidden p-2 sm:p-3 md:p-4 lg:p-6">
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden">
+                <div className="p-3 sm:p-4 md:p-6 lg:p-8">
+                  <div className="flex items-center justify-between mb-4 sm:mb-6 md:mb-8">
+                    <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-5">
+                      <div className="bg-primary/10 h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 lg:h-16 lg:w-16 rounded-xl flex items-center justify-
