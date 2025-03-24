@@ -1,7 +1,8 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Calculator, Mail, Instagram } from 'lucide-react';
+import { Calculator, Mail, Instagram, ExternalLink } from 'lucide-react';
+
 const Footer = () => {
   return <footer className="bg-gray-50 border-t border-gray-100">
       <div className="container mx-auto px-4 py-12 md:py-16">
