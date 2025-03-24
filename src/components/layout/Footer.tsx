@@ -1,17 +1,14 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Calculator, Mail, MapPin, Phone, ExternalLink, Instagram } from 'lucide-react';
-
 const Footer = () => {
-  return (
-    <footer className="bg-gray-50 border-t border-gray-100">
+  return <footer className="bg-gray-50 border-t border-gray-100">
       <div className="container mx-auto px-4 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
           <div className="space-y-4">
             <Link to="/" className="flex items-center space-x-2 font-semibold text-lg">
               <Calculator className="h-5 w-5 text-primary" />
-              <span>RentabilitiQ</span>
+              <span className="text-slate-950">RentabilitiQ</span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed">
               La solution moderne pour calculer et optimiser la rentabilité de vos 
@@ -26,7 +23,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-medium text-sm tracking-wider uppercase mb-4">Navigation Principale</h4>
+            <h4 className="font-medium text-sm tracking-wider uppercase mb-4 text-slate-950">Navigation Principale</h4>
             <ul className="space-y-2">
               <li><Link to="/" className="text-muted-foreground hover:text-primary text-sm">Accueil</Link></li>
               <li><Link to="/calculator" className="text-muted-foreground hover:text-primary text-sm">Calculateur de rentabilité</Link></li>
@@ -36,7 +33,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-medium text-sm tracking-wider uppercase mb-4">Ressources</h4>
+            <h4 className="font-medium text-sm tracking-wider uppercase mb-4 text-slate-950">Ressources</h4>
             <ul className="space-y-2">
               <li><Link to="/terms" className="text-muted-foreground hover:text-primary text-sm">Conditions d'utilisation</Link></li>
               <li><Link to="/privacy" className="text-muted-foreground hover:text-primary text-sm">Politique de confidentialité</Link></li>
@@ -55,7 +52,7 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-medium text-sm tracking-wider uppercase mb-4">Contact</h4>
+            <h4 className="font-medium text-sm tracking-wider uppercase mb-4 text-slate-950">Contact</h4>
             <ul className="space-y-3">
               <li className="flex items-start space-x-3">
                 <Mail className="h-5 w-5 text-muted-foreground mt-0.5" />
@@ -85,8 +82,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
