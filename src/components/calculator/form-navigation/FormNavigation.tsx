@@ -23,7 +23,7 @@ const FormNavigation: React.FC<FormNavigationProps> = ({
           type="button" 
           variant="outline" 
           onClick={onPrevious}
-          className="border-gray-600 text-white hover:bg-gray-800"
+          className="border-gray-600 text-black dark:text-white hover:bg-gray-800 hover:text-white"
         >
           Précédent
         </Button>
