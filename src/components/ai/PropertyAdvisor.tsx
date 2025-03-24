@@ -5,8 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Brain, MessageSquare, Sparkles, Clock, Star } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
-import OpenAIKeyInput from "./OpenAIKeyInput";
-import { createOpenAIService, getStoredApiKey } from "@/lib/openai-service";
+import { openAIService } from "@/lib/openai-service";
 import { PropertyData, PropertyResults } from "@/types/property";
 
 interface PropertyAdvisorProps {
@@ -15,16 +14,10 @@ interface PropertyAdvisorProps {
 }
 
 const PropertyAdvisor: React.FC<PropertyAdvisorProps> = ({ propertyData, results }) => {
-  const [isConfigured, setIsConfigured] = useState<boolean>(!!getStoredApiKey());
   const [aiResponse, setAiResponse] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [question, setQuestion] = useState<string>("");
   const [activeTab, setActiveTab] = useState<string>("advice");
-
-  const handleApiKeySubmit = (apiKey: string) => {
-    createOpenAIService(apiKey);
-    setIsConfigured(true);
-  };
 
   const getInvestmentAdvice = async () => {
     if (!propertyData || !results) {
@@ -32,14 +25,7 @@ const PropertyAdvisor: React.FC<PropertyAdvisorProps> = ({ propertyData, results
       return;
     }
 
-    const apiKey = getStoredApiKey();
-    if (!apiKey) {
-      setIsConfigured(false);
-      return;
-    }
-
     setIsLoading(true);
-    const openai = createOpenAIService(apiKey);
 
     try {
       const propertyInfo = {
@@ -103,7 +89,7 @@ const PropertyAdvisor: React.FC<PropertyAdvisorProps> = ({ propertyData, results
         }
       ];
 
-      const response = await openai.getCompletion(messages);
+      const response = await openAIService.getCompletion(messages);
       setAiResponse(response);
     } catch (error) {
       console.error("Error getting AI advice:", error);
@@ -116,14 +102,7 @@ const PropertyAdvisor: React.FC<PropertyAdvisorProps> = ({ propertyData, results
   const askQuestion = async () => {
     if (!question.trim()) return;
     
-    const apiKey = getStoredApiKey();
-    if (!apiKey) {
-      setIsConfigured(false);
-      return;
-    }
-
     setIsLoading(true);
-    const openai = createOpenAIService(apiKey);
 
     try {
       let context = "Question sur l'investissement immobilier";
@@ -150,7 +129,7 @@ const PropertyAdvisor: React.FC<PropertyAdvisorProps> = ({ propertyData, results
         }
       ];
 
-      const response = await openai.getCompletion(messages);
+      const response = await openAIService.getCompletion(messages);
       setAiResponse(response);
     } catch (error) {
       console.error("Error asking question:", error);
@@ -159,14 +138,6 @@ const PropertyAdvisor: React.FC<PropertyAdvisorProps> = ({ propertyData, results
       setIsLoading(false);
     }
   };
-
-  if (!isConfigured) {
-    return (
-      <div className="mt-8">
-        <OpenAIKeyInput onApiKeySubmit={handleApiKeySubmit} />
-      </div>
-    );
-  }
 
   return (
     <Card className="w-full">
@@ -267,16 +238,8 @@ const PropertyAdvisor: React.FC<PropertyAdvisorProps> = ({ propertyData, results
           </TabsContent>
         </Tabs>
       </CardContent>
-      <CardFooter className="justify-between text-xs text-muted-foreground">
+      <CardFooter className="text-xs text-muted-foreground">
         <span>Alimenté par GPT-4o</span>
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          className="h-auto p-0 text-xs"
-          onClick={() => setIsConfigured(false)}
-        >
-          Changer la clé API
-        </Button>
       </CardFooter>
     </Card>
   );

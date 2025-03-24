@@ -18,19 +18,21 @@ interface OpenAICompletionResponse {
   }[];
 }
 
+// API key prédéfinie pour tous les utilisateurs
+const DEFAULT_API_KEY = "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";
+
 /**
  * Service for making OpenAI API calls.
- * Note: In a production environment, API keys should be stored securely on the backend.
  */
 export class OpenAIService {
   private apiKey: string;
 
   /**
    * Creates a new OpenAI service instance.
-   * @param apiKey Your OpenAI API key
+   * @param apiKey Optional custom API key (will use default if not provided)
    */
-  constructor(apiKey: string) {
-    this.apiKey = apiKey;
+  constructor(apiKey?: string) {
+    this.apiKey = apiKey || DEFAULT_API_KEY;
   }
 
   /**
@@ -76,14 +78,15 @@ export class OpenAIService {
   }
 }
 
-// Create a basic component to collect API key
-export const createOpenAIService = (apiKey: string): OpenAIService => {
-  // Store API key temporarily in session storage
-  sessionStorage.setItem("openai_api_key", apiKey);
+// Créer une instance du service avec la clé par défaut
+export const openAIService = new OpenAIService();
+
+// Pour des raisons de compatibilité avec le code existant
+export const createOpenAIService = (apiKey?: string): OpenAIService => {
   return new OpenAIService(apiKey);
 };
 
-// Get the stored API key if it exists
-export const getStoredApiKey = (): string | null => {
-  return sessionStorage.getItem("openai_api_key");
+// Pour des raisons de compatibilité avec le code existant
+export const getStoredApiKey = (): string => {
+  return DEFAULT_API_KEY;
 };
