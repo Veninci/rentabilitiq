@@ -19,7 +19,7 @@ interface OpenAICompletionResponse {
 }
 
 // API key prédéfinie pour tous les utilisateurs
-const DEFAULT_API_KEY = "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";
+const DEFAULT_API_KEY = "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";
 
 /**
  * Service for making OpenAI API calls.
