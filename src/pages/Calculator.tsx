@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
@@ -7,9 +6,10 @@ import PropertyForm from '@/components/calculator/PropertyForm';
 import ResultsCard from '@/components/calculator/ResultsCard';
 import ComparisonChart from '@/components/calculator/ComparisonChart';
 import CalculationHistoryCard from '@/components/calculator/CalculationHistoryCard';
+import PropertyAdvisor from '@/components/ai/PropertyAdvisor';
 import { PropertyData, PropertyResults, CalculationHistory } from '@/types/property';
 import { calculateResults, calculateAirbnbResults, calculateLongTermResults } from '@/lib/calculations';
-import { Calculator as CalculatorIcon, MapPin, Lock, AlertTriangle, Info as InfoIcon, CheckCircle, History } from 'lucide-react';
+import { Calculator as CalculatorIcon, MapPin, Lock, AlertTriangle, Info as InfoIcon, CheckCircle, History, Brain } from 'lucide-react';
 import { 
   hasReachedUsageLimit, 
   trackCalculatorUsage, 
@@ -252,7 +252,7 @@ const Calculator = () => {
               )}
             </div>
             
-            {/* Tabs for Calculator and History */}
+            {/* Tabs for Calculator, History, and AI */}
             <div className="max-w-4xl mx-auto mb-8">
               <Tabs 
                 defaultValue="calculator" 
@@ -260,7 +260,7 @@ const Calculator = () => {
                 onValueChange={setSelectedTab} 
                 className="w-full"
               >
-                <TabsList className="grid grid-cols-2 mb-4">
+                <TabsList className="grid grid-cols-3 mb-4">
                   <TabsTrigger value="calculator" className="flex items-center">
                     <CalculatorIcon className="h-4 w-4 mr-2" />
                     <span>Calculateur</span>
@@ -268,6 +268,10 @@ const Calculator = () => {
                   <TabsTrigger value="history" className="flex items-center">
                     <History className="h-4 w-4 mr-2" />
                     <span>Historique ({calculationHistory.length})</span>
+                  </TabsTrigger>
+                  <TabsTrigger value="ai-advisor" className="flex items-center">
+                    <Brain className="h-4 w-4 mr-2" />
+                    <span>Conseiller IA</span>
                   </TabsTrigger>
                 </TabsList>
                 
@@ -303,6 +307,10 @@ const Calculator = () => {
                     onSelectHistory={handleSelectHistory}
                     onClearHistory={handleClearHistory}
                   />
+                </TabsContent>
+                
+                <TabsContent value="ai-advisor">
+                  <PropertyAdvisor propertyData={propertyData} results={results} />
                 </TabsContent>
               </Tabs>
             </div>
@@ -345,6 +353,9 @@ const Calculator = () => {
                   longTerm={longTermResults} 
                   airbnb={airbnbResults} 
                 />
+                
+                {/* Add AI Property Advisor in results section if we have results */}
+                <PropertyAdvisor propertyData={propertyData} results={results} />
               </div>
             </div>
           </section>
