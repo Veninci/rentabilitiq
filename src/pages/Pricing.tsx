@@ -2,13 +2,67 @@
 import React from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
-import PricingCards from '@/components/pricing/PricingCards';
 import PricingFAQ from '@/components/pricing/PricingFAQ';
 import BreadcrumbNav from '@/components/layout/BreadcrumbNav';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { Pricing as PricingComponent } from '@/components/ui/pricing';
 
 const Pricing = () => {
+  const pricingPlans = [
+    {
+      name: "Basic",
+      price: "0",
+      yearlyPrice: "0",
+      period: "mois",
+      features: [
+        '1 simulation par mois',
+        'Calculs basiques de rentabilité',
+        'Comparaison location classique et Airbnb',
+        'Accès à la calculatrice standard',
+      ],
+      description: "Pour débuter vos simulations immobilières",
+      buttonText: "Commencer gratuitement",
+      href: "/calculator",
+      isPopular: false,
+    },
+    {
+      name: "Pro",
+      price: "8.99",
+      yearlyPrice: "90",
+      period: "mois",
+      features: [
+        'Simulations illimitées',
+        'Export PDF des rapports',
+        'Alertes de rentabilité',
+        'Comparaison multi-propriétés',
+        'Support prioritaire',
+      ],
+      description: "Pour les investisseurs actifs",
+      buttonText: "S'abonner maintenant",
+      href: "/checkout?planId=pro&planName=Pro&amount=8.99&cycle=monthly",
+      isPopular: true,
+    },
+    {
+      name: "Expert",
+      price: "13.99",
+      yearlyPrice: "150",
+      period: "mois",
+      features: [
+        'Tout ce qui est inclus dans Pro',
+        'API immobilière complète',
+        'Suivi des tendances du marché',
+        'Conseils fiscaux personnalisés',
+        'Tableau de bord avancé',
+        'Accès prioritaire aux nouvelles fonctionnalités',
+      ],
+      description: "Pour les investisseurs professionnels",
+      buttonText: "S'abonner maintenant",
+      href: "/checkout?planId=expert&planName=Expert&amount=13.99&cycle=monthly",
+      isPopular: false,
+    },
+  ];
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Helmet>
@@ -20,21 +74,13 @@ const Pricing = () => {
       <Navbar />
       <BreadcrumbNav />
       
-      <main className="flex-grow pt-8 pricing-page">
-        <section className="py-8 md:py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="text-center mb-12 md:mb-16">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4 animate-fade-in">
-              Des tarifs adaptés à vos besoins
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto animate-fade-in">
-              Choisissez le plan qui correspond à votre stratégie d'investissement immobilier. 
-              <Link to="/calculator" className="text-primary hover:underline ml-1">
-                Essayez notre calculateur gratuit
-              </Link>.
-            </p>
-          </div>
-          
-          <PricingCards />
+      <main className="flex-grow pricing-page">
+        <div className="py-8 md:py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <PricingComponent 
+            plans={pricingPlans}
+            title="Des tarifs adaptés à vos besoins"
+            description="Choisissez le plan qui correspond à votre stratégie d'investissement immobilier."
+          />
           
           <div className="mt-16 md:mt-24">
             <div className="text-center mb-12">
@@ -46,7 +92,7 @@ const Pricing = () => {
             </div>
             <PricingFAQ />
           </div>
-        </section>
+        </div>
       </main>
       <Footer />
     </div>
