@@ -113,7 +113,7 @@ const Pricing = () => {
               </Label>
               <Switch id="billing-toggle" checked={billingCycle === 'yearly'} onCheckedChange={handleToggle} />
               <Label htmlFor="billing-toggle" className={`text-sm font-medium ${billingCycle === 'yearly' ? 'text-foreground' : 'text-muted-foreground'}`}>
-                Annuel <span className="text-primary">(Économisez)</span>
+                Annuel <span className="text-primary dark:text-white">(Économisez)</span>
               </Label>
             </div>
           </div>
