@@ -21,10 +21,6 @@ const CalculationHistoryCard: React.FC<CalculationHistoryCardProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  const handleNavigateToCalculator = () => {
-    navigate('/calculator');
-  };
-
   if (history.length === 0) {
     return (
       <Card className="w-full">
@@ -37,7 +33,7 @@ const CalculationHistoryCard: React.FC<CalculationHistoryCardProps> = ({
             <Button 
               variant="outline" 
               className="mt-4"
-              onClick={handleNavigateToCalculator}
+              onClick={() => navigate('/calculator')}
             >
               Faire votre premier calcul
             </Button>
