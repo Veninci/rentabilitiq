@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import type { ButtonProps } from "@/components/ui/button";
-import { MousePointerClick } from "lucide-react";
 
 interface ParticleButtonProps extends ButtonProps {
     onSuccess?: () => void;
