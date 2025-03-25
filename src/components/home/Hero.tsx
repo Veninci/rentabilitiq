@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ArrowRight, BarChart4, PieChart, Calculator, Maximize2, Home, Building, Wallet, TrendingUp, Landmark, Settings, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -48,11 +47,13 @@ const Hero = () => {
                 </Link>
               </Button>
             </MagneticButton>
-            <Button asChild variant="outline" size="lg" className="w-full sm:w-auto rounded-full px-6 py-6 text-base">
-              <Link to="/pricing">
-                Voir les tarifs
-              </Link>
-            </Button>
+            <MagneticButton>
+              <Button asChild variant="outline" size="lg" className="w-full sm:w-auto rounded-full px-6 py-6 text-base">
+                <Link to="/pricing">
+                  Voir les tarifs
+                </Link>
+              </Button>
+            </MagneticButton>
           </div>
         </div>
         
