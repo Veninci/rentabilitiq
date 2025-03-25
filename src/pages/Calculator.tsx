@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
@@ -7,6 +8,7 @@ import ResultsCard from '@/components/calculator/ResultsCard';
 import ComparisonChart from '@/components/calculator/ComparisonChart';
 import CalculationHistoryCard from '@/components/calculator/CalculationHistoryCard';
 import PropertyAdvisor from '@/components/ai/PropertyAdvisor';
+import UsageLimitReached from '@/components/calculator/UsageLimitReached';
 import { PropertyData, PropertyResults, CalculationHistory } from '@/types/property';
 import { calculateResults, calculateAirbnbResults, calculateLongTermResults } from '@/lib/calculations';
 import { Calculator as CalculatorIcon, MapPin, Lock, AlertTriangle, Info as InfoIcon, CheckCircle, History, Brain } from 'lucide-react';
@@ -17,7 +19,8 @@ import {
   isSubscribed,
   saveCalculationToHistory,
   getCalculationHistory,
-  clearCalculationHistory
+  clearCalculationHistory,
+  getRemainingPaidCalculations
 } from '@/lib/usageTracker';
 import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
@@ -49,18 +52,19 @@ const Calculator = () => {
       // Show a toast notification about the limit
       toast({
         title: "Limite atteinte",
-        description: "Vous avez atteint votre limite de 1 calcul gratuit. Passez à l'offre Pro pour des calculs illimités.",
+        description: "Vous avez atteint votre limite de 1 calcul gratuit. Achetez un calcul à l'unité ou passez à l'offre Pro.",
         variant: "destructive",
       });
-      
-      // Redirect to pricing page after a short delay
-      setTimeout(() => {
-        navigate('/pricing');
-      }, 2000);
     }
     
     // Update remaining calculations
-    setRemainingCalculations(getRemainingCalculations());
+    const paidCalculations = getRemainingPaidCalculations();
+    if (paidCalculations > 0) {
+      setRemainingCalculations(paidCalculations);
+      setLimitReached(false);
+    } else {
+      setRemainingCalculations(getRemainingCalculations());
+    }
 
     // Load calculation history
     setCalculationHistory(getCalculationHistory());
@@ -73,7 +77,7 @@ const Calculator = () => {
     };
   }, [toast, navigate]);
 
-  // Effet pour gérer le compte à rebours de 10 minutes
+  // Effet pour gérer le compte à rebours
   useEffect(() => {
     if (redirectCountdown !== null && redirectCountdown > 0) {
       const interval = setInterval(() => {
@@ -92,23 +96,27 @@ const Calculator = () => {
       setLimitReached(true);
       toast({
         title: "Limite atteinte",
-        description: "Vous avez atteint votre limite de 1 calcul gratuit. Passez à l'offre Pro pour des calculs illimités.",
+        description: "Vous avez atteint votre limite de calcul. Achetez un calcul à l'unité ou passez à l'offre Pro.",
         variant: "destructive",
       });
-      
-      // Redirect to pricing page after a short delay
-      setTimeout(() => {
-        navigate('/pricing');
-      }, 2000);
-      
       return;
     }
     
     // Store property data
     setPropertyData(data);
     
-    // Track this calculation if not subscribed
-    trackCalculatorUsage();
+    // Track this calculation - cette fonction retourne maintenant un boolean indiquant si le calcul a été effectué
+    const calculationSuccess = trackCalculatorUsage();
+    
+    if (!calculationSuccess) {
+      setLimitReached(true);
+      toast({
+        title: "Limite atteinte",
+        description: "Vous n'avez plus de calculs disponibles. Achetez un calcul à l'unité ou passez à l'offre Pro.",
+        variant: "destructive",
+      });
+      return;
+    }
     
     // Update remaining calculations and limit status
     const remaining = getRemainingCalculations();
@@ -146,21 +154,14 @@ const Calculator = () => {
       redirectTimerRef.current = null;
     }
 
-    // Si c'est le dernier calcul gratuit, informer l'utilisateur et configurer le compte à rebours de 10 minutes
-    if (remaining === 0 && !isSubscribed()) {
+    // Si c'était un calcul payé à l'unité, informer l'utilisateur
+    const paidCalculations = getRemainingPaidCalculations();
+    if (paidCalculations === 0 && !isSubscribed()) {
       toast({
-        title: "Dernier calcul gratuit",
-        description: "Vous venez d'utiliser votre calcul gratuit. Vous serez redirigé vers la page des tarifs dans 10 minutes.",
+        title: "Dernier calcul utilisé",
+        description: "Vous venez d'utiliser votre dernier calcul payé. Pour en obtenir un nouveau, achetez-le à l'unité pour 5,99€.",
         variant: "default",
       });
-      
-      // Démarrer le compte à rebours de 10 minutes (600 secondes)
-      setRedirectCountdown(600);
-      
-      // Configurer le timer pour rediriger après 10 minutes
-      redirectTimerRef.current = setTimeout(() => {
-        navigate('/pricing');
-      }, 600000); // 10 minutes en millisecondes
     }
   };
 
@@ -232,12 +233,19 @@ const Calculator = () => {
                     <CheckCircle className="h-4 w-4 mr-2" />
                     <span>Calculs illimités (Abonnement actif)</span>
                   </div>
+                ) : getRemainingPaidCalculations() > 0 ? (
+                  <div className="bg-green-100 text-green-800 px-4 py-2 rounded-full flex items-center">
+                    <CheckCircle className="h-4 w-4 mr-2" />
+                    <span>
+                      {`${getRemainingPaidCalculations()} calcul${getRemainingPaidCalculations() > 1 ? 's' : ''} payé${getRemainingPaidCalculations() > 1 ? 's' : ''} disponible${getRemainingPaidCalculations() > 1 ? 's' : ''}`}
+                    </span>
+                  </div>
                 ) : (
                   <div className={`${limitReached ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800'} px-4 py-2 rounded-full flex items-center`}>
                     <AlertTriangle className="h-4 w-4 mr-2" />
                     <span>
                       {limitReached 
-                        ? "Limite atteinte - Passez à l'offre Pro" 
+                        ? "Limite atteinte - Achetez un calcul à l'unité" 
                         : `Il vous reste ${remainingCalculations} calcul gratuit`}
                     </span>
                   </div>
@@ -277,23 +285,7 @@ const Calculator = () => {
                 
                 <TabsContent value="calculator">
                   {limitReached ? (
-                    <Card className="max-w-4xl mx-auto bg-card rounded-2xl shadow-sm border p-6 md:p-8 text-center">
-                      <div className="flex flex-col items-center gap-4 py-6">
-                        <div className="rounded-full bg-amber-100 p-3 w-12 h-12 flex items-center justify-center">
-                          <Lock className="h-6 w-6 text-amber-600" />
-                        </div>
-                        <h2 className="text-xl font-bold">Limite de calculs atteinte</h2>
-                        <p className="text-muted-foreground mb-4 max-w-md">
-                          Vous avez utilisé votre calcul gratuit pour ce mois-ci. Passez à l'offre Pro pour des calculs illimités.
-                        </p>
-                        <Button 
-                          onClick={() => navigate('/pricing')}
-                          className="px-8"
-                        >
-                          Voir les offres
-                        </Button>
-                      </div>
-                    </Card>
+                    <UsageLimitReached />
                   ) : (
                     <div className="bg-card rounded-2xl shadow-sm border p-6 md:p-8">
                       <PropertyForm onCalculate={handleCalculate} initialData={propertyData} />
@@ -337,13 +329,6 @@ const Calculator = () => {
                 <p className="text-muted-foreground">
                   Voici l'analyse détaillée de la rentabilité de votre bien immobilier.
                 </p>
-                
-                {/* Afficher le compte à rebours dans la section des résultats aussi */}
-                {redirectCountdown !== null && redirectCountdown > 0 && (
-                  <div className="mt-4 text-amber-800 font-medium">
-                    Redirection vers la page des tarifs dans {formatTime(redirectCountdown)}
-                  </div>
-                )}
               </div>
               
               <div className="max-w-4xl mx-auto space-y-8">

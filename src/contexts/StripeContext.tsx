@@ -2,6 +2,11 @@
 import React, { createContext, useContext, ReactNode, useState, useEffect } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
+import { 
+  getRemainingPaidCalculations, 
+  usePaidCalculation, 
+  addPaidCalculation 
+} from '@/lib/usageTracker';
 
 // Remplacez cette clé par votre clé publique Stripe
 const stripePromise = loadStripe('pk_test_51O9aXXXXXXXXXXXXXXXXXXXX');
@@ -12,9 +17,9 @@ interface StripeProviderProps {
 
 interface StripeContextValue {
   // Déclaration des types pour l'authentification et les paiements
-  // Ces méthodes seront implémentées ultérieurement
   hasPaidForCalculation: () => boolean;
   markCalculationAsPaid: () => void;
+  useCalculation: () => boolean;
   resetPaymentStatus: () => void;
   remainingCalculations: number;
 }
@@ -22,6 +27,7 @@ interface StripeContextValue {
 const StripeContext = createContext<StripeContextValue>({
   hasPaidForCalculation: () => false,
   markCalculationAsPaid: () => {},
+  useCalculation: () => false,
   resetPaymentStatus: () => {},
   remainingCalculations: 0,
 });
@@ -33,10 +39,8 @@ export const StripeProvider = ({ children }: StripeProviderProps) => {
 
   useEffect(() => {
     // Vérifier si l'utilisateur a des calculs déjà payés
-    const paidCalculations = localStorage.getItem('paid_calculations');
-    if (paidCalculations) {
-      setRemainingCalculations(parseInt(paidCalculations, 10));
-    }
+    const paidCalculations = getRemainingPaidCalculations();
+    setRemainingCalculations(paidCalculations);
   }, []);
 
   // Vérifier si l'utilisateur a payé pour un calcul
@@ -46,18 +50,20 @@ export const StripeProvider = ({ children }: StripeProviderProps) => {
 
   // Marquer qu'un calcul a été effectué et payé
   const markCalculationAsPaid = (): void => {
-    const newCount = remainingCalculations + 1;
-    setRemainingCalculations(newCount);
-    localStorage.setItem('paid_calculations', newCount.toString());
+    addPaidCalculation();
+    setRemainingCalculations(getRemainingPaidCalculations());
   };
 
   // Utiliser un calcul
-  const useCalculation = (): void => {
+  const useCalculation = (): boolean => {
     if (remainingCalculations > 0) {
-      const newCount = remainingCalculations - 1;
-      setRemainingCalculations(newCount);
-      localStorage.setItem('paid_calculations', newCount.toString());
+      const success = usePaidCalculation();
+      if (success) {
+        setRemainingCalculations(getRemainingPaidCalculations());
+      }
+      return success;
     }
+    return false;
   };
 
   // Réinitialiser l'état des paiements
@@ -69,6 +75,7 @@ export const StripeProvider = ({ children }: StripeProviderProps) => {
   const value = {
     hasPaidForCalculation,
     markCalculationAsPaid,
+    useCalculation,
     resetPaymentStatus,
     remainingCalculations,
   };

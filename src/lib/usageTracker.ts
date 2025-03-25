@@ -1,3 +1,4 @@
+
 // Simple utility to track calculator usage and enforce limits for free users
 
 // Define the structure of our usage data
@@ -19,6 +20,7 @@ export const resetToBasic = (): void => {
   localStorage.removeItem('pending_subscription');
   localStorage.removeItem('subscription_timestamp');
   localStorage.removeItem('payment_confirmed');
+  localStorage.removeItem('paid_calculations');
   
   // Réinitialiser le compteur d'utilisation pour avoir un seul essai
   const resetUsage: UsageData = {
@@ -28,15 +30,21 @@ export const resetToBasic = (): void => {
   localStorage.setItem('calculator_usage', JSON.stringify(resetUsage));
 };
 
-// Vérifier si l'utilisateur est abonné (Pro ou Expert)
+// Vérifier si l'utilisateur est abonné (Pro ou Expert) ou a des calculs payés à l'unité
 export const isSubscribed = (): boolean => {
   const subscription = localStorage.getItem('user_subscription');
   const pendingSubscription = localStorage.getItem('pending_subscription');
   const subscriptionTimestamp = localStorage.getItem('subscription_timestamp');
   const paymentConfirmed = localStorage.getItem('payment_confirmed');
+  const paidCalculations = localStorage.getItem('paid_calculations');
   
   // Si l'utilisateur a une souscription active confirmée
   if (subscription === 'pro' || subscription === 'expert') {
+    return true;
+  }
+  
+  // Si l'utilisateur a des calculs payés à l'unité
+  if (paidCalculations && parseInt(paidCalculations) > 0) {
     return true;
   }
   
@@ -74,6 +82,16 @@ export const confirmSubscription = (): void => {
     // Nettoyer les données temporaires
     localStorage.removeItem('pending_subscription');
     localStorage.removeItem('subscription_timestamp');
+  } else if (pendingSubscription === 'unit') {
+    // Pour l'achat à l'unité, ajouter un calcul
+    const currentCalculations = localStorage.getItem('paid_calculations');
+    const calculationsCount = currentCalculations ? parseInt(currentCalculations) + 1 : 1;
+    localStorage.setItem('paid_calculations', calculationsCount.toString());
+    
+    // Nettoyer les données temporaires
+    localStorage.removeItem('pending_subscription');
+    localStorage.removeItem('subscription_timestamp');
+    localStorage.setItem('payment_confirmed', 'true');
   }
 };
 
@@ -85,6 +103,31 @@ export const setUserSubscription = (plan: 'pro' | 'expert'): void => {
   localStorage.removeItem('pending_subscription');
   localStorage.removeItem('subscription_timestamp');
   localStorage.removeItem('payment_confirmed');
+};
+
+// Ajouter un calcul à l'unité
+export const addPaidCalculation = (): void => {
+  const currentCalculations = localStorage.getItem('paid_calculations');
+  const calculationsCount = currentCalculations ? parseInt(currentCalculations) + 1 : 1;
+  localStorage.setItem('paid_calculations', calculationsCount.toString());
+};
+
+// Utiliser un calcul à l'unité
+export const usePaidCalculation = (): boolean => {
+  const currentCalculations = localStorage.getItem('paid_calculations');
+  if (!currentCalculations || parseInt(currentCalculations) <= 0) {
+    return false;
+  }
+  
+  const calculationsCount = parseInt(currentCalculations) - 1;
+  localStorage.setItem('paid_calculations', calculationsCount.toString());
+  return true;
+};
+
+// Récupérer le nombre de calculs payés restants
+export const getRemainingPaidCalculations = (): number => {
+  const currentCalculations = localStorage.getItem('paid_calculations');
+  return currentCalculations ? parseInt(currentCalculations) : 0;
 };
 
 // Check if the user has reached their free limit (1 calculation per month)
@@ -99,17 +142,24 @@ export const hasReachedUsageLimit = (): boolean => {
 };
 
 // Increment the usage counter when a calculation is performed
-export const trackCalculatorUsage = (): void => {
-  // Les utilisateurs abonnés n'ont pas besoin de suivre l'utilisation
+export const trackCalculatorUsage = (): boolean => {
+  // Vérifier d'abord si l'utilisateur a des calculs payés à l'unité
+  const paidCalculations = localStorage.getItem('paid_calculations');
+  if (paidCalculations && parseInt(paidCalculations) > 0) {
+    // Utiliser un calcul payé
+    return usePaidCalculation();
+  }
+  
+  // Si l'utilisateur est abonné, ne pas suivre l'utilisation
   if (isSubscribed()) {
-    return;
+    return true;
   }
   
   const currentUsage = getUsageData();
   
   // Si l'utilisateur a déjà atteint sa limite, ne pas incrémenter
   if (currentUsage.count >= 1) {
-    return;
+    return false;
   }
   
   const updatedUsage: UsageData = {
@@ -118,6 +168,7 @@ export const trackCalculatorUsage = (): void => {
   };
   
   localStorage.setItem('calculator_usage', JSON.stringify(updatedUsage));
+  return true;
 };
 
 // Get current usage data, with monthly reset logic
@@ -169,6 +220,12 @@ export const getUsageData = (): UsageData => {
 
 // Get remaining free calculations this month
 export const getRemainingCalculations = (): number => {
+  // Vérifier d'abord les calculs payés à l'unité
+  const paidCalculations = getRemainingPaidCalculations();
+  if (paidCalculations > 0) {
+    return paidCalculations;
+  }
+  
   // Les utilisateurs abonnés ont des calculs illimités
   if (isSubscribed()) {
     return Infinity; // Représente un nombre illimité
