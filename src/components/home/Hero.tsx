@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ArrowRight, BarChart4, PieChart, Calculator, Maximize2, Home, Building, Wallet, TrendingUp, Landmark, Settings, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -7,6 +6,7 @@ import GlassCard from '../ui/GlassCard';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Dialog, DialogContent, DialogClose } from '@/components/ui/dialog';
 import { MagneticButton } from '@/components/ui/magnetic-button';
+import { ParticleButton } from '@/components/ui/particle-button';
 
 const Hero = () => {
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
@@ -48,11 +48,11 @@ const Hero = () => {
                 </Link>
               </Button>
             </MagneticButton>
-            <Button asChild variant="outline" size="lg" className="w-full sm:w-auto rounded-full px-6 py-6 text-base">
+            <ParticleButton asChild variant="outline" size="lg" className="w-full sm:w-auto rounded-full px-6 py-6 text-base">
               <Link to="/pricing">
                 Voir les tarifs
               </Link>
-            </Button>
+            </ParticleButton>
           </div>
         </div>
         
@@ -339,10 +339,68 @@ const Hero = () => {
                   </div>
                 </div>
               </div>
-            </GlassCard>
+              
+              <div className="absolute bottom-2 md:bottom-4 right-2 md:right-4">
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button variant="ghost" size="icon" className="rounded-full bg-white/80 hover:bg-white shadow-sm h-6 w-6 md:h-8 md:w-8 transition-all duration-300 dark:bg-gray-800/80 dark:hover:bg-gray-800" onClick={() => setIsCalculatorOpen(true)}>
+                        <Maximize2 className="h-3 w-3 md:h-4 md:w-4" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Agrandir le calculateur</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </div>
+            </div>
+          </GlassCard>
+          <div className="text-center mt-2 text-xs md:text-sm text-muted-foreground animate-fade-in" style={{
+          animationDelay: "400ms"
+        }}>
+            L'interface ci-dessus est un exemple à titre illustratif. Essayez le calculateur pour des résultats personnalisés.
           </div>
-        </DialogContent>
-      </Dialog>
-    </section>;
-};
-export default Hero;
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto mt-8 md:mt-12 animate-fade-in px-2 sm:px-0" style={{
+        animationDelay: "400ms"
+      }}>
+          <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm transition-all hover:shadow-md">
+            <div className="bg-primary/10 h-10 w-10 rounded-lg flex items-center justify-center mb-4">
+              <Calculator className="h-5 w-5 text-primary" />
+            </div>
+            <h3 className="text-lg font-medium mb-2 text-slate-950">Calcul précis</h3>
+            <p className="text-muted-foreground text-sm">Obtenez des calculs de rentabilité précis basés sur tous les paramètres pertinents de votre investissement.</p>
+          </div>
+          
+          <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm transition-all hover:shadow-md">
+            <div className="bg-primary/10 h-10 w-10 rounded-lg flex items-center justify-center mb-4">
+              <BarChart4 className="h-5 w-5 text-primary" />
+            </div>
+            <h3 className="text-lg font-medium mb-2 text-slate-950">Analyse complète</h3>
+            <p className="text-muted-foreground text-sm">Analysez en détail tous les aspects financiers de votre bien : revenus, charges, cash-flow et plus encore.</p>
+          </div>
+          
+          <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm transition-all hover:shadow-md">
+            <div className="bg-primary/10 h-10 w-10 rounded-lg flex items-center justify-center mb-4">
+              <PieChart className="h-5 w-5 text-primary" />
+            </div>
+            <h3 className="text-lg font-medium mb-2 text-slate-950">Comparaison visuelle</h3>
+            <p className="text-muted-foreground text-sm">Comparez facilement différents scénarios d'investissement grâce à des visualisations claires et intuitives.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Expanded Calculator Modal */}
+      <Dialog open={isCalculatorOpen} onOpenChange={setIsCalculatorOpen}>
+        <DialogContent className="sm:max-w-[90vw] md:max-w-[80vw] lg:max-w-[75vw] p-0 bg-transparent border-none shadow-none max-h-[90vh] overflow-y-auto">
+          <div className="relative">
+            <DialogClose className="absolute right-2 top-2 z-10">
+              <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full bg-white/80 hover:bg-white/90">
+                <X className="h-4 w-4" />
+              </Button>
+              <span className="sr-only">Fermer</span>
+            </DialogClose>
+            
+            <GlassCard variant="elevated" className="
