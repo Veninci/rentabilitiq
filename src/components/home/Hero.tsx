@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ArrowRight, BarChart4, PieChart, Calculator, Maximize2, Home, Building, Wallet, TrendingUp, Landmark, Settings, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -5,6 +6,8 @@ import { Link } from 'react-router-dom';
 import GlassCard from '../ui/GlassCard';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Dialog, DialogContent, DialogClose } from '@/components/ui/dialog';
+import { MagneticButton } from '@/components/ui/magnetic-button';
+
 const Hero = () => {
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
   return <section className="relative pt-20 md:pt-32 pb-10 md:pb-24 overflow-hidden px-4 md:px-0">
@@ -37,12 +40,14 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 animate-slide-up" style={{
           animationDelay: "200ms"
         }}>
-            <Button asChild size="lg" className="w-full sm:w-auto rounded-full px-6 py-6 text-base">
-              <Link to="/calculator">
-                Essayer le calculateur
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
+            <MagneticButton>
+              <Button asChild size="lg" className="w-full sm:w-auto rounded-full px-6 py-6 text-base">
+                <Link to="/calculator">
+                  Essayer le calculateur
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+            </MagneticButton>
             <Button asChild variant="outline" size="lg" className="w-full sm:w-auto rounded-full px-6 py-6 text-base">
               <Link to="/pricing">
                 Voir les tarifs
