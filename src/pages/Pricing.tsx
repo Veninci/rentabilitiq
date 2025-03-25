@@ -44,21 +44,20 @@ const Pricing = () => {
       isPopular: true,
     },
     {
-      name: "Expert",
-      price: "13.99",
-      yearlyPrice: "150",
-      period: "mois",
+      name: "À l'unité",
+      price: "5.99",
+      yearlyPrice: "5.99",
+      period: "calcul",
       features: [
-        'Tout ce qui est inclus dans Pro',
-        'API immobilière complète',
-        'Suivi des tendances du marché',
-        'Conseils fiscaux personnalisés',
-        'Tableau de bord avancé',
-        'Accès prioritaire aux nouvelles fonctionnalités',
+        'Paiement à l\'usage',
+        'Un calcul pour 5,99€',
+        'Export PDF des rapports',
+        'Accès à toutes les fonctionnalités',
+        'Pas d\'engagement',
       ],
-      description: "Pour les investisseurs professionnels",
-      buttonText: "S'abonner maintenant",
-      href: "/checkout?planId=expert&planName=Expert&amount=13.99",
+      description: "Pour les calculs ponctuels",
+      buttonText: "Acheter un calcul",
+      href: "/checkout?planId=unit&planName=À l'unité&amount=5.99",
       isPopular: false,
     },
   ];
@@ -67,7 +66,7 @@ const Pricing = () => {
     <div className="min-h-screen flex flex-col bg-background">
       <Helmet>
         <title>Tarifs - RentabilitiQ | Calculateur de rentabilité immobilière</title>
-        <meta name="description" content="Découvrez nos différentes formules d'abonnement pour le calculateur de rentabilité immobilière RentabilitiQ, avec options Basic, Pro et Expert." />
+        <meta name="description" content="Découvrez nos différentes formules d'abonnement pour le calculateur de rentabilité immobilière RentabilitiQ, avec options Basic, Pro et À l'unité." />
         <link rel="canonical" href="https://rentabilitiq.com/pricing" />
       </Helmet>
       

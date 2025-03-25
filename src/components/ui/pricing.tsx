@@ -1,3 +1,4 @@
+
 import { useState, useRef } from "react";
 import { Check, Star } from "lucide-react";
 import { motion } from "framer-motion";
@@ -69,6 +70,11 @@ export function Pricing({
   // Generate checkout URL with billing cycle parameter
   const getCheckoutUrl = (plan: PricingPlan) => {
     if (plan.name === "Basic") return plan.href;
+    
+    // For "À l'unité" plan, don't include billing cycle since it's per calculation
+    if (plan.period === "calcul") {
+      return plan.href;
+    }
     
     const cycle = isMonthly ? "monthly" : "yearly";
     const amount = isMonthly ? plan.price : plan.yearlyPrice;
@@ -167,15 +173,15 @@ export function Pricing({
                     className="font-variant-numeric: tabular-nums"
                   />
                 </span>
-                {plan.period !== "Next 3 months" && (
-                  <span className="text-sm font-semibold leading-6 tracking-wide text-muted-foreground">
-                    / {plan.period}
-                  </span>
-                )}
+                <span className="text-sm font-semibold leading-6 tracking-wide text-muted-foreground">
+                  / {plan.period}
+                </span>
               </div>
 
               <p className="text-xs leading-5 text-muted-foreground">
-                {isMonthly ? "facturé mensuellement" : "facturé annuellement"}
+                {plan.period === "calcul" 
+                  ? "paiement unique par calcul" 
+                  : isMonthly ? "facturé mensuellement" : "facturé annuellement"}
               </p>
 
               <ul className="mt-5 gap-2 flex flex-col">

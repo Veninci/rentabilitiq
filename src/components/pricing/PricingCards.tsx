@@ -70,23 +70,21 @@ const PricingCards = () => {
       highlighted: true,
     },
     {
-      name: 'Expert',
-      description: 'Pour les investisseurs professionnels',
+      name: 'À l\'unité',
+      description: 'Pour les calculs ponctuels',
       price: {
-        monthly: 13.99,
-        yearly: 150,
+        monthly: 5.99,
+        yearly: 5.99,
       },
-      savePercent: 11,
       features: [
-        'Tout ce qui est inclus dans Pro',
-        'API immobilière complète',
-        'Suivi des tendances du marché',
-        'Conseils fiscaux personnalisés',
-        'Tableau de bord avancé',
-        'Accès prioritaire aux nouvelles fonctionnalités',
+        'Paiement à l\'usage',
+        'Un calcul pour 5,99€',
+        'Export PDF des rapports',
+        'Accès à toutes les fonctionnalités',
+        'Pas d\'engagement',
       ],
       limitations: [],
-      cta: 'S\'abonner maintenant',
+      cta: 'Acheter un calcul',
       variant: 'elevated',
       highlighted: false,
     },
@@ -151,11 +149,11 @@ const PricingCards = () => {
                   )}
                 </span>
                 <span className="text-muted-foreground mb-1">
-                  {billingCycle === 'monthly' ? '/mois' : '/an'}
+                  {plan.name === 'À l\'unité' ? '/calcul' : billingCycle === 'monthly' ? '/mois' : '/an'}
                 </span>
               </div>
               
-              {plan.savePercent && billingCycle === 'yearly' && (
+              {plan.savePercent && billingCycle === 'yearly' && plan.name !== 'À l\'unité' && (
                 <div className="mt-2 inline-block bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100 text-xs px-2 py-1 rounded">
                   Économisez {plan.savePercent}%
                 </div>

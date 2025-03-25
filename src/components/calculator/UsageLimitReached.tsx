@@ -3,7 +3,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Lock } from 'lucide-react';
+import { Lock, CreditCard } from 'lucide-react';
 
 const UsageLimitReached = () => {
   const navigate = useNavigate();
@@ -16,14 +16,25 @@ const UsageLimitReached = () => {
         </div>
         <h2 className="text-xl font-bold">Limite de calculs atteinte</h2>
         <p className="text-muted-foreground mb-4 max-w-md">
-          Vous avez utilisé vos 3 calculs gratuits pour ce mois-ci. Passez à l'offre Pro pour des calculs illimités.
+          Vous avez utilisé votre calcul gratuit pour ce mois-ci. Achetez un calcul à l'unité pour 5,99€ ou passez à l'offre Pro pour des calculs illimités.
         </p>
-        <Button 
-          onClick={() => navigate('/pricing')}
-          className="px-8"
-        >
-          Voir les offres
-        </Button>
+        <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md">
+          <Button 
+            onClick={() => navigate('/checkout?planId=unit&planName=À l\'unité&amount=5.99')}
+            className="flex-1 gap-2"
+            variant="default"
+          >
+            <CreditCard className="h-4 w-4" />
+            Acheter un calcul (5,99€)
+          </Button>
+          <Button 
+            onClick={() => navigate('/pricing')}
+            className="flex-1"
+            variant="outline"
+          >
+            Voir toutes les offres
+          </Button>
+        </div>
       </div>
     </Card>
   );

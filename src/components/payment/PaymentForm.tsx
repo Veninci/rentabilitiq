@@ -39,6 +39,11 @@ const PaymentForm = ({ planId, planName, amount, billingCycle }: PaymentFormProp
     const currentDomain = window.location.origin; // Obtenir le domaine actuel (localhost ou production)
     const successUrl = `${currentDomain}/checkout?status=success&payment_id=${transactionId}`;
     
+    // Pour le paiement à l'unité
+    if (planId === 'unit') {
+      return `https://buy.stripe.com/test_5kA4gK2Nq9yk2VG5kl?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
+    }
+    
     // Liens pour les abonnements annuels
     if (billingCycle === 'yearly') {
       // Plan Expert annuel
@@ -78,25 +83,33 @@ const PaymentForm = ({ planId, planName, amount, billingCycle }: PaymentFormProp
     handleRedirectToStripe();
   };
 
-  const displayBillingCycle = billingCycle === 'monthly' ? 'Mensuel' : 'Annuel';
+  // Adapter l'affichage selon qu'il s'agit d'un abonnement ou d'un paiement à l'unité
+  const isPerCalculation = planId === 'unit';
+  const displayBillingCycle = isPerCalculation ? 'Par calcul' : billingCycle === 'monthly' ? 'Mensuel' : 'Annuel';
 
   return (
     <Card className="p-6 w-full max-w-md mx-auto">
       <form onSubmit={handleSubmit}>
         <h3 className="text-xl font-semibold mb-4">
-          Finaliser l'abonnement {planName}
+          {isPerCalculation ? "Acheter un calcul" : `Finaliser l'abonnement ${planName}`}
         </h3>
         
         <div className="mb-6">
           <p className="text-sm text-muted-foreground mb-2">Détails du forfait:</p>
-          <p className="font-medium">{planName} - {displayBillingCycle}</p>
-          <p className="text-lg font-semibold">{amount} € {billingCycle === 'monthly' ? '/mois' : '/an'}</p>
+          <p className="font-medium">{planName} {!isPerCalculation && `- ${displayBillingCycle}`}</p>
+          <p className="text-lg font-semibold">
+            {amount} € {isPerCalculation ? '/calcul' : billingCycle === 'monthly' ? '/mois' : '/an'}
+          </p>
         </div>
 
         <div className="mb-6">
           <div className="p-4 bg-muted/50 rounded-md text-center">
             <p className="text-sm mb-2">Vous allez être redirigé vers une page de paiement sécurisée Stripe</p>
-            <p className="text-xs text-muted-foreground">L'accès au calculateur sera débloqué uniquement après confirmation du paiement</p>
+            <p className="text-xs text-muted-foreground">
+              {isPerCalculation 
+                ? "Ce paiement vous donne accès à un calcul de rentabilité complet" 
+                : "L'accès au calculateur sera débloqué uniquement après confirmation du paiement"}
+            </p>
           </div>
         </div>
 
