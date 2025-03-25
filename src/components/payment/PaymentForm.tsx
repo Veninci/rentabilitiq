@@ -41,7 +41,7 @@ const PaymentForm = ({ planId, planName, amount, billingCycle }: PaymentFormProp
     
     // Pour le paiement à l'unité
     if (planId === 'unit') {
-      return `https://buy.stripe.com/test_5kA4gK2Nq9yk2VG5kl?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
+      return `https://buy.stripe.com/fZe160e5laCQ8zmcMQ?transaction_id=${transactionId}&redirect_to=${encodeURIComponent(successUrl)}`;
     }
     
     // Liens pour les abonnements annuels

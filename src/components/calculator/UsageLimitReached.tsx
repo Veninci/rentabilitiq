@@ -20,7 +20,7 @@ const UsageLimitReached = () => {
         </p>
         <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md">
           <Button 
-            onClick={() => navigate('/checkout?planId=unit&planName=À l\'unité&amount=5.99')}
+            onClick={() => window.location.href = 'https://buy.stripe.com/fZe160e5laCQ8zmcMQ'}
             className="flex-1 gap-2"
             variant="default"
           >
