@@ -6,6 +6,7 @@ import Hero from '@/components/home/Hero';
 import Features from '@/components/home/Features';
 import CityMarketTrends from '@/components/home/city-market-trends';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
+import { Logos3 } from '@/components/ui/logos3';
 
 const Index = () => {
   return (
@@ -16,6 +17,7 @@ const Index = () => {
       </div>
       <main className="flex-grow pt-16 md:pt-20">
         <Hero />
+        <Logos3 heading="Ils font confiance à notre solution" />
         <Features />
         <CityMarketTrends />
       </main>
