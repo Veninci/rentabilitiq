@@ -43,6 +43,12 @@ const Logos3 = ({
       image: "/lovable-uploads/67757e96-e869-43ca-9289-3084b35a15bd.png",
       className: "h-10 w-auto",
     },
+    {
+      id: "logo-4",
+      description: "Lovable",
+      image: "/lovable-uploads/82e134ee-d25a-4571-8c5f-8f3f34850ed4.png",
+      className: "h-10 w-auto",
+    },
   ],
 }: Logos3Props) => {
   return (
@@ -62,9 +68,9 @@ const Logos3 = ({
               {logos.map((logo) => (
                 <CarouselItem
                   key={logo.id}
-                  className="flex basis-1/3 justify-center pl-0 sm:basis-1/3 md:basis-1/3 lg:basis-1/3"
+                  className="flex basis-1/4 justify-center pl-0 sm:basis-1/4 md:basis-1/4 lg:basis-1/4"
                 >
-                  <div className="mx-12 flex shrink-0 items-center justify-center">
+                  <div className="mx-8 flex shrink-0 items-center justify-center">
                     <div className="flex h-16 items-center justify-center">
                       <img
                         src={logo.image}
