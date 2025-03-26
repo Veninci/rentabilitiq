@@ -1,17 +1,20 @@
 
-import React from 'react';
+import React, { useRef } from 'react';
 import { PropertyResults } from '@/types/property';
 import GlassCard from '../ui/GlassCard';
-import { ArrowDownUp, CalendarDays, CircleDollarSign, LineChart, TrendingUp, SquareIcon } from 'lucide-react';
+import { ArrowDownUp, CalendarDays, CircleDollarSign, LineChart, TrendingUp, SquareIcon, Download, FilePdf } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { formatter } from '@/lib/formatter';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
+import { exportResultsToPDF } from '@/lib/pdfExport';
+import { useToast } from '@/hooks/use-toast';
 
 interface ResultsCardProps {
   results: PropertyResults;
+  cityName?: string;
 }
 
-const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
+const ResultsCard: React.FC<ResultsCardProps> = ({ results, cityName }) => {
   const {
     totalInvestment,
     annualIncome,
@@ -25,6 +28,9 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
     pricePerSqm,
     rentPerSqm
   } = results;
+  
+  const cardRef = useRef<HTMLDivElement>(null);
+  const { toast } = useToast();
 
   const investmentBreakdownData = [
     { name: 'Prix d\'achat', value: results.purchasePrice, color: '#F59E0B' },
@@ -49,13 +55,52 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
     }
     return null;
   };
+  
+  const handleExportPDF = async () => {
+    if (!cardRef.current) return;
+    
+    toast({
+      title: "Génération du PDF en cours",
+      description: "Veuillez patienter pendant la création de votre document...",
+    });
+    
+    try {
+      const success = await exportResultsToPDF(results, cardRef.current, cityName);
+      
+      if (success) {
+        toast({
+          title: "PDF généré avec succès",
+          description: "Votre analyse de rentabilité a été téléchargée au format PDF.",
+          variant: "default",
+        });
+      } else {
+        toast({
+          title: "Erreur",
+          description: "Un problème est survenu lors de la génération du PDF.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Erreur",
+        description: "Un problème est survenu lors de la génération du PDF.",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
-    <GlassCard variant="results" className="w-full animate-scale-in">
+    <GlassCard variant="results" className="w-full animate-scale-in" ref={cardRef}>
       <div className="mb-4 flex items-center justify-between">
         <h3 className="text-lg font-semibold">Résultats de l'analyse</h3>
-        <Button variant="outline" size="sm">
-          Exporter
+        <Button 
+          variant="outline" 
+          size="sm"
+          onClick={handleExportPDF}
+          className="flex items-center gap-2"
+        >
+          <FilePdf className="h-4 w-4" />
+          <span>Télécharger en PDF</span>
         </Button>
       </div>
 
@@ -204,6 +249,10 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
           value={paybackPeriod === Infinity ? "Jamais" : `${paybackPeriod.toFixed(1)} ans`} 
           color="text-foreground"
         />
+      </div>
+      
+      <div className="mt-6 text-center text-xs text-muted-foreground">
+        <p>Ce document est généré par RentaFlex. Les résultats sont des estimations et ne constituent pas un conseil financier.</p>
       </div>
     </GlassCard>
   );

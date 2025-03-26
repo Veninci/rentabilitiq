@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
@@ -332,7 +331,7 @@ const Calculator = () => {
               </div>
               
               <div className="max-w-4xl mx-auto space-y-8">
-                <ResultsCard results={results} />
+                <ResultsCard results={results} cityName={selectedCity} />
                 
                 <ComparisonChart 
                   longTerm={longTermResults} 
