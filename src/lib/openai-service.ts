@@ -18,59 +18,33 @@ interface OpenAICompletionResponse {
   }[];
 }
 
-// Clé API par défaut (à remplacer par une clé valide)
-// Note: Idéalement, cela devrait être géré côté serveur
-const DEFAULT_API_KEY = "";
+// API key prédéfinie pour tous les utilisateurs
+const DEFAULT_API_KEY = "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";
 
 /**
- * Service pour faire des appels à l'API LLM.
+ * Service for making OpenAI API calls.
  */
 export class OpenAIService {
   private apiKey: string;
 
   /**
-   * Crée une nouvelle instance du service.
-   * @param apiKey Clé API personnalisée (utilisera la clé par défaut si non fournie)
+   * Creates a new OpenAI service instance.
+   * @param apiKey Optional custom API key (will use default if not provided)
    */
   constructor(apiKey?: string) {
-    // Utiliser la clé fournie ou celle stockée dans localStorage ou la clé par défaut
-    this.apiKey = apiKey || localStorage.getItem('openai_api_key') || DEFAULT_API_KEY;
+    this.apiKey = apiKey || DEFAULT_API_KEY;
   }
 
   /**
-   * Définit une nouvelle clé API et la sauvegarde dans localStorage
-   */
-  setApiKey(apiKey: string): void {
-    this.apiKey = apiKey;
-    localStorage.setItem('openai_api_key', apiKey);
-  }
-
-  /**
-   * Vérifie si une clé API est définie
-   */
-  hasApiKey(): boolean {
-    return !!this.apiKey;
-  }
-
-  /**
-   * Envoie une requête de complétion à l'API.
-   * @param messages Les messages à inclure dans la requête
-   * @param model Le modèle à utiliser (par défaut: gpt-4o)
-   * @returns Le texte généré
+   * Sends a completion request to the OpenAI API.
+   * @param messages The messages to include in the request
+   * @param model The model to use (default: gpt-4o)
+   * @returns The generated text
    */
   async getCompletion(
     messages: OpenAIMessage[],
     model: string = 'gpt-4o'
   ): Promise<string> {
-    if (!this.hasApiKey()) {
-      toast({
-        title: "Clé API manquante",
-        description: "Veuillez saisir votre clé API OpenAI dans les paramètres.",
-        variant: "destructive",
-      });
-      return "Veuillez configurer votre clé API OpenAI pour utiliser cette fonctionnalité.";
-    }
-
     try {
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
@@ -87,13 +61,13 @@ export class OpenAIService {
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.error?.message || "Erreur lors de l'appel à l'API");
+        throw new Error(error.error?.message || "Error calling OpenAI API");
       }
 
       const data: OpenAICompletionResponse = await response.json();
       return data.choices[0]?.message?.content || "";
     } catch (error) {
-      console.error("Erreur API:", error);
+      console.error("OpenAI API error:", error);
       toast({
         title: "Erreur",
         description: `Erreur lors de la communication avec l'IA: ${error instanceof Error ? error.message : 'Erreur inconnue'}`,
@@ -104,7 +78,7 @@ export class OpenAIService {
   }
 }
 
-// Créer une instance du service
+// Créer une instance du service avec la clé par défaut
 export const openAIService = new OpenAIService();
 
 // Pour des raisons de compatibilité avec le code existant
@@ -114,5 +88,5 @@ export const createOpenAIService = (apiKey?: string): OpenAIService => {
 
 // Pour des raisons de compatibilité avec le code existant
 export const getStoredApiKey = (): string => {
-  return localStorage.getItem('openai_api_key') || DEFAULT_API_KEY;
+  return DEFAULT_API_KEY;
 };
