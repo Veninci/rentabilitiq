@@ -17,7 +17,7 @@ const Index = () => {
       </div>
       <main className="flex-grow pt-16 md:pt-20">
         <Hero />
-        <Logos3 heading="Ils font confiance à notre solution" />
+        <Logos3 heading="Les partenaires engagés dans le développement" />
         <Features />
         <CityMarketTrends />
       </main>

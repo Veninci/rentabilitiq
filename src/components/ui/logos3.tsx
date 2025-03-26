@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -20,7 +19,7 @@ interface Logos3Props {
 }
 
 const Logos3 = ({
-  heading = "Ils font confiance à notre solution",
+  heading = "Les partenaires engagés dans le développement",
   logos = [{
     id: "logo-1",
     description: "Supabase",
