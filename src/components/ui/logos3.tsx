@@ -1,20 +1,24 @@
+
 "use client";
 
 import { useEffect, useState } from "react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+
 interface Logo {
   id: string;
   description: string;
   image: string;
   className?: string;
 }
+
 interface Logos3Props {
   heading?: string;
   logos?: Logo[];
   className?: string;
 }
+
 const Logos3 = ({
   heading = "Ils font confiance à notre solution",
   logos = [{
@@ -26,17 +30,17 @@ const Logos3 = ({
     id: "logo-2",
     description: "OpenAI",
     image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/OpenAI_Logo.svg/320px-OpenAI_Logo.svg.png",
-    className: "h-10 w-auto"
+    className: "h-10 w-auto invert-0 dark:invert"
   }, {
     id: "logo-3",
     description: "GitHub",
     image: "/lovable-uploads/67757e96-e869-43ca-9289-3084b35a15bd.png",
-    className: "h-10 w-auto"
+    className: "h-10 w-auto invert-0 dark:invert"
   }, {
     id: "logo-4",
     description: "Lovable",
     image: "/lovable-uploads/82e134ee-d25a-4571-8c5f-8f3f34850ed4.png",
-    className: "h-10 w-auto"
+    className: "h-10 w-auto invert-0 dark:invert"
   }]
 }: Logos3Props) => {
   const isXs = useMediaQuery("(max-width: 480px)");
@@ -74,9 +78,10 @@ const Logos3 = ({
     if (isMd) return "basis-1/3";
     return "basis-1/4";
   };
+  
   return <section className="py-8 sm:py-12 md:py-16 lg:py-24 dark:bg-gray-900">
       <div className="container flex flex-col items-center text-center px-4">
-        <h2 className="my-3 sm:my-4 md:my-6 text-pretty sm:text-xl md:text-2xl font-bold lg:text-4xl text-xl text-gray-950">
+        <h2 className="my-3 sm:my-4 md:my-6 text-pretty sm:text-xl md:text-2xl font-bold lg:text-4xl text-xl text-gray-950 dark:text-white">
           {heading}
         </h2>
       </div>
@@ -106,4 +111,5 @@ const Logos3 = ({
       </div>
     </section>;
 };
+
 export { Logos3 };
