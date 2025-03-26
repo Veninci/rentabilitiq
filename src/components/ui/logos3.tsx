@@ -57,18 +57,36 @@ const Logos3 = ({
     },
     {
       id: "logo-6",
+      description: "Supabase",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Supabase_Logo.svg/320px-Supabase_Logo.svg.png",
+      className: "h-7 w-auto",
+    },
+    {
+      id: "logo-7",
+      description: "OpenAI",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/OpenAI_Logo.svg/320px-OpenAI_Logo.svg.png",
+      className: "h-7 w-auto",
+    },
+    {
+      id: "logo-8",
+      description: "GitHub",
+      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/320px-Octicons-mark-github.svg.png",
+      className: "h-7 w-auto",
+    },
+    {
+      id: "logo-9",
       description: "Orpi",
       image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Orpi_logo.svg/320px-Orpi_logo.svg.png",
       className: "h-7 w-auto",
     },
     {
-      id: "logo-7",
+      id: "logo-10",
       description: "Foncia",
       image: "https://upload.wikimedia.org/wikipedia/fr/thumb/d/d0/Foncia_logo.svg/320px-Foncia_logo.svg.png",
       className: "h-7 w-auto",
     },
     {
-      id: "logo-8",
+      id: "logo-11",
       description: "Guy Hoquet",
       image: "https://upload.wikimedia.org/wikipedia/fr/thumb/e/e5/Guy_Hoquet_logo.svg/320px-Guy_Hoquet_logo.svg.png",
       className: "h-7 w-auto",
