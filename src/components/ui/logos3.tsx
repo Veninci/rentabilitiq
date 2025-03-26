@@ -1,7 +1,9 @@
 
 "use client";
 
+import { useEffect, useState } from "react";
 import AutoScroll from "embla-carousel-auto-scroll";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 import {
   Carousel,
@@ -51,27 +53,35 @@ const Logos3 = ({
     },
   ],
 }: Logos3Props) => {
+  const isMobile = useIsMobile();
+  const [scrollSpeed, setScrollSpeed] = useState(0.5);
+
+  // Adjust scroll speed for mobile
+  useEffect(() => {
+    setScrollSpeed(isMobile ? 0.3 : 0.5);
+  }, [isMobile]);
+
   return (
-    <section className="py-16 md:py-24 dark:bg-gray-900">
+    <section className="py-12 md:py-16 lg:py-24 dark:bg-gray-900">
       <div className="container flex flex-col items-center text-center">
-        <h2 className="my-6 text-pretty text-2xl font-bold lg:text-4xl dark:text-white">
+        <h2 className="my-4 md:my-6 text-pretty text-xl md:text-2xl font-bold lg:text-4xl dark:text-white">
           {heading}
         </h2>
       </div>
-      <div className="pt-6 md:pt-10 lg:pt-12">
-        <div className="relative mx-auto flex items-center justify-center lg:max-w-5xl">
+      <div className="pt-4 md:pt-6 lg:pt-8">
+        <div className="relative mx-auto flex items-center justify-center px-4 lg:max-w-5xl">
           <Carousel
             opts={{ loop: true }}
-            plugins={[AutoScroll({ playOnInit: true, direction: "forward", speed: 0.5 })]}
+            plugins={[AutoScroll({ playOnInit: true, direction: "forward", speed: scrollSpeed })]}
           >
             <CarouselContent className="ml-0">
               {logos.map((logo) => (
                 <CarouselItem
                   key={logo.id}
-                  className="flex basis-1/4 justify-center pl-0 sm:basis-1/4 md:basis-1/4 lg:basis-1/4"
+                  className="flex justify-center pl-0 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/4"
                 >
-                  <div className="mx-8 flex shrink-0 items-center justify-center">
-                    <div className="flex h-16 items-center justify-center">
+                  <div className="mx-4 sm:mx-6 md:mx-8 flex shrink-0 items-center justify-center">
+                    <div className="flex h-12 md:h-16 items-center justify-center">
                       <img
                         src={logo.image}
                         alt={logo.description}
@@ -83,8 +93,8 @@ const Logos3 = ({
               ))}
             </CarouselContent>
           </Carousel>
-          <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-background to-transparent dark:from-gray-900"></div>
-          <div className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-background to-transparent dark:from-gray-900"></div>
+          <div className="absolute inset-y-0 left-0 w-8 md:w-12 bg-gradient-to-r from-background to-transparent dark:from-gray-900"></div>
+          <div className="absolute inset-y-0 right-0 w-8 md:w-12 bg-gradient-to-l from-background to-transparent dark:from-gray-900"></div>
         </div>
       </div>
     </section>
