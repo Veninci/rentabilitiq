@@ -18,28 +18,27 @@ interface OpenAICompletionResponse {
   }[];
 }
 
-// API key prédéfinie pour tous les utilisateurs
-const DEFAULT_API_KEY = "sk-31d578b31967472cb42defd49ea1e55e";
+// Clé API fournie par l'utilisateur
+const API_KEY = "sk-31d578b31967472cb42defd49ea1e55e";
 
 /**
- * Service for making OpenAI API calls.
+ * Service pour faire des appels à l'API LLM.
  */
 export class OpenAIService {
   private apiKey: string;
 
   /**
-   * Creates a new OpenAI service instance.
-   * @param apiKey Optional custom API key (will use default if not provided)
+   * Crée une nouvelle instance du service.
    */
-  constructor(apiKey?: string) {
-    this.apiKey = apiKey || DEFAULT_API_KEY;
+  constructor() {
+    this.apiKey = API_KEY;
   }
 
   /**
-   * Sends a completion request to the OpenAI API.
-   * @param messages The messages to include in the request
-   * @param model The model to use (default: gpt-4o)
-   * @returns The generated text
+   * Envoie une requête de complétion à l'API.
+   * @param messages Les messages à inclure dans la requête
+   * @param model Le modèle à utiliser (par défaut: gpt-4o)
+   * @returns Le texte généré
    */
   async getCompletion(
     messages: OpenAIMessage[],
@@ -61,13 +60,13 @@ export class OpenAIService {
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.error?.message || "Error calling OpenAI API");
+        throw new Error(error.error?.message || "Erreur lors de l'appel à l'API");
       }
 
       const data: OpenAICompletionResponse = await response.json();
       return data.choices[0]?.message?.content || "";
     } catch (error) {
-      console.error("OpenAI API error:", error);
+      console.error("Erreur API:", error);
       toast({
         title: "Erreur",
         description: `Erreur lors de la communication avec l'IA: ${error instanceof Error ? error.message : 'Erreur inconnue'}`,
@@ -78,15 +77,15 @@ export class OpenAIService {
   }
 }
 
-// Créer une instance du service avec la clé par défaut
+// Créer une instance du service avec la clé API
 export const openAIService = new OpenAIService();
 
 // Pour des raisons de compatibilité avec le code existant
-export const createOpenAIService = (apiKey?: string): OpenAIService => {
-  return new OpenAIService(apiKey);
+export const createOpenAIService = (): OpenAIService => {
+  return new OpenAIService();
 };
 
 // Pour des raisons de compatibilité avec le code existant
 export const getStoredApiKey = (): string => {
-  return DEFAULT_API_KEY;
+  return API_KEY;
 };
