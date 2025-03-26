@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -37,6 +38,11 @@ const Logos3 = ({
     description: "Lovable",
     image: "/lovable-uploads/82e134ee-d25a-4571-8c5f-8f3f34850ed4.png",
     className: "h-10 w-auto invert-0 dark:invert"
+  }, {
+    id: "logo-5",
+    description: "Stripe",
+    image: "/lovable-uploads/0b594ba9-4036-419f-b9e1-7999819636a7.png",
+    className: "h-10 w-auto"
   }]
 }: Logos3Props) => {
   const isXs = useMediaQuery("(max-width: 480px)");
