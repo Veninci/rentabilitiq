@@ -42,7 +42,7 @@ const Logos3 = ({
     id: "logo-5",
     description: "Stripe",
     image: "/lovable-uploads/0b594ba9-4036-419f-b9e1-7999819636a7.png",
-    className: "h-10 w-auto"
+    className: "h-12 w-auto" // Augmenté la hauteur de h-10 à h-12 pour que le logo Stripe soit légèrement plus grand
   }]
 }: Logos3Props) => {
   const isXs = useMediaQuery("(max-width: 480px)");
@@ -80,6 +80,7 @@ const Logos3 = ({
     if (isMd) return "basis-1/3";
     return "basis-1/4";
   };
+  
   return <section className="py-8 sm:py-12 md:py-16 lg:py-24 dark:bg-gray-900">
       <div className="container flex flex-col items-center text-center px-4">
         <h2 className="my-3 sm:my-4 md:my-6 text-pretty sm:text-xl lg:text-4xl text-xl text-gray-950 dark:text-white md:text-2xl font-extrabold">
