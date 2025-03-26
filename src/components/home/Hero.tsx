@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ArrowRight, BarChart4, PieChart, Calculator, Maximize2, Home, Building, Wallet, TrendingUp, Landmark, Settings, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -9,6 +10,33 @@ import { MagneticButton } from '@/components/ui/magnetic-button';
 
 const Hero = () => {
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
+  
+  // Define consistent values for the calculator example
+  const propertyPrice = 210000;
+  const propertySize = 45;
+  const monthlyRent = 850;
+  const downPayment = 40000;
+  const interestRate = 3.5;
+  const loanTerm = 20; // years
+  const loanAmount = propertyPrice - downPayment;
+  
+  // Calculate monthly mortgage payment
+  const monthlyInterestRate = interestRate / 100 / 12;
+  const numberOfPayments = loanTerm * 12;
+  const monthlyMortgage = loanAmount * 
+    (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) / 
+    (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
+  
+  // Calculate annual income and expenses (simplified)
+  const annualRent = monthlyRent * 12;
+  const annualExpenses = monthlyMortgage * 12 + 1500; // Adding some expenses
+  const annualCashFlow = annualRent - annualExpenses;
+  const monthlyCashFlow = annualCashFlow / 12;
+  
+  // Calculate yields
+  const grossYield = (annualRent / propertyPrice) * 100;
+  const netYield = (annualCashFlow / propertyPrice) * 100;
+  
   return <section className="relative pt-20 md:pt-32 pb-10 md:pb-24 overflow-hidden px-4 md:px-0">
       {/* Background gradient */}
       <div className="absolute top-0 left-0 right-0 h-[70vh] bg-gradient-to-b from-primary/5 to-transparent -z-10"></div>
@@ -93,15 +121,15 @@ const Hero = () => {
                       <div className="grid grid-cols-2 gap-2 md:gap-4 mb-2 md:mb-4">
                         <div className="space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm text-gray-500 dark:text-gray-300">Prix d'achat</div>
-                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">210 000 €</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">{propertyPrice.toLocaleString()} €</div>
                         </div>
                         <div className="space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm text-gray-500 dark:text-gray-300">Surface</div>
-                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">45 m²</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">{propertySize} m²</div>
                         </div>
                         <div className="space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm text-gray-500 dark:text-gray-300">Loyer mensuel</div>
-                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">850 €</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">{monthlyRent} €</div>
                         </div>
                         <div className="space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm text-gray-500 dark:text-gray-300">Type de location</div>
@@ -109,11 +137,11 @@ const Hero = () => {
                         </div>
                         <div className="space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm text-gray-500 dark:text-gray-300">Apport</div>
-                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">40 000 €</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">{downPayment.toLocaleString()} €</div>
                         </div>
                         <div className="space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm text-gray-500 dark:text-gray-300">Taux d'intérêt</div>
-                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">3.5%</div>
+                          <div className="h-8 md:h-10 bg-gray-100 rounded-md flex items-center px-3 text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">{interestRate}%</div>
                         </div>
                       </div>
                       <div className="mt-auto flex justify-end">
@@ -134,7 +162,7 @@ const Hero = () => {
                             <TrendingUp className="h-4 w-4 text-primary mr-2" />
                             <div className="text-xs text-muted-foreground dark:text-gray-300">Rendement brut</div>
                           </div>
-                          <div className="font-medium text-primary">5.8%</div>
+                          <div className="font-medium text-primary">{grossYield.toFixed(1)}%</div>
                         </div>
                         
                         <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg dark:bg-gray-700">
@@ -142,7 +170,7 @@ const Hero = () => {
                             <Wallet className="h-4 w-4 text-green-500 mr-2" />
                             <div className="text-xs text-muted-foreground dark:text-gray-300">Cash-flow mensuel</div>
                           </div>
-                          <div className="font-medium text-green-500">387 €</div>
+                          <div className="font-medium text-green-500">{Math.round(monthlyCashFlow)} €</div>
                         </div>
                         
                         <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg dark:bg-gray-700">
@@ -150,7 +178,7 @@ const Hero = () => {
                             <Landmark className="h-4 w-4 text-blue-500 mr-2" />
                             <div className="text-xs text-muted-foreground dark:text-gray-300">Mensualité crédit</div>
                           </div>
-                          <div className="font-medium text-blue-500">614 €</div>
+                          <div className="font-medium text-blue-500">{Math.round(monthlyMortgage)} €</div>
                         </div>
                       </div>
                       
@@ -159,7 +187,7 @@ const Hero = () => {
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="bg-white rounded-full h-20 w-20 flex items-center justify-center shadow-sm dark:bg-gray-800">
                             <div className="text-center">
-                              <div className="text-2xl font-bold text-primary">4.2%</div>
+                              <div className="text-2xl font-bold text-primary">{netYield.toFixed(1)}%</div>
                               <div className="text-xs text-gray-500 dark:text-gray-300">Rendement</div>
                             </div>
                           </div>
@@ -264,15 +292,15 @@ const Hero = () => {
                       <div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:gap-6 mb-3 sm:mb-4 md:mb-5 lg:mb-6">
                         <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm lg:text-base text-gray-500">Prix d'achat</div>
-                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">210 000 €</div>
+                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">{propertyPrice.toLocaleString()} €</div>
                         </div>
                         <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm lg:text-base text-gray-500">Surface</div>
-                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">45 m²</div>
+                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">{propertySize} m²</div>
                         </div>
                         <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm lg:text-base text-gray-500">Loyer mensuel</div>
-                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">850 €</div>
+                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">{monthlyRent} €</div>
                         </div>
                         <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm lg:text-base text-gray-500">Type de location</div>
@@ -280,11 +308,11 @@ const Hero = () => {
                         </div>
                         <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm lg:text-base text-gray-500">Apport</div>
-                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">40 000 €</div>
+                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">{downPayment.toLocaleString()} €</div>
                         </div>
                         <div className="space-y-1 sm:space-y-1.5 md:space-y-2">
                           <div className="text-xs md:text-sm lg:text-base text-gray-500">Taux d'intérêt</div>
-                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">3.5%</div>
+                          <div className="h-7 sm:h-8 md:h-10 lg:h-12 bg-gray-100 rounded-md flex items-center px-2 sm:px-3 md:px-4 text-xs sm:text-sm md:text-base lg:text-lg font-medium text-black dark:text-black">{interestRate}%</div>
                         </div>
                       </div>
                       <div className="flex justify-end">
@@ -305,7 +333,7 @@ const Hero = () => {
                             <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 text-primary mr-1.5 sm:mr-2 md:mr-3" />
                             <div className="text-xs md:text-sm lg:text-base text-muted-foreground">Rendement brut</div>
                           </div>
-                          <div className="font-medium text-primary text-sm sm:text-base md:text-lg">5.8%</div>
+                          <div className="font-medium text-primary text-sm sm:text-base md:text-lg">{grossYield.toFixed(1)}%</div>
                         </div>
                         
                         <div className="flex items-center justify-between bg-gray-50 p-2 sm:p-3 md:p-4 rounded-lg">
@@ -313,7 +341,7 @@ const Hero = () => {
                             <Wallet className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 text-green-500 mr-1.5 sm:mr-2 md:mr-3" />
                             <div className="text-xs md:text-sm lg:text-base text-muted-foreground">Cash-flow mensuel</div>
                           </div>
-                          <div className="font-medium text-green-500 text-sm sm:text-base md:text-lg">387 €</div>
+                          <div className="font-medium text-green-500 text-sm sm:text-base md:text-lg">{Math.round(monthlyCashFlow)} €</div>
                         </div>
                         
                         <div className="flex items-center justify-between bg-gray-50 p-2 sm:p-3 md:p-4 rounded-lg">
@@ -321,7 +349,7 @@ const Hero = () => {
                             <Landmark className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 text-blue-500 mr-1.5 sm:mr-2 md:mr-3" />
                             <div className="text-xs md:text-sm lg:text-base text-muted-foreground">Mensualité crédit</div>
                           </div>
-                          <div className="font-medium text-blue-500 text-sm sm:text-base md:text-lg">614 €</div>
+                          <div className="font-medium text-blue-500 text-sm sm:text-base md:text-lg">{Math.round(monthlyMortgage)} €</div>
                         </div>
                       </div>
                       
@@ -330,7 +358,7 @@ const Hero = () => {
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="bg-white rounded-full h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24 lg:h-28 lg:w-28 flex items-center justify-center shadow-md">
                             <div className="text-center">
-                              <div className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-bold text-primary">4.2%</div>
+                              <div className="text-xl sm:text-2xl md:text-2xl lg:text-3xl font-bold text-primary">{netYield.toFixed(1)}%</div>
                               <div className="text-xs sm:text-xs md:text-sm text-gray-500">Rendement</div>
                             </div>
                           </div>
