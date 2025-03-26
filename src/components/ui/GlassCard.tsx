@@ -9,13 +9,13 @@ interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
   noPadding?: boolean;
 }
 
-const GlassCard = ({
+const GlassCard = React.forwardRef<HTMLDivElement, GlassCardProps>(({
   children,
   className,
   variant = 'default',
   noPadding = false,
   ...props
-}: GlassCardProps) => {
+}, ref) => {
   const variantClasses = {
     default: 'bg-white/80 backdrop-blur-md border border-white/20 shadow-md dark:bg-black/40 dark:border-white/10 dark:text-foreground',
     elevated: 'bg-white/90 backdrop-blur-lg border border-white/30 shadow-lg dark:bg-black/50 dark:border-white/20 dark:text-foreground',
@@ -27,6 +27,7 @@ const GlassCard = ({
 
   return (
     <div
+      ref={ref}
       className={cn(
         'rounded-xl md:rounded-2xl transition-all duration-300',
         variantClasses[variant],
@@ -39,6 +40,8 @@ const GlassCard = ({
       {children}
     </div>
   );
-};
+});
+
+GlassCard.displayName = 'GlassCard';
 
 export default GlassCard;
