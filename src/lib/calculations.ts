@@ -2,46 +2,81 @@
 import { PropertyData, PropertyResults } from '@/types/property';
 
 export const calculateResults = (data: PropertyData): PropertyResults => {
+  // Ensure all numeric values are valid, replace NaN with 0
+  const safeValue = (value: number): number => {
+    return isNaN(value) ? 0 : value;
+  };
+  
+  // Clean input data
+  const purchasePrice = safeValue(data.purchasePrice);
+  const renovationCost = safeValue(data.renovationCost);
+  const notaryFees = safeValue(data.notaryFees);
+  const otherCosts = safeValue(data.otherCosts);
+  const propertySize = safeValue(data.propertySize);
+  const downPayment = safeValue(data.downPayment);
+  const loanAmount = safeValue(data.loanAmount);
+  const interestRate = safeValue(data.interestRate);
+  const loanTerm = safeValue(data.loanTerm);
+  const monthlyRent = safeValue(data.monthlyRent);
+  const airbnbNightlyRate = safeValue(data.airbnbNightlyRate);
+  const airbnbOccupancyRate = safeValue(data.airbnbOccupancyRate);
+  const managementFees = safeValue(data.managementFees);
+  const propertyTax = safeValue(data.propertyTax);
+  const insurance = safeValue(data.insurance);
+  const condoFees = safeValue(data.condoFees);
+  const maintenanceCost = safeValue(data.maintenanceCost);
+  const otherExpenses = safeValue(data.otherExpenses);
+  
   // Calcul de l'investissement total
   const totalInvestment = 
-    data.purchasePrice + 
-    data.renovationCost + 
-    data.notaryFees + 
-    data.otherCosts;
+    purchasePrice + 
+    renovationCost + 
+    notaryFees + 
+    otherCosts;
   
   // Calcul des revenus annuels selon le type de location
   let annualIncome = 0;
   if (data.rentalType === 'long-term') {
-    annualIncome = data.monthlyRent * 12;
+    annualIncome = monthlyRent * 12;
   } else {
     // Pour Airbnb : tarif par nuit * nombre de nuits occupées par an
     const daysPerYear = 365;
-    const occupiedDays = Math.round(daysPerYear * (data.airbnbOccupancyRate / 100));
-    annualIncome = data.airbnbNightlyRate * occupiedDays;
+    const occupiedDays = Math.round(daysPerYear * Math.min(Math.max(airbnbOccupancyRate, 0), 100) / 100);
+    annualIncome = airbnbNightlyRate * occupiedDays;
   }
   
   // Calcul de l'échéance mensuelle du prêt
-  const monthlyInterestRate = data.interestRate / 100 / 12;
-  const numberOfPayments = data.loanTerm * 12;
-  
   let monthlyMortgage = 0;
-  if (monthlyInterestRate > 0 && numberOfPayments > 0 && data.loanAmount > 0) {
-    monthlyMortgage = 
-      data.loanAmount * 
-      (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) / 
-      (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
+  
+  if (loanAmount > 0) {
+    const monthlyInterestRate = interestRate > 0 ? (interestRate / 100) / 12 : 0;
+    const numberOfPayments = loanTerm > 0 ? loanTerm * 12 : 0;
+    
+    if (monthlyInterestRate > 0 && numberOfPayments > 0) {
+      // Formule standard pour le calcul d'un prêt à taux fixe
+      monthlyMortgage = 
+        loanAmount * 
+        (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments)) / 
+        (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
+        
+      // Protection contre des valeurs infinies ou NaN
+      monthlyMortgage = isFinite(monthlyMortgage) ? monthlyMortgage : 0;
+    } else if (numberOfPayments > 0) {
+      // Si le taux d'intérêt est 0, c'est un simple calcul de division
+      monthlyMortgage = loanAmount / numberOfPayments;
+    }
   }
   
   // Calcul des frais de gestion annuels
-  const managementCosts = (annualIncome * data.managementFees) / 100;
+  const managementCosts = (annualIncome * Math.min(Math.max(managementFees, 0), 100)) / 100;
   
   // Calcul des dépenses annuelles
   const annualExpenses = 
-    data.propertyTax + 
-    data.insurance + 
-    data.condoFees + 
-    data.maintenanceCost + 
-    data.otherExpenses + 
+    propertyTax + 
+    insurance + 
+    condoFees + 
+    maintenanceCost + 
+    otherExpenses + 
     managementCosts + 
     (monthlyMortgage * 12);
   
@@ -54,45 +89,48 @@ export const calculateResults = (data: PropertyData): PropertyResults => {
   const grossYield = totalInvestment > 0 ? (annualIncome / totalInvestment) * 100 : 0;
   const netYield = totalInvestment > 0 ? (annualCashFlow / totalInvestment) * 100 : 0;
   
-  // ROI removed as requested
-  
   // Période de récupération de l'investissement (en années)
   // Si le cash flow est négatif ou nul, l'investissement ne sera jamais rentabilisé
   const paybackPeriod = (annualCashFlow > 0) ? (totalInvestment / annualCashFlow) : Infinity;
   
   // Calcul du prix au m²
-  const pricePerSqm = data.propertySize > 0 ? data.purchasePrice / data.propertySize : 0;
+  const pricePerSqm = propertySize > 0 ? purchasePrice / propertySize : 0;
   
   // Calcul du loyer au m²
   let rentPerSqm = 0;
-  if (data.propertySize > 0) {
+  if (propertySize > 0) {
     if (data.rentalType === 'long-term') {
-      rentPerSqm = data.monthlyRent / data.propertySize;
+      rentPerSqm = monthlyRent / propertySize;
     } else {
       // Pour Airbnb, on calcule un loyer mensuel équivalent
       const monthlyEquivalent = annualIncome / 12;
-      rentPerSqm = monthlyEquivalent / data.propertySize;
+      rentPerSqm = monthlyEquivalent / propertySize;
     }
   }
   
+  // Arrondir les résultats à 2 décimales pour plus de précision
+  const roundToTwoDecimals = (value: number): number => {
+    return Math.round(value * 100) / 100;
+  };
+  
   return {
-    totalInvestment: Math.round(totalInvestment * 100) / 100,
-    annualIncome: Math.round(annualIncome * 100) / 100,
-    annualExpenses: Math.round(annualExpenses * 100) / 100,
-    annualCashFlow: Math.round(annualCashFlow * 100) / 100,
-    monthlyCashFlow: Math.round(monthlyCashFlow * 100) / 100,
-    grossYield: Math.round(grossYield * 100) / 100,
-    netYield: Math.round(netYield * 100) / 100,
-    paybackPeriod: Math.round(paybackPeriod * 100) / 100,
-    monthlyMortgage: Math.round(monthlyMortgage * 100) / 100,
-    pricePerSqm: Math.round(pricePerSqm * 100) / 100,
-    rentPerSqm: Math.round(rentPerSqm * 100) / 100,
+    totalInvestment: roundToTwoDecimals(totalInvestment),
+    annualIncome: roundToTwoDecimals(annualIncome),
+    annualExpenses: roundToTwoDecimals(annualExpenses),
+    annualCashFlow: roundToTwoDecimals(annualCashFlow),
+    monthlyCashFlow: roundToTwoDecimals(monthlyCashFlow),
+    grossYield: roundToTwoDecimals(grossYield),
+    netYield: roundToTwoDecimals(netYield),
+    paybackPeriod: roundToTwoDecimals(paybackPeriod),
+    monthlyMortgage: roundToTwoDecimals(monthlyMortgage),
+    pricePerSqm: roundToTwoDecimals(pricePerSqm),
+    rentPerSqm: roundToTwoDecimals(rentPerSqm),
     
     // Add the additional properties needed for charts
-    notaryFees: data.notaryFees,
-    renovationCost: data.renovationCost,
-    otherCosts: data.otherCosts,
-    purchasePrice: data.purchasePrice
+    notaryFees: notaryFees,
+    renovationCost: renovationCost,
+    otherCosts: otherCosts,
+    purchasePrice: purchasePrice
   };
 };
 

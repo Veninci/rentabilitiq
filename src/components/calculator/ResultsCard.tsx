@@ -27,7 +27,7 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results }) => {
   } = results;
 
   const investmentBreakdownData = [
-    { name: 'Prix d\'achat', value: results.totalInvestment - results.notaryFees - results.otherCosts - results.renovationCost, color: '#F59E0B' },
+    { name: 'Prix d\'achat', value: results.purchasePrice, color: '#F59E0B' },
     { name: 'Frais de notaire', value: results.notaryFees, color: '#6366F1' },
     { name: 'Travaux', value: results.renovationCost, color: '#EC4899' },
     { name: 'Autres frais', value: results.otherCosts, color: '#14B8A6' },
