@@ -35,13 +35,13 @@ const Logos3 = ({
       id: "logo-2",
       description: "OpenAI",
       image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/OpenAI_Logo.svg/320px-OpenAI_Logo.svg.png",
-      className: "h-7 w-auto",
+      className: "h-10 w-auto",
     },
     {
       id: "logo-3",
       description: "GitHub",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/320px-Octicons-mark-github.svg.png",
-      className: "h-7 w-auto",
+      image: "/lovable-uploads/67757e96-e869-43ca-9289-3084b35a15bd.png",
+      className: "h-10 w-auto",
     },
   ],
 }: Logos3Props) => {
@@ -62,10 +62,10 @@ const Logos3 = ({
               {logos.map((logo) => (
                 <CarouselItem
                   key={logo.id}
-                  className="flex basis-1/3 justify-center pl-0 sm:basis-1/4 md:basis-1/5 lg:basis-1/6"
+                  className="flex basis-1/3 justify-center pl-0 sm:basis-1/3 md:basis-1/3 lg:basis-1/3"
                 >
-                  <div className="mx-10 flex shrink-0 items-center justify-center">
-                    <div>
+                  <div className="mx-12 flex shrink-0 items-center justify-center">
+                    <div className="flex h-16 items-center justify-center">
                       <img
                         src={logo.image}
                         alt={logo.description}
