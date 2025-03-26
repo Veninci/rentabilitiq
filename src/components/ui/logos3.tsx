@@ -28,8 +28,8 @@ const Logos3 = ({
     {
       id: "logo-1",
       description: "Supabase",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Supabase_Logo.svg/320px-Supabase_Logo.svg.png",
-      className: "h-7 w-auto",
+      image: "/lovable-uploads/f2667950-68a5-4464-963e-1c956f312793.png",
+      className: "h-10 w-auto",
     },
     {
       id: "logo-2",
