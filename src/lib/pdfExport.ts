@@ -12,7 +12,7 @@ export const exportResultsToPDF = async (
   try {
     // Fonction pour sécuriser les valeurs
     const safeGet = (value: any, defaultValue: any = 0) => {
-      return value === null || value === undefined || isNaN(value) ? defaultValue : value;
+      return value === null || value === undefined || isNaN(value) || !isFinite(value) ? defaultValue : value;
     };
 
     // Create a new PDF document
@@ -48,10 +48,11 @@ export const exportResultsToPDF = async (
     const startY = 50;
     const lineHeight = 8;
     
-    pdf.text(`Investissement total: ${formatter.formatCurrency(results.totalInvestment)}`, 20, startY);
-    pdf.text(`Cash-flow mensuel: ${formatter.formatCurrency(results.monthlyCashFlow)}`, 20, startY + lineHeight);
-    pdf.text(`Rendement brut: ${formatter.formatPercent(results.grossYield)}`, 20, startY + lineHeight * 2);
-    pdf.text(`Rendement net: ${formatter.formatPercent(results.netYield)}`, 20, startY + lineHeight * 3);
+    // Utiliser les valeurs sécurisées pour l'affichage
+    pdf.text(`Investissement total: ${formatter.formatCurrency(safeGet(results.totalInvestment))}`, 20, startY);
+    pdf.text(`Cash-flow mensuel: ${formatter.formatCurrency(safeGet(results.monthlyCashFlow))}`, 20, startY + lineHeight);
+    pdf.text(`Rendement brut: ${formatter.formatPercent(safeGet(results.grossYield))}`, 20, startY + lineHeight * 2);
+    pdf.text(`Rendement net: ${formatter.formatPercent(safeGet(results.netYield))}`, 20, startY + lineHeight * 3);
     
     // Capture the element as an image
     const canvas = await html2canvas(elementToCapture, {

@@ -1,8 +1,8 @@
 
 export const formatter = {
   formatCurrency: (value: number | null | undefined, options?: Intl.NumberFormatOptions) => {
-    // Protection contre les valeurs null ou undefined
-    if (value === null || value === undefined || isNaN(value)) {
+    // Protection contre les valeurs null, undefined, NaN ou Infinity
+    if (value === null || value === undefined || isNaN(value) || !isFinite(value)) {
       return '0 €';
     }
     
@@ -15,8 +15,8 @@ export const formatter = {
   },
   
   formatNumber: (value: number | null | undefined, options?: Intl.NumberFormatOptions) => {
-    // Protection contre les valeurs null ou undefined
-    if (value === null || value === undefined || isNaN(value)) {
+    // Protection contre les valeurs null, undefined, NaN ou Infinity
+    if (value === null || value === undefined || isNaN(value) || !isFinite(value)) {
       return '0';
     }
     
@@ -27,11 +27,12 @@ export const formatter = {
   },
   
   formatPercent: (value: number | null | undefined, options?: Intl.NumberFormatOptions) => {
-    // Protection contre les valeurs null ou undefined
-    if (value === null || value === undefined || isNaN(value)) {
+    // Protection contre les valeurs null, undefined, NaN ou Infinity
+    if (value === null || value === undefined || isNaN(value) || !isFinite(value)) {
       return '0 %';
     }
     
+    // Diviser par 100 seulement si nécessaire - la valeur est déjà en pourcentage
     return new Intl.NumberFormat('fr-FR', {
       style: 'percent',
       maximumFractionDigits: 2,
@@ -40,9 +41,13 @@ export const formatter = {
   },
   
   formatSavings: (monthlyPrice: number, yearlyPrice: number) => {
-    const monthlyCost = monthlyPrice * 12;
-    const savings = monthlyCost - yearlyPrice;
-    const savingsPercent = Math.round((savings / monthlyCost) * 100);
+    // Protection contre les valeurs null ou undefined
+    const safeMonthly = monthlyPrice || 0;
+    const safeYearly = yearlyPrice || 0;
+    
+    const monthlyCost = safeMonthly * 12;
+    const savings = monthlyCost - safeYearly;
+    const savingsPercent = monthlyCost > 0 ? Math.round((savings / monthlyCost) * 100) : 0;
     
     return {
       amount: savings,

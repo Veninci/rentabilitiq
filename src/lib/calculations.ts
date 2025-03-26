@@ -4,7 +4,7 @@ import { PropertyData, PropertyResults } from '@/types/property';
 export const calculateResults = (data: PropertyData): PropertyResults => {
   // Ensure all numeric values are valid, replace NaN with 0
   const safeValue = (value: number): number => {
-    return isNaN(value) ? 0 : value;
+    return isNaN(value) || value === null || value === undefined ? 0 : value;
   };
   
   // Clean input data
@@ -27,7 +27,7 @@ export const calculateResults = (data: PropertyData): PropertyResults => {
   const maintenanceCost = safeValue(data.maintenanceCost);
   const otherExpenses = safeValue(data.otherExpenses);
   
-  // Calcul de l'investissement total
+  // Calcul de l'investissement total - somme exacte des valeurs entrées par l'utilisateur
   const totalInvestment = 
     purchasePrice + 
     renovationCost + 
@@ -37,6 +37,7 @@ export const calculateResults = (data: PropertyData): PropertyResults => {
   // Calcul des revenus annuels selon le type de location
   let annualIncome = 0;
   if (data.rentalType === 'long-term') {
+    // Loyer mensuel * 12 mois
     annualIncome = monthlyRent * 12;
   } else {
     // Pour Airbnb : tarif par nuit * nombre de nuits occupées par an
@@ -67,10 +68,10 @@ export const calculateResults = (data: PropertyData): PropertyResults => {
     }
   }
   
-  // Calcul des frais de gestion annuels
+  // Calcul des frais de gestion annuels - pourcentage des revenus annuels
   const managementCosts = (annualIncome * Math.min(Math.max(managementFees, 0), 100)) / 100;
   
-  // Calcul des dépenses annuelles
+  // Calcul des dépenses annuelles - somme exacte des charges annuelles entrées par l'utilisateur
   const annualExpenses = 
     propertyTax + 
     insurance + 
@@ -80,12 +81,11 @@ export const calculateResults = (data: PropertyData): PropertyResults => {
     managementCosts + 
     (monthlyMortgage * 12);
   
-  // Calcul du cash-flow
+  // Calcul du cash-flow - différence entre revenus et dépenses
   const annualCashFlow = annualIncome - annualExpenses;
   const monthlyCashFlow = annualCashFlow / 12;
   
-  // Calcul des rendements
-  // Éviter la division par zéro
+  // Calcul des rendements - correctement calculés par rapport à l'investissement total
   const grossYield = totalInvestment > 0 ? (annualIncome / totalInvestment) * 100 : 0;
   const netYield = totalInvestment > 0 ? (annualCashFlow / totalInvestment) * 100 : 0;
   
@@ -93,10 +93,10 @@ export const calculateResults = (data: PropertyData): PropertyResults => {
   // Si le cash flow est négatif ou nul, l'investissement ne sera jamais rentabilisé
   const paybackPeriod = (annualCashFlow > 0) ? (totalInvestment / annualCashFlow) : Infinity;
   
-  // Calcul du prix au m²
+  // Calcul du prix au m² - correctement calculé par rapport à la taille de la propriété
   const pricePerSqm = propertySize > 0 ? purchasePrice / propertySize : 0;
   
-  // Calcul du loyer au m²
+  // Calcul du loyer au m² - correctement calculé selon le type de location
   let rentPerSqm = 0;
   if (propertySize > 0) {
     if (data.rentalType === 'long-term') {
