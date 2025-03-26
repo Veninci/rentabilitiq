@@ -37,6 +37,9 @@ const Hero = () => {
   const grossYield = (annualRent / propertyPrice) * 100;
   const netYield = (annualCashFlow / propertyPrice) * 100;
   
+  // Déterminer la couleur du cash flow en fonction de sa valeur
+  const cashFlowColor = monthlyCashFlow >= 0 ? "text-green-500" : "text-red-500";
+  
   return <section className="relative pt-20 md:pt-32 pb-10 md:pb-24 overflow-hidden px-4 md:px-0">
       {/* Background gradient */}
       <div className="absolute top-0 left-0 right-0 h-[70vh] bg-gradient-to-b from-primary/5 to-transparent -z-10"></div>
@@ -170,7 +173,7 @@ const Hero = () => {
                             <Wallet className="h-4 w-4 text-green-500 mr-2" />
                             <div className="text-xs text-muted-foreground dark:text-gray-300">Cash-flow mensuel</div>
                           </div>
-                          <div className="font-medium text-green-500">{Math.round(monthlyCashFlow)} €</div>
+                          <div className={`font-medium ${cashFlowColor}`}>{Math.round(monthlyCashFlow)} €</div>
                         </div>
                         
                         <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg dark:bg-gray-700">
@@ -341,7 +344,7 @@ const Hero = () => {
                             <Wallet className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 text-green-500 mr-1.5 sm:mr-2 md:mr-3" />
                             <div className="text-xs md:text-sm lg:text-base text-muted-foreground">Cash-flow mensuel</div>
                           </div>
-                          <div className="font-medium text-green-500 text-sm sm:text-base md:text-lg">{Math.round(monthlyCashFlow)} €</div>
+                          <div className={`font-medium ${cashFlowColor} text-sm sm:text-base md:text-lg`}>{Math.round(monthlyCashFlow)} €</div>
                         </div>
                         
                         <div className="flex items-center justify-between bg-gray-50 p-2 sm:p-3 md:p-4 rounded-lg">

@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { PropertyResults } from '@/types/property';
 import GlassCard from '../ui/GlassCard';
