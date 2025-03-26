@@ -4,20 +4,17 @@ import { useEffect, useState } from "react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
-
 interface Logo {
   id: string;
   description: string;
   image: string;
   className?: string;
 }
-
 interface Logos3Props {
   heading?: string;
   logos?: Logo[];
   className?: string;
 }
-
 const Logos3 = ({
   heading = "Les partenaires engagés dans le développement",
   logos = [{
@@ -77,10 +74,9 @@ const Logos3 = ({
     if (isMd) return "basis-1/3";
     return "basis-1/4";
   };
-  
   return <section className="py-8 sm:py-12 md:py-16 lg:py-24 dark:bg-gray-900">
       <div className="container flex flex-col items-center text-center px-4">
-        <h2 className="my-3 sm:my-4 md:my-6 text-pretty sm:text-xl md:text-2xl font-bold lg:text-4xl text-xl text-gray-950 dark:text-white">
+        <h2 className="my-3 sm:my-4 md:my-6 text-pretty sm:text-xl lg:text-4xl text-xl text-gray-950 dark:text-white md:text-2xl font-extrabold">
           {heading}
         </h2>
       </div>
@@ -110,5 +106,4 @@ const Logos3 = ({
       </div>
     </section>;
 };
-
 export { Logos3 };
