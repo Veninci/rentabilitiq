@@ -1,12 +1,15 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Brain, MessageSquare, Sparkles, Clock, Star } from "lucide-react";
+import { Brain, MessageSquare, Sparkles, Clock, Star, Key, X } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import { openAIService } from "@/lib/openai-service";
 import { PropertyData, PropertyResults } from "@/types/property";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from "@/components/ui/dialog";
+import { toast } from "@/hooks/use-toast";
 
 interface PropertyAdvisorProps {
   propertyData?: PropertyData | null;
@@ -18,6 +21,34 @@ const PropertyAdvisor: React.FC<PropertyAdvisorProps> = ({ propertyData, results
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [question, setQuestion] = useState<string>("");
   const [activeTab, setActiveTab] = useState<string>("advice");
+  const [apiKey, setApiKey] = useState<string>("");
+  const [showKeyInput, setShowKeyInput] = useState<boolean>(false);
+
+  // Charger la clé API depuis localStorage au chargement du composant
+  useEffect(() => {
+    const storedKey = localStorage.getItem('openai_api_key');
+    if (storedKey) {
+      setApiKey(storedKey);
+    }
+  }, []);
+
+  const handleSaveApiKey = () => {
+    if (apiKey.trim()) {
+      openAIService.setApiKey(apiKey.trim());
+      toast({
+        title: "Clé API sauvegardée",
+        description: "Votre clé API a été enregistrée avec succès.",
+        variant: "default"
+      });
+      setShowKeyInput(false);
+    } else {
+      toast({
+        title: "Erreur",
+        description: "Veuillez entrer une clé API valide.",
+        variant: "destructive"
+      });
+    }
+  };
 
   const getInvestmentAdvice = async () => {
     if (!propertyData || !results) {
@@ -139,6 +170,8 @@ const PropertyAdvisor: React.FC<PropertyAdvisorProps> = ({ propertyData, results
     }
   };
 
+  const hasApiKey = openAIService.hasApiKey();
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -151,6 +184,23 @@ const PropertyAdvisor: React.FC<PropertyAdvisorProps> = ({ propertyData, results
         </CardDescription>
       </CardHeader>
       <CardContent>
+        {!hasApiKey && (
+          <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-md text-amber-800 flex items-center">
+            <div className="flex-1">
+              Vous devez configurer votre clé API OpenAI pour utiliser cette fonctionnalité.
+            </div>
+            <Button 
+              size="sm" 
+              variant="outline" 
+              onClick={() => setShowKeyInput(true)}
+              className="ml-2"
+            >
+              <Key className="mr-2 h-4 w-4" />
+              Configurer
+            </Button>
+          </div>
+        )}
+
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="grid grid-cols-2 mb-4">
             <TabsTrigger value="advice" className="flex items-center gap-1">
@@ -174,7 +224,7 @@ const PropertyAdvisor: React.FC<PropertyAdvisorProps> = ({ propertyData, results
                   <Button 
                     size="sm" 
                     onClick={getInvestmentAdvice} 
-                    disabled={isLoading}
+                    disabled={isLoading || !hasApiKey}
                   >
                     {isLoading ? 
                       <>
@@ -213,7 +263,7 @@ const PropertyAdvisor: React.FC<PropertyAdvisorProps> = ({ propertyData, results
                 />
                 <Button 
                   onClick={askQuestion} 
-                  disabled={isLoading || !question.trim()}
+                  disabled={isLoading || !question.trim() || !hasApiKey}
                   className="self-end"
                 >
                   {isLoading ? 
@@ -237,6 +287,44 @@ const PropertyAdvisor: React.FC<PropertyAdvisorProps> = ({ propertyData, results
             </div>
           </TabsContent>
         </Tabs>
+
+        {/* Dialog pour configurer la clé API */}
+        <Dialog open={showKeyInput} onOpenChange={setShowKeyInput}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Configurer votre clé API OpenAI</DialogTitle>
+              <DialogDescription>
+                Entrez votre clé API OpenAI pour utiliser les fonctionnalités d'intelligence artificielle.
+                Vous pouvez obtenir une clé sur <a href="https://platform.openai.com/account/api-keys" target="_blank" rel="noopener noreferrer" className="text-primary underline">platform.openai.com</a>.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="flex items-center space-x-2 py-4">
+              <div className="grid flex-1 gap-2">
+                <Input
+                  type="password"
+                  placeholder="sk-..."
+                  value={apiKey}
+                  onChange={(e) => setApiKey(e.target.value)}
+                />
+                <p className="text-xs text-muted-foreground">
+                  La clé est stockée uniquement dans votre navigateur et n'est jamais partagée.
+                </p>
+              </div>
+            </div>
+            <DialogFooter className="sm:justify-between">
+              <DialogClose asChild>
+                <Button type="button" variant="secondary">
+                  <X className="mr-2 h-4 w-4" />
+                  Annuler
+                </Button>
+              </DialogClose>
+              <Button type="button" onClick={handleSaveApiKey}>
+                <Key className="mr-2 h-4 w-4" />
+                Sauvegarder
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </CardContent>
       <CardFooter className="text-xs text-muted-foreground">
         <span>Alimenté par GPT-4o</span>

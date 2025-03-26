@@ -18,8 +18,9 @@ interface OpenAICompletionResponse {
   }[];
 }
 
-// Clé API fournie par l'utilisateur
-const API_KEY = "sk-31d578b31967472cb42defd49ea1e55e";
+// Clé API par défaut (à remplacer par une clé valide)
+// Note: Idéalement, cela devrait être géré côté serveur
+const DEFAULT_API_KEY = "";
 
 /**
  * Service pour faire des appels à l'API LLM.
@@ -29,9 +30,26 @@ export class OpenAIService {
 
   /**
    * Crée une nouvelle instance du service.
+   * @param apiKey Clé API personnalisée (utilisera la clé par défaut si non fournie)
    */
-  constructor() {
-    this.apiKey = API_KEY;
+  constructor(apiKey?: string) {
+    // Utiliser la clé fournie ou celle stockée dans localStorage ou la clé par défaut
+    this.apiKey = apiKey || localStorage.getItem('openai_api_key') || DEFAULT_API_KEY;
+  }
+
+  /**
+   * Définit une nouvelle clé API et la sauvegarde dans localStorage
+   */
+  setApiKey(apiKey: string): void {
+    this.apiKey = apiKey;
+    localStorage.setItem('openai_api_key', apiKey);
+  }
+
+  /**
+   * Vérifie si une clé API est définie
+   */
+  hasApiKey(): boolean {
+    return !!this.apiKey;
   }
 
   /**
@@ -44,6 +62,15 @@ export class OpenAIService {
     messages: OpenAIMessage[],
     model: string = 'gpt-4o'
   ): Promise<string> {
+    if (!this.hasApiKey()) {
+      toast({
+        title: "Clé API manquante",
+        description: "Veuillez saisir votre clé API OpenAI dans les paramètres.",
+        variant: "destructive",
+      });
+      return "Veuillez configurer votre clé API OpenAI pour utiliser cette fonctionnalité.";
+    }
+
     try {
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
@@ -77,15 +104,15 @@ export class OpenAIService {
   }
 }
 
-// Créer une instance du service avec la clé API
+// Créer une instance du service
 export const openAIService = new OpenAIService();
 
 // Pour des raisons de compatibilité avec le code existant
-export const createOpenAIService = (): OpenAIService => {
-  return new OpenAIService();
+export const createOpenAIService = (apiKey?: string): OpenAIService => {
+  return new OpenAIService(apiKey);
 };
 
 // Pour des raisons de compatibilité avec le code existant
 export const getStoredApiKey = (): string => {
-  return API_KEY;
+  return localStorage.getItem('openai_api_key') || DEFAULT_API_KEY;
 };
