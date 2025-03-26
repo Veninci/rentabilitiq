@@ -10,6 +10,11 @@ export const exportResultsToPDF = async (
   cityName?: string
 ) => {
   try {
+    // Fonction pour sécuriser les valeurs
+    const safeGet = (value: any, defaultValue: any = 0) => {
+      return value === null || value === undefined || isNaN(value) ? defaultValue : value;
+    };
+
     // Create a new PDF document
     const pdf = new jsPDF('p', 'mm', 'a4');
     const pageWidth = pdf.internal.pageSize.getWidth();
@@ -36,7 +41,7 @@ export const exportResultsToPDF = async (
     pdf.setFontSize(10);
     pdf.text(`Généré le ${dateStr}`, pageWidth / 2, 40, { align: 'center' });
     
-    // Add key results as text
+    // Add key results as text with safer values
     pdf.setFontSize(12);
     pdf.setTextColor(51, 51, 51);
     

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis, YAxis, CartesianGrid, Legend } from 'recharts';
 import GlassCard from '../ui/GlassCard';
@@ -12,16 +11,21 @@ interface ComparisonChartProps {
 }
 
 const ComparisonChart: React.FC<ComparisonChartProps> = ({ longTerm, airbnb }) => {
+  // Fonction utilitaire pour sécuriser les valeurs
+  const safeGet = (value: any, defaultValue: any = 0) => {
+    return value === null || value === undefined || isNaN(value) ? defaultValue : value;
+  };
+  
   // Format data for charts to avoid NaN
   const yieldData = [
     { 
       name: 'Location longue durée', 
-      value: isNaN(longTerm.netYield) ? 0 : longTerm.netYield,
+      value: safeGet(longTerm.netYield),
       color: '#3B82F6' 
     },
     { 
       name: 'Location Airbnb', 
-      value: isNaN(airbnb.netYield) ? 0 : airbnb.netYield,
+      value: safeGet(airbnb.netYield),
       color: '#10B981' 
     },
   ];
@@ -29,29 +33,29 @@ const ComparisonChart: React.FC<ComparisonChartProps> = ({ longTerm, airbnb }) =
   const cashFlowData = [
     { 
       name: 'Location longue durée', 
-      value: isNaN(longTerm.annualCashFlow) ? 0 : longTerm.annualCashFlow,
+      value: safeGet(longTerm.annualCashFlow),
       color: '#3B82F6' 
     },
     { 
       name: 'Location Airbnb', 
-      value: isNaN(airbnb.annualCashFlow) ? 0 : airbnb.annualCashFlow,
+      value: safeGet(airbnb.annualCashFlow),
       color: '#10B981' 
     },
   ];
   
   // Data for revenue comparison chart
   const revenueData = [
-    { name: 'Revenus', longTerm: longTerm.annualIncome, airbnb: airbnb.annualIncome },
-    { name: 'Charges', longTerm: longTerm.annualExpenses, airbnb: airbnb.annualExpenses },
-    { name: 'Cash-flow', longTerm: longTerm.annualCashFlow, airbnb: airbnb.annualCashFlow },
+    { name: 'Revenus', longTerm: safeGet(longTerm.annualIncome), airbnb: safeGet(airbnb.annualIncome) },
+    { name: 'Charges', longTerm: safeGet(longTerm.annualExpenses), airbnb: safeGet(airbnb.annualExpenses) },
+    { name: 'Cash-flow', longTerm: safeGet(longTerm.annualCashFlow), airbnb: safeGet(airbnb.annualCashFlow) },
   ];
   
   // Data for monthly income comparison
   const monthlyData = [
     { 
       name: 'Cash-flow mensuel', 
-      'Location longue durée': longTerm.monthlyCashFlow, 
-      'Location Airbnb': airbnb.monthlyCashFlow 
+      'Location longue durée': safeGet(longTerm.monthlyCashFlow), 
+      'Location Airbnb': safeGet(airbnb.monthlyCashFlow) 
     },
   ];
   
@@ -62,7 +66,7 @@ const ComparisonChart: React.FC<ComparisonChartProps> = ({ longTerm, airbnb }) =
         <div className="bg-white p-2 rounded shadow-sm border border-gray-100 text-sm">
           <p className="font-medium">{data.name}</p>
           <p className="text-primary">
-            {data.value < 0 || data.value > 100 
+            {safeGet(data.value) < 0 || safeGet(data.value) > 100 
               ? formatter.formatCurrency(data.value)
               : formatter.formatPercent(data.value)
             }
@@ -88,6 +92,7 @@ const ComparisonChart: React.FC<ComparisonChartProps> = ({ longTerm, airbnb }) =
     }
     return null;
   };
+  
   
   return (
     <GlassCard className="animate-scale-in">
@@ -138,13 +143,13 @@ const ComparisonChart: React.FC<ComparisonChartProps> = ({ longTerm, airbnb }) =
             <div className="text-center">
               <div className="text-sm text-muted-foreground mb-1">Location longue durée</div>
               <div className="text-primary font-semibold">
-                {isNaN(longTerm.netYield) ? "0 %" : formatter.formatPercent(longTerm.netYield)}
+                {formatter.formatPercent(longTerm.netYield)}
               </div>
             </div>
             <div className="text-center">
               <div className="text-sm text-muted-foreground mb-1">Location Airbnb</div>
               <div className="text-primary font-semibold">
-                {isNaN(airbnb.netYield) ? "0 %" : formatter.formatPercent(airbnb.netYield)}
+                {formatter.formatPercent(airbnb.netYield)}
               </div>
             </div>
           </div>
@@ -193,14 +198,14 @@ const ComparisonChart: React.FC<ComparisonChartProps> = ({ longTerm, airbnb }) =
           <div className="flex justify-between border-t border-gray-100 pt-4 mt-4">
             <div className="text-center">
               <div className="text-sm text-muted-foreground mb-1">Location longue durée</div>
-              <div className={`font-semibold ${longTerm.annualCashFlow >= 0 ? 'text-green-600' : 'text-red-500'}`}>
-                {isNaN(longTerm.annualCashFlow) ? "0 €" : formatter.formatCurrency(longTerm.annualCashFlow)}
+              <div className={`font-semibold ${safeGet(longTerm.annualCashFlow) >= 0 ? 'text-green-600' : 'text-red-500'}`}>
+                {formatter.formatCurrency(longTerm.annualCashFlow)}
               </div>
             </div>
             <div className="text-center">
               <div className="text-sm text-muted-foreground mb-1">Location Airbnb</div>
-              <div className={`font-semibold ${airbnb.annualCashFlow >= 0 ? 'text-green-600' : 'text-red-500'}`}>
-                {isNaN(airbnb.annualCashFlow) ? "0 €" : formatter.formatCurrency(airbnb.annualCashFlow)}
+              <div className={`font-semibold ${safeGet(airbnb.annualCashFlow) >= 0 ? 'text-green-600' : 'text-red-500'}`}>
+                {formatter.formatCurrency(airbnb.annualCashFlow)}
               </div>
             </div>
           </div>
@@ -272,20 +277,20 @@ const ComparisonChart: React.FC<ComparisonChartProps> = ({ longTerm, airbnb }) =
             <ul className="space-y-2 text-sm">
               <li className="flex justify-between">
                 <span className="text-muted-foreground">Revenus annuels</span>
-                <span>{isNaN(longTerm.annualIncome) ? "0 €" : formatter.formatCurrency(longTerm.annualIncome)}</span>
+                <span>{formatter.formatCurrency(longTerm.annualIncome)}</span>
               </li>
               <li className="flex justify-between">
                 <span className="text-muted-foreground">Charges annuelles</span>
-                <span>{isNaN(longTerm.annualExpenses) ? "0 €" : formatter.formatCurrency(longTerm.annualExpenses)}</span>
+                <span>{formatter.formatCurrency(longTerm.annualExpenses)}</span>
               </li>
               <li className="flex justify-between">
                 <span className="text-muted-foreground">Rendement net</span>
-                <span>{isNaN(longTerm.netYield) ? "0 %" : formatter.formatPercent(longTerm.netYield)}</span>
+                <span>{formatter.formatPercent(longTerm.netYield)}</span>
               </li>
               <li className="flex justify-between font-medium">
                 <span>Cash-flow mensuel</span>
-                <span className={longTerm.monthlyCashFlow >= 0 ? 'text-green-600' : 'text-red-500'}>
-                  {isNaN(longTerm.monthlyCashFlow) ? "0 €" : formatter.formatCurrency(longTerm.monthlyCashFlow)}
+                <span className={safeGet(longTerm.monthlyCashFlow) >= 0 ? 'text-green-600' : 'text-red-500'}>
+                  {formatter.formatCurrency(longTerm.monthlyCashFlow)}
                 </span>
               </li>
             </ul>
@@ -299,20 +304,20 @@ const ComparisonChart: React.FC<ComparisonChartProps> = ({ longTerm, airbnb }) =
             <ul className="space-y-2 text-sm">
               <li className="flex justify-between">
                 <span className="text-muted-foreground">Revenus annuels</span>
-                <span>{isNaN(airbnb.annualIncome) ? "0 €" : formatter.formatCurrency(airbnb.annualIncome)}</span>
+                <span>{formatter.formatCurrency(airbnb.annualIncome)}</span>
               </li>
               <li className="flex justify-between">
                 <span className="text-muted-foreground">Charges annuelles</span>
-                <span>{isNaN(airbnb.annualExpenses) ? "0 €" : formatter.formatCurrency(airbnb.annualExpenses)}</span>
+                <span>{formatter.formatCurrency(airbnb.annualExpenses)}</span>
               </li>
               <li className="flex justify-between">
                 <span className="text-muted-foreground">Rendement net</span>
-                <span>{isNaN(airbnb.netYield) ? "0 %" : formatter.formatPercent(airbnb.netYield)}</span>
+                <span>{formatter.formatPercent(airbnb.netYield)}</span>
               </li>
               <li className="flex justify-between font-medium">
                 <span>Cash-flow mensuel</span>
-                <span className={airbnb.monthlyCashFlow >= 0 ? 'text-green-600' : 'text-red-500'}>
-                  {isNaN(airbnb.monthlyCashFlow) ? "0 €" : formatter.formatCurrency(airbnb.monthlyCashFlow)}
+                <span className={safeGet(airbnb.monthlyCashFlow) >= 0 ? 'text-green-600' : 'text-red-500'}>
+                  {formatter.formatCurrency(airbnb.monthlyCashFlow)}
                 </span>
               </li>
             </ul>

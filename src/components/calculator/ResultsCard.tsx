@@ -1,3 +1,4 @@
+
 import React, { useRef } from 'react';
 import { PropertyResults } from '@/types/property';
 import GlassCard from '../ui/GlassCard';
@@ -14,6 +15,11 @@ interface ResultsCardProps {
 }
 
 const ResultsCard: React.FC<ResultsCardProps> = ({ results, cityName }) => {
+  // Extrait les valeurs avec une vérification pour éviter les erreurs de nullité
+  const safeGet = (value: any, defaultValue: any = 0) => {
+    return value === null || value === undefined || isNaN(value) ? defaultValue : value;
+  };
+  
   const {
     totalInvestment,
     annualIncome,
@@ -31,11 +37,12 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results, cityName }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
+  // Sécuriser les données utilisées dans les graphiques
   const investmentBreakdownData = [
-    { name: 'Prix d\'achat', value: results.purchasePrice, color: '#F59E0B' },
-    { name: 'Frais de notaire', value: results.notaryFees, color: '#6366F1' },
-    { name: 'Travaux', value: results.renovationCost, color: '#EC4899' },
-    { name: 'Autres frais', value: results.otherCosts, color: '#14B8A6' },
+    { name: 'Prix d\'achat', value: safeGet(results.purchasePrice), color: '#F59E0B' },
+    { name: 'Frais de notaire', value: safeGet(results.notaryFees), color: '#6366F1' },
+    { name: 'Travaux', value: safeGet(results.renovationCost), color: '#EC4899' },
+    { name: 'Autres frais', value: safeGet(results.otherCosts), color: '#14B8A6' },
   ].filter(item => item.value > 0);
 
   const CustomTooltip = ({ active, payload }: any) => {
@@ -86,6 +93,17 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results, cityName }) => {
         variant: "destructive",
       });
     }
+  };
+
+  // Sécuriser la valeur de paybackPeriod qui pourrait être null ou Infinity
+  const displayPaybackPeriod = () => {
+    if (paybackPeriod === null || paybackPeriod === undefined) {
+      return "Jamais";
+    }
+    if (!isFinite(paybackPeriod)) {
+      return "Jamais";
+    }
+    return `${safeGet(paybackPeriod).toFixed(1)} ans`;
   };
 
   return (
@@ -139,14 +157,14 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results, cityName }) => {
               <ResultItem 
                 label="Cash-flow mensuel" 
                 value={formatter.formatCurrency(monthlyCashFlow)} 
-                color={monthlyCashFlow >= 0 ? "text-green-600" : "text-red-500"}
+                color={safeGet(monthlyCashFlow) >= 0 ? "text-green-600" : "text-red-500"}
               />
               <ResultItem 
                 label="Cash-flow annuel" 
                 value={formatter.formatCurrency(annualCashFlow)}
-                color={annualCashFlow >= 0 ? "text-green-600" : "text-red-500"} 
+                color={safeGet(annualCashFlow) >= 0 ? "text-green-600" : "text-red-500"} 
               />
-              {monthlyMortgage > 0 && (
+              {safeGet(monthlyMortgage) > 0 && (
                 <ResultItem 
                   label="Mensualité crédit" 
                   value={formatter.formatCurrency(monthlyMortgage)} 
@@ -246,7 +264,7 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results, cityName }) => {
           
           <ResultItem 
             label="Durée de remboursement" 
-            value={paybackPeriod === Infinity ? "Jamais" : `${paybackPeriod.toFixed(1)} ans`} 
+            value={displayPaybackPeriod()} 
             color="text-foreground"
           />
         </div>
