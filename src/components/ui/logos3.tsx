@@ -43,24 +43,6 @@ const Logos3 = ({
       image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/320px-Octicons-mark-github.svg.png",
       className: "h-7 w-auto",
     },
-    {
-      id: "logo-4",
-      description: "Orpi",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Orpi_logo.svg/320px-Orpi_logo.svg.png",
-      className: "h-7 w-auto",
-    },
-    {
-      id: "logo-5",
-      description: "Foncia",
-      image: "https://upload.wikimedia.org/wikipedia/fr/thumb/d/d0/Foncia_logo.svg/320px-Foncia_logo.svg.png",
-      className: "h-7 w-auto",
-    },
-    {
-      id: "logo-6",
-      description: "Guy Hoquet",
-      image: "https://upload.wikimedia.org/wikipedia/fr/thumb/e/e5/Guy_Hoquet_logo.svg/320px-Guy_Hoquet_logo.svg.png",
-      className: "h-7 w-auto",
-    },
   ],
 }: Logos3Props) => {
   return (
