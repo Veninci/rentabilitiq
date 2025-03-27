@@ -11,7 +11,7 @@ import PropertyAdvisor from '@/components/ai/PropertyAdvisor';
 import UsageLimitReached from '@/components/calculator/UsageLimitReached';
 import { PropertyData, PropertyResults, CalculationHistory } from '@/types/property';
 import { calculateResults, calculateAirbnbResults, calculateLongTermResults } from '@/lib/calculations';
-import { MapPin, Lock, AlertTriangle, Info as InfoIcon, CheckCircle, History, Brain } from 'lucide-react';
+import { MapPin, Lock, AlertTriangle, Info as InfoIcon, CheckCircle, History, Brain, Calculator as CalculatorIcon } from 'lucide-react';
 import { 
   hasReachedUsageLimit, 
   trackCalculatorUsage, 
