@@ -115,10 +115,10 @@ export function ExpandableTabs({
           return <Separator key={`separator-${index}`} />;
         }
 
-        const Icon = tab.icon;
+        const Icon = tab.icon as LucideIcon;
         return (
           <motion.button
-            key={tab.title}
+            key={tab.title as string}
             variants={buttonVariants}
             initial={false}
             animate="animate"
@@ -143,7 +143,7 @@ export function ExpandableTabs({
                   transition={transition}
                   className="overflow-hidden"
                 >
-                  {tab.title}
+                  {tab.title as string}
                 </motion.span>
               )}
             </AnimatePresence>
