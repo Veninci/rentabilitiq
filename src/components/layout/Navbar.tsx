@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Home, PieChart, FileText, InfoIcon } from 'lucide-react';
+import { Menu, X, Home, PieChart, EuroIcon, InfoIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ExpandableTabs } from '@/components/ui/expandable-tabs';
@@ -29,7 +28,7 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Accueil', path: '/', icon: Home },
     { name: 'Calculateur', path: '/calculator', icon: PieChart },
-    { name: 'Tarifs', path: '/pricing', icon: PieChart },
+    { name: 'Tarifs', path: '/pricing', icon: EuroIcon },
     { name: 'À propos', path: '/about', icon: InfoIcon },
   ];
 
