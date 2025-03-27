@@ -115,10 +115,12 @@ export function ExpandableTabs({
           return <Separator key={`separator-${index}`} />;
         }
 
-        const Icon = tab.icon as LucideIcon;
+        // We need to explicitly check that this is a Tab type to make TypeScript happy
+        const tabItem = tab as Tab;
+        const Icon = tabItem.icon;
         return (
           <motion.button
-            key={tab.title as string}
+            key={tabItem.title}
             variants={buttonVariants}
             initial={false}
             animate="animate"
@@ -126,7 +128,7 @@ export function ExpandableTabs({
             onClick={() => handleSelect(index)}
             transition={transition}
             className={cn(
-              "relative flex items-center rounded-xl px-4 py-2 text-sm font-medium transition-colors duration-300",
+              "relative flex items-center rounded-xl px-2 py-2 text-sm font-medium transition-colors duration-300",
               selected === index
                 ? cn("bg-muted", activeColor)
                 : "text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -143,7 +145,7 @@ export function ExpandableTabs({
                   transition={transition}
                   className="overflow-hidden"
                 >
-                  {tab.title as string}
+                  {tabItem.title}
                 </motion.span>
               )}
             </AnimatePresence>
