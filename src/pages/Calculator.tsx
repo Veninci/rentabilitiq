@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
@@ -10,7 +11,7 @@ import PropertyAdvisor from '@/components/ai/PropertyAdvisor';
 import UsageLimitReached from '@/components/calculator/UsageLimitReached';
 import { PropertyData, PropertyResults, CalculationHistory } from '@/types/property';
 import { calculateResults, calculateAirbnbResults, calculateLongTermResults } from '@/lib/calculations';
-import { Calculator as CalculatorIcon, MapPin, Lock, AlertTriangle, Info as InfoIcon, CheckCircle, History, Brain } from 'lucide-react';
+import { MapPin, Lock, AlertTriangle, Info as InfoIcon, CheckCircle, History, Brain } from 'lucide-react';
 import { 
   hasReachedUsageLimit, 
   trackCalculatorUsage, 
@@ -25,6 +26,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import Logo from '@/components/ui/Logo';
 
 const Calculator = () => {
   const [results, setResults] = useState<PropertyResults | null>(null);
@@ -213,7 +215,7 @@ const Calculator = () => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center mb-8">
               <div className="inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-                <CalculatorIcon className="h-4 w-4 mr-2" />
+                <Logo className="h-4 w-4 mr-2" />
                 <span>Calculateur de rentabilité</span>
               </div>
               

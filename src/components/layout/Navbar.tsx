@@ -1,10 +1,10 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Calculator, Home, PieChart, FileText, InfoIcon } from 'lucide-react';
+import { Menu, X, Home, PieChart, FileText, InfoIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { ExpandableTabs } from '@/components/ui/expandable-tabs';
+import Logo from '@/components/ui/Logo';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -27,7 +27,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Accueil', path: '/', icon: Home },
-    { name: 'Calculateur', path: '/calculator', icon: Calculator },
+    { name: 'Calculateur', path: '/calculator', icon: PieChart },
     { name: 'Tarifs', path: '/pricing', icon: PieChart },
     { name: 'À propos', path: '/about', icon: InfoIcon },
   ];
@@ -69,7 +69,7 @@ const Navbar = () => {
           to="/" 
           className="flex items-center space-x-1 md:space-x-2 font-semibold text-lg md:text-xl"
         >
-          <Calculator className="h-5 w-5 md:h-6 md:w-6 text-primary" />
+          <Logo className="text-primary" size="md" />
           <span className="animate-fade-in">RentabilitiQ</span>
         </Link>
 

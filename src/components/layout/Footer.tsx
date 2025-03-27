@@ -1,7 +1,7 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Calculator, Mail, Instagram, ExternalLink } from 'lucide-react';
+import { Mail, Instagram, ExternalLink } from 'lucide-react';
+import Logo from '@/components/ui/Logo';
 
 const Footer = () => {
   return <footer className="bg-gray-50 border-t border-gray-100">
@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
           <div className="space-y-4">
             <Link to="/" className="flex items-center space-x-2 font-semibold text-lg">
-              <Calculator className="h-5 w-5 text-primary" />
+              <Logo className="text-primary" size="sm" />
               <span className="text-slate-950">RentabilitiQ</span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed">
