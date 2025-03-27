@@ -1,9 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Calculator } from 'lucide-react';
+import { Menu, X, Calculator, Home, PieChart, FileText, InfoIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { ExpandableTabs } from '@/components/ui/expandable-tabs';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -25,16 +26,33 @@ const Navbar = () => {
   }, [location.pathname]);
 
   const navLinks = [
-    { name: 'Accueil', path: '/' },
-    { name: 'Calculateur', path: '/calculator' },
-    { name: 'Tarifs', path: '/pricing' },
-    { name: 'À propos', path: '/about' },
+    { name: 'Accueil', path: '/', icon: Home },
+    { name: 'Calculateur', path: '/calculator', icon: Calculator },
+    { name: 'Tarifs', path: '/pricing', icon: PieChart },
+    { name: 'À propos', path: '/about', icon: InfoIcon },
   ];
 
   const isActive = (path: string) => location.pathname === path;
 
   const handleFreeTrialClick = () => {
     navigate('/calculator');
+  };
+
+  // Convert navLinks to expandable tabs format
+  const tabs = navLinks.map(link => ({
+    title: link.name,
+    icon: link.icon,
+    path: link.path
+  }));
+
+  // Find the active tab index
+  const activeTabIndex = navLinks.findIndex(link => isActive(link.path));
+
+  // Handle tab change
+  const handleTabChange = (index: number | null) => {
+    if (index !== null) {
+      navigate(navLinks[index].path);
+    }
   };
 
   return (
@@ -55,28 +73,19 @@ const Navbar = () => {
           <span className="animate-fade-in">RentabilitiQ</span>
         </Link>
 
-        {/* Desktop Menu */}
+        {/* Desktop Navigation - Now using ExpandableTabs */}
         <div className="hidden md:flex items-center space-x-8">
-          <div className="flex space-x-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className={cn(
-                  'transition-all duration-300 relative py-1',
-                  isActive(link.path)
-                    ? 'text-primary font-medium'
-                    : 'text-muted-foreground hover:text-foreground'
-                )}
-              >
-                {link.name}
-                {isActive(link.path) && (
-                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-primary rounded-full animate-fade-in" />
-                )}
-              </Link>
-            ))}
-          </div>
-          <Button size="sm" className="rounded-full px-4 animate-fade-in" onClick={handleFreeTrialClick}>
+          <ExpandableTabs 
+            tabs={tabs} 
+            activeIndex={activeTabIndex !== -1 ? activeTabIndex : null}
+            onChange={handleTabChange}
+            className="border-transparent"
+          />
+          <Button 
+            size="sm" 
+            className="rounded-full px-4 animate-fade-in" 
+            onClick={handleFreeTrialClick}
+          >
             Essai gratuit
           </Button>
         </div>
