@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Home, PieChart, FileText, InfoIcon } from 'lucide-react';
@@ -69,7 +70,7 @@ const Navbar = () => {
           to="/" 
           className="flex items-center space-x-1 md:space-x-2 font-semibold text-lg md:text-xl"
         >
-          <Logo className="text-primary" size="lg" />
+          <Logo className="text-primary" size="xl" />
           <span className="animate-fade-in">RentabilitiQ</span>
         </Link>
 
