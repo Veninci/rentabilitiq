@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
           <div className="space-y-4">
             <Link to="/" className="flex items-center space-x-2 font-semibold text-lg">
-              <Logo className="text-primary" size="sm" />
+              <Logo className="text-primary" size="md" />
               <span className="text-slate-950">RentabilitiQ</span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed">

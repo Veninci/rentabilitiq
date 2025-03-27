@@ -99,8 +99,8 @@ const Hero = () => {
                 <div className="w-full h-full p-3 md:p-6 flex flex-col">
                   <div className="flex items-center justify-between mb-4 md:mb-6">
                     <div className="flex items-center space-x-2 md:space-x-4">
-                      <div className="bg-primary/10 h-8 w-8 md:h-12 md:w-12 rounded-lg flex items-center justify-center">
-                        <Logo className="h-4 w-4 md:h-6 md:w-6 text-primary" />
+                      <div className="bg-primary/10 h-10 w-10 md:h-14 md:w-14 rounded-lg flex items-center justify-center">
+                        <Logo className="h-6 w-6 md:h-8 md:w-8 text-primary" />
                       </div>
                       <div className="text-sm md:text-xl font-medium text-foreground">Calculateur de rentabilité</div>
                     </div>
@@ -229,8 +229,8 @@ const Hero = () => {
         animationDelay: "400ms"
       }}>
           <div className="bg-white rounded-xl border border-gray-100 p-6 shadow-sm transition-all hover:shadow-md">
-            <div className="bg-primary/10 h-10 w-10 rounded-lg flex items-center justify-center mb-4">
-              <Logo className="h-5 w-5 text-primary" />
+            <div className="bg-primary/10 h-12 w-12 rounded-lg flex items-center justify-center mb-4">
+              <Logo className="h-7 w-7 text-primary" />
             </div>
             <h3 className="text-lg font-medium mb-2 text-slate-950">Calcul précis</h3>
             <p className="text-muted-foreground text-sm">Obtenez des calculs de rentabilité précis basés sur tous les paramètres pertinents de votre investissement.</p>
@@ -270,8 +270,8 @@ const Hero = () => {
                 <div className="p-3 sm:p-4 md:p-6 lg:p-8">
                   <div className="flex items-center justify-between mb-4 sm:mb-6 md:mb-8">
                     <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-5">
-                      <div className="bg-primary/10 h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 lg:h-16 lg:w-16 rounded-xl flex items-center justify-center">
-                        <Logo className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 lg:h-8 lg:w-8 text-primary" />
+                      <div className="bg-primary/10 h-10 w-10 sm:h-12 sm:w-12 md:h-16 md:w-16 lg:h-20 lg:w-20 rounded-xl flex items-center justify-center">
+                        <Logo className="h-6 w-6 sm:h-7 sm:w-7 md:h-10 md:w-10 lg:h-12 lg:w-12 text-primary" />
                       </div>
                       <div className="text-sm sm:text-base md:text-xl lg:text-2xl font-medium">Calculateur de rentabilité</div>
                     </div>

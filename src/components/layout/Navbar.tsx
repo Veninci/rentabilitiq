@@ -69,7 +69,7 @@ const Navbar = () => {
           to="/" 
           className="flex items-center space-x-1 md:space-x-2 font-semibold text-lg md:text-xl"
         >
-          <Logo className="text-primary" size="md" />
+          <Logo className="text-primary" size="lg" />
           <span className="animate-fade-in">RentabilitiQ</span>
         </Link>
 
