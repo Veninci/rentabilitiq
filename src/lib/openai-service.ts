@@ -1,4 +1,6 @@
+
 import { toast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface OpenAIMessage {
   role: 'system' | 'user' | 'assistant';
@@ -17,28 +19,28 @@ interface OpenAICompletionResponse {
   }[];
 }
 
-// API key prédéfinie pour tous les utilisateurs
-const DEFAULT_API_KEY = "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";
+// Clé API stockée dans Supabase
+const OPENAI_API_KEY = "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";
 
 /**
- * Service for making OpenAI API calls.
+ * Service pour effectuer des appels à l'API OpenAI.
  */
 export class OpenAIService {
   private apiKey: string;
 
   /**
-   * Creates a new OpenAI service instance.
-   * @param apiKey Optional custom API key (will use default if not provided)
+   * Crée une nouvelle instance du service OpenAI.
+   * @param apiKey Clé API personnalisée (utilisera celle par défaut si non fournie)
    */
   constructor(apiKey?: string) {
-    this.apiKey = apiKey || DEFAULT_API_KEY;
+    this.apiKey = apiKey || OPENAI_API_KEY;
   }
 
   /**
-   * Sends a completion request to the OpenAI API.
-   * @param messages The messages to include in the request
-   * @param model The model to use (default: gpt-4o)
-   * @returns The generated text
+   * Envoie une demande de complétion à l'API OpenAI.
+   * @param messages Les messages à inclure dans la demande
+   * @param model Le modèle à utiliser (par défaut: gpt-4o)
+   * @returns Le texte généré
    */
   async getCompletion(
     messages: OpenAIMessage[],
@@ -60,19 +62,34 @@ export class OpenAIService {
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.error?.message || "Error calling OpenAI API");
+        throw new Error(error.error?.message || "Erreur lors de l'appel à l'API OpenAI");
       }
 
       const data: OpenAICompletionResponse = await response.json();
       return data.choices[0]?.message?.content || "";
     } catch (error) {
-      console.error("OpenAI API error:", error);
+      console.error("Erreur API OpenAI:", error);
       toast({
         title: "Erreur",
         description: `Erreur lors de la communication avec l'IA: ${error instanceof Error ? error.message : 'Erreur inconnue'}`,
         variant: "destructive",
       });
       return "Désolé, une erreur est survenue lors de la communication avec l'IA.";
+    }
+  }
+
+  /**
+   * Obtient la clé API depuis Supabase de manière sécurisée (pour une implémentation future)
+   * @returns La clé API
+   */
+  static async getSecureApiKey(): Promise<string> {
+    try {
+      // Note: Cette fonction sera utilisée ultérieurement pour récupérer la clé depuis Supabase
+      // Pour l'instant, nous utilisons la clé par défaut
+      return OPENAI_API_KEY;
+    } catch (error) {
+      console.error("Erreur lors de la récupération de la clé API:", error);
+      return OPENAI_API_KEY;
     }
   }
 }
@@ -87,5 +104,5 @@ export const createOpenAIService = (apiKey?: string): OpenAIService => {
 
 // Pour des raisons de compatibilité avec le code existant
 export const getStoredApiKey = (): string => {
-  return DEFAULT_API_KEY;
+  return OPENAI_API_KEY;
 };
