@@ -1,4 +1,3 @@
-
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -20,7 +19,7 @@ interface OpenAICompletionResponse {
 }
 
 // Clé API stockée dans Supabase
-const OPENAI_API_KEY = "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";
+const OPENAI_API_KEY = "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";
 
 /**
  * Service pour effectuer des appels à l'API OpenAI.
