@@ -1,4 +1,3 @@
-
 import { toast } from "@/hooks/use-toast";
 
 interface OpenAIMessage {
@@ -19,7 +18,7 @@ interface OpenAICompletionResponse {
 }
 
 // API key prédéfinie pour tous les utilisateurs
-const DEFAULT_API_KEY = "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";
+const DEFAULT_API_KEY = "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";
 
 /**
  * Service for making OpenAI API calls.
