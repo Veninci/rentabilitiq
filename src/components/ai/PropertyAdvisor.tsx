@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Brain, MessageSquare, Sparkles, Clock, Star, SendHorizontal } from "lucide-react";
+import { Brain, MessageSquare, Sparkles, Clock, Star, SendHorizontal, Bot } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { openAIService } from "@/lib/openai-service";
 import { PropertyData, PropertyResults } from "@/types/property";
@@ -233,8 +233,9 @@ const PropertyAdvisor: React.FC<PropertyAdvisorProps> = ({ propertyData, results
                 <div className="flex items-start max-w-[80%] gap-2">
                   {message.role === 'assistant' && (
                     <Avatar className="h-8 w-8 mt-1">
-                      <AvatarFallback className="bg-primary text-primary-foreground">IA</AvatarFallback>
-                      <AvatarImage src="/lovable-uploads/f10628aa-f2ee-42d3-9d80-c0513fee0296.png" alt="AI" />
+                      <AvatarFallback className="bg-primary text-primary-foreground">
+                        <Bot size={16} />
+                      </AvatarFallback>
                     </Avatar>
                   )}
                   
@@ -266,8 +267,9 @@ const PropertyAdvisor: React.FC<PropertyAdvisorProps> = ({ propertyData, results
               <div className="flex justify-start">
                 <div className="flex items-start max-w-[80%] gap-2">
                   <Avatar className="h-8 w-8">
-                    <AvatarFallback className="bg-primary text-primary-foreground">IA</AvatarFallback>
-                    <AvatarImage src="/lovable-uploads/f10628aa-f2ee-42d3-9d80-c0513fee0296.png" alt="AI" />
+                    <AvatarFallback className="bg-primary text-primary-foreground">
+                      <Bot size={16} />
+                    </AvatarFallback>
                   </Avatar>
                   
                   <div className="rounded-lg p-3 bg-muted">
