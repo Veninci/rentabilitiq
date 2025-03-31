@@ -1,11 +1,9 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Instagram, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
 import Logo from '@/components/ui/Logo';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
-
 const Footer = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -15,18 +13,17 @@ const Footer = () => {
     // This prevents the default behavior which might be causing the scroll to top
     e.stopPropagation();
   };
-
   return <footer className="bg-gray-50 border-t border-gray-100">
       <div className="container mx-auto px-4 py-6 md:py-8">
         {/* SEO Content in Collapsible Section */}
         <div className="mb-8 border-b pb-6">
           <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold md:text-xl">
+              <h2 className="text-xl font-bold md:text-xl text-slate-950">
                 Ressources pour investisseurs
               </h2>
-              <CollapsibleTrigger className="p-2 hover:bg-gray-100 rounded-full">
-                {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              <CollapsibleTrigger className="p-2 rounded-full text-slate-950 bg-slate-50">
+                {isOpen ? <ChevronUp size={20} className="bg-slate-50" /> : <ChevronDown size={20} />}
               </CollapsibleTrigger>
             </div>
             
@@ -171,5 +168,4 @@ const Footer = () => {
       </div>
     </footer>;
 };
-
 export default Footer;
