@@ -7,7 +7,6 @@ import Features from '@/components/home/Features';
 import CityMarketTrends from '@/components/home/city-market-trends';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { Logos3 } from '@/components/ui/logos3';
-import SeoContent from '@/components/home/SeoContent';
 import { Helmet } from 'react-helmet-async';
 
 const Index = () => {
@@ -29,7 +28,6 @@ const Index = () => {
         <Logos3 heading="Les partenaires engagés dans le développement" />
         <Features />
         <CityMarketTrends />
-        <SeoContent />
       </main>
       <Footer />
     </div>
