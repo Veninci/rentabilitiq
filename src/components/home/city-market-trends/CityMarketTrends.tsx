@@ -6,9 +6,6 @@ import MarketSummary from "./MarketSummary";
 import TrendsChart from "./TrendsChart";
 import DataTable from "./DataTable";
 import { cityData } from "./city-data";
-import { Button } from "@/components/ui/button";
-import GlassCard from '@/components/ui/GlassCard';
-import { ArrowUpRight } from 'lucide-react';
 
 const CityMarketTrends: React.FC = () => {
   const [selectedCity, setSelectedCity] = useState<string>("Paris");
@@ -37,27 +34,7 @@ const CityMarketTrends: React.FC = () => {
   };
 
   return (
-    <section className="py-8 bg-muted/30">
-      <div className="container mx-auto">
-        <GlassCard className="px-6 py-6 max-w-3xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="text-left">
-              <h2 className="text-2xl font-bold">Évolution du marché</h2>
-              <p className="text-muted-foreground text-sm">Tendances du marché immobilier français</p>
-            </div>
-            <Button 
-              variant="outline" 
-              className="flex items-center gap-2"
-              onClick={() => {
-                setDialogOpen(true);
-              }}
-            >
-              Détails <ArrowUpRight className="w-4 h-4" />
-            </Button>
-          </div>
-        </GlassCard>
-      </div>
-      
+    <>
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="sm:max-w-[700px] max-h-[90vh] overflow-y-auto w-[95vw]">
           <DialogHeader>
@@ -93,7 +70,7 @@ const CityMarketTrends: React.FC = () => {
           </div>
         </DialogContent>
       </Dialog>
-    </section>
+    </>
   );
 };
 

@@ -4,6 +4,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import Hero from '@/components/home/Hero';
 import Features from '@/components/home/Features';
+import CityMarketTrends from '@/components/home/city-market-trends';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { Logos3 } from '@/components/ui/logos3';
 import { Helmet } from 'react-helmet-async';
