@@ -3,10 +3,17 @@ import React from 'react';
 import { Layout } from '@/components/layout/Layout';
 import GlassCard from '@/components/ui/GlassCard';
 import { cn } from '@/lib/utils';
+import { Helmet } from 'react-helmet-async';
 
 const About = () => {
   return (
     <Layout>
+      <Helmet>
+        <title>À Propos de RentabilitiQ - Notre Mission et Notre Équipe</title>
+        <meta name="description" content="Découvrez l'histoire de RentabilitiQ, notre mission de démocratisation de l'information immobilière et notre équipe passionnée par l'investissement locatif." />
+        <link rel="canonical" href="https://rentabilitiq.com/about" />
+      </Helmet>
+
       <div className="container mx-auto px-4 py-24 md:py-32">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center">À propos de RentabilitiQ</h1>
@@ -44,7 +51,7 @@ const About = () => {
                 )}>
                   <img 
                     src="/lovable-uploads/f10628aa-f2ee-42d3-9d80-c0513fee0296.png" 
-                    alt="Lucas Da Silva Venancio, fondateur de RentabilitiQ" 
+                    alt="Lucas Da Silva Venancio, fondateur de RentabilitiQ - Expert en investissement immobilier" 
                     className="w-full h-full object-cover object-bottom object-[center_70%] filter grayscale hover:grayscale-0 transition-all duration-500"
                   />
                 </div>
