@@ -1,11 +1,21 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Instagram, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
 import Logo from '@/components/ui/Logo';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
+
 const Footer = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  // Function to prevent default behavior and stop event propagation
+  const handleTabClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    // This prevents the default behavior which might be causing the scroll to top
+    e.stopPropagation();
+  };
+
   return <footer className="bg-gray-50 border-t border-gray-100">
       <div className="container mx-auto px-4 py-6 md:py-8">
         {/* SEO Content in Collapsible Section */}
@@ -23,13 +33,13 @@ const Footer = () => {
             <CollapsibleContent className="mt-4">
               <Tabs defaultValue="rentabilite" className="w-full">
                 <TabsList className="mb-4 w-full flex flex-wrap gap-2 bg-transparent">
-                  <TabsTrigger value="rentabilite" className="flex-grow md:flex-grow-0">
+                  <TabsTrigger value="rentabilite" className="flex-grow md:flex-grow-0" onClick={handleTabClick}>
                     Calculer la rentabilité
                   </TabsTrigger>
-                  <TabsTrigger value="criteres" className="flex-grow md:flex-grow-0">
+                  <TabsTrigger value="criteres" className="flex-grow md:flex-grow-0" onClick={handleTabClick}>
                     Critères d'investissement
                   </TabsTrigger>
-                  <TabsTrigger value="villes" className="flex-grow md:flex-grow-0">
+                  <TabsTrigger value="villes" className="flex-grow md:flex-grow-0" onClick={handleTabClick}>
                     Villes rentables
                   </TabsTrigger>
                 </TabsList>
@@ -161,4 +171,5 @@ const Footer = () => {
       </div>
     </footer>;
 };
+
 export default Footer;
