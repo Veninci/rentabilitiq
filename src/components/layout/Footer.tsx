@@ -1,11 +1,9 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Instagram, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
 import Logo from '@/components/ui/Logo';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
-
 const Footer = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -15,14 +13,13 @@ const Footer = () => {
     // This prevents the default behavior which might be causing the scroll to top
     e.stopPropagation();
   };
-
   return <footer className="bg-gray-50 border-t border-gray-100 dark:bg-gray-900 dark:border-gray-800">
       <div className="container mx-auto px-4 py-6 md:py-8">
         {/* SEO Content in Collapsible Section */}
         <div className="mb-8 border-b pb-6 dark:border-gray-800">
           <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg md:text-xl font-bold text-slate-950 dark:text-white">
+              <h2 className="text-lg md:text-xl font-bold text-slate-50">
                 Ressources pour investisseurs
               </h2>
               <CollapsibleTrigger className="p-2 rounded-full text-slate-950 dark:text-white bg-slate-50 dark:bg-gray-800">
@@ -33,25 +30,13 @@ const Footer = () => {
             <CollapsibleContent className="mt-4">
               <Tabs defaultValue="rentabilite" className="w-full">
                 <TabsList className="mb-4 w-full flex flex-wrap gap-2 bg-transparent overflow-x-auto pb-1 -mx-1 px-1 scrollbar-none">
-                  <TabsTrigger 
-                    value="rentabilite" 
-                    className="flex-shrink-0 text-sm bg-slate-50 dark:bg-gray-800 text-slate-950 dark:text-white data-[state=active]:bg-primary data-[state=active]:text-white" 
-                    onClick={handleTabClick}
-                  >
+                  <TabsTrigger value="rentabilite" className="flex-shrink-0 text-sm bg-slate-50 dark:bg-gray-800 text-slate-950 dark:text-white data-[state=active]:bg-primary data-[state=active]:text-white" onClick={handleTabClick}>
                     Calculer la rentabilité
                   </TabsTrigger>
-                  <TabsTrigger 
-                    value="criteres" 
-                    className="flex-shrink-0 text-sm bg-slate-50 dark:bg-gray-800 text-slate-950 dark:text-white data-[state=active]:bg-primary data-[state=active]:text-white" 
-                    onClick={handleTabClick}
-                  >
+                  <TabsTrigger value="criteres" className="flex-shrink-0 text-sm bg-slate-50 dark:bg-gray-800 text-slate-950 dark:text-white data-[state=active]:bg-primary data-[state=active]:text-white" onClick={handleTabClick}>
                     Critères d'investissement
                   </TabsTrigger>
-                  <TabsTrigger 
-                    value="villes" 
-                    className="flex-shrink-0 text-sm bg-slate-50 dark:bg-gray-800 text-slate-950 dark:text-white data-[state=active]:bg-primary data-[state=active]:text-white" 
-                    onClick={handleTabClick}
-                  >
+                  <TabsTrigger value="villes" className="flex-shrink-0 text-sm bg-slate-50 dark:bg-gray-800 text-slate-950 dark:text-white data-[state=active]:bg-primary data-[state=active]:text-white" onClick={handleTabClick}>
                     Villes rentables
                   </TabsTrigger>
                 </TabsList>
