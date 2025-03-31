@@ -19,7 +19,7 @@ interface OpenAICompletionResponse {
 }
 
 // Clé API stockée dans Supabase
-const OPENAI_API_KEY = "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";
+const OPENAI_API_KEY = "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";
 
 /**
  * Service pour effectuer des appels à l'API OpenAI.
