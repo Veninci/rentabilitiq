@@ -27,6 +27,7 @@ const Index = () => {
         <Hero />
         <Logos3 heading="Les partenaires engagés dans le développement" />
         <Features />
+        <CityMarketTrends />
       </main>
       <Footer />
     </div>
