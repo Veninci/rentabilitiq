@@ -195,6 +195,13 @@
   .calculator-results-light {
     @apply bg-white text-gray-900;
   }
+  
+  /* Footer resources section - Ensure dark mode doesn't affect text color */
+  .dark .prose h3.text-slate-950,
+  .dark .prose p.text-slate-950,
+  .dark .prose li.text-slate-950 {
+    @apply text-white;
+  }
 }
 
 @layer utilities {
@@ -292,5 +299,27 @@
   .hero-slogan {
     margin-top: -12px !important;
   }
+  
+  /* Improved mobile responsiveness for footer tabs */
+  [role="tablist"] {
+    padding: 0 !important;
+    gap: 0.5rem !important;
+  }
+  
+  footer .TabsTrigger {
+    padding: 0.5rem !important;
+    min-height: 40px !important;
+    white-space: normal !important;
+    height: auto !important;
+    line-height: 1.2 !important;
+  }
+  
+  footer .prose ul {
+    padding-left: 1rem !important;
+  }
+  
+  footer .prose li {
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.25rem !important;
+  }
 }
-
