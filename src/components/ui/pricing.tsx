@@ -174,7 +174,7 @@ export function Pricing({
                   />
                 </span>
                 <span className="text-sm font-semibold leading-6 tracking-wide text-muted-foreground">
-                  / {plan.period}
+                  / {isMonthly ? plan.period : plan.name === "Pro" ? "an" : plan.period}
                 </span>
               </div>
 

@@ -50,7 +50,7 @@ const PricingCards = () => {
       description: 'Pour les investisseurs actifs',
       price: {
         monthly: 8.99,
-        yearly: 90,
+        yearly: 90, // Updated to 90€ per year, not per month
       },
       savePercent: 16,
       features: [
