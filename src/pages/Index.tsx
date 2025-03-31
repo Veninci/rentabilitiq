@@ -25,9 +25,6 @@ const Index = () => {
       </div>
       <main className="flex-grow pt-16 md:pt-20">
         <Hero />
-        <div className="container py-12">
-          <CityMarketTrends />
-        </div>
         <Logos3 heading="Les partenaires engagés dans le développement" />
         <Features />
       </main>
