@@ -14,6 +14,7 @@ import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import Cookies from "./pages/Cookies";
 import NotFound from "./pages/NotFound";
+import GoogleTagManager from "./components/analytics/GoogleTagManager";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <GoogleTagManager />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/calculator" element={<Calculator />} />
