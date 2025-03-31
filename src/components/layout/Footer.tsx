@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Instagram, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
@@ -19,10 +20,10 @@ const Footer = () => {
         <div className="mb-8 border-b pb-6 dark:border-gray-800">
           <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg md:text-xl font-bold text-slate-50">
+              <h2 className="text-lg md:text-xl font-bold text-black dark:text-white">
                 Ressources pour investisseurs
               </h2>
-              <CollapsibleTrigger className="p-2 rounded-full text-slate-950 dark:text-white bg-slate-50 dark:bg-gray-800">
+              <CollapsibleTrigger className="p-2 rounded-full text-black dark:text-white bg-slate-50 dark:bg-gray-800">
                 {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </CollapsibleTrigger>
             </div>
@@ -30,63 +31,63 @@ const Footer = () => {
             <CollapsibleContent className="mt-4">
               <Tabs defaultValue="rentabilite" className="w-full">
                 <TabsList className="mb-4 w-full flex flex-wrap gap-2 bg-transparent overflow-x-auto pb-1 -mx-1 px-1 scrollbar-none">
-                  <TabsTrigger value="rentabilite" className="flex-shrink-0 text-sm bg-slate-50 dark:bg-gray-800 text-slate-950 dark:text-white data-[state=active]:bg-primary data-[state=active]:text-white" onClick={handleTabClick}>
+                  <TabsTrigger value="rentabilite" className="flex-shrink-0 text-sm bg-slate-50 dark:bg-gray-800 text-black dark:text-white data-[state=active]:bg-primary data-[state=active]:text-white" onClick={handleTabClick}>
                     Calculer la rentabilité
                   </TabsTrigger>
-                  <TabsTrigger value="criteres" className="flex-shrink-0 text-sm bg-slate-50 dark:bg-gray-800 text-slate-950 dark:text-white data-[state=active]:bg-primary data-[state=active]:text-white" onClick={handleTabClick}>
+                  <TabsTrigger value="criteres" className="flex-shrink-0 text-sm bg-slate-50 dark:bg-gray-800 text-black dark:text-white data-[state=active]:bg-primary data-[state=active]:text-white" onClick={handleTabClick}>
                     Critères d'investissement
                   </TabsTrigger>
-                  <TabsTrigger value="villes" className="flex-shrink-0 text-sm bg-slate-50 dark:bg-gray-800 text-slate-950 dark:text-white data-[state=active]:bg-primary data-[state=active]:text-white" onClick={handleTabClick}>
+                  <TabsTrigger value="villes" className="flex-shrink-0 text-sm bg-slate-50 dark:bg-gray-800 text-black dark:text-white data-[state=active]:bg-primary data-[state=active]:text-white" onClick={handleTabClick}>
                     Villes rentables
                   </TabsTrigger>
                 </TabsList>
                 
                 <TabsContent value="rentabilite" className="prose prose-slate max-w-none text-sm md:text-base">
-                  <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-slate-950 dark:text-white">Comment calculer la rentabilité immobilière?</h3>
-                  <p className="text-slate-950 dark:text-slate-200">
+                  <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-black dark:text-white">Comment calculer la rentabilité immobilière?</h3>
+                  <p className="text-black dark:text-white">
                     La rentabilité d'un investissement immobilier se mesure principalement de deux façons: la rentabilité brute et la rentabilité nette. 
                     Notre calculateur RentabilitiQ prend en compte tous les paramètres essentiels pour vous offrir une analyse complète:
                   </p>
                   <ul className="list-disc pl-4 md:pl-6 mt-2 mb-4 space-y-1">
-                    <li className="text-slate-950 dark:text-slate-200">Prix d'achat et frais de notaire</li>
-                    <li className="text-slate-950 dark:text-slate-200">Montant du loyer mensuel</li>
-                    <li className="text-slate-950 dark:text-slate-200">Charges récurrentes (copropriété, taxe foncière, assurances)</li>
-                    <li className="text-slate-950 dark:text-slate-200">Modalités de financement (apport, durée du prêt, taux d'intérêt)</li>
-                    <li className="text-slate-950 dark:text-slate-200">Comparaison location classique vs location saisonnière (Airbnb)</li>
+                    <li className="text-black dark:text-white">Prix d'achat et frais de notaire</li>
+                    <li className="text-black dark:text-white">Montant du loyer mensuel</li>
+                    <li className="text-black dark:text-white">Charges récurrentes (copropriété, taxe foncière, assurances)</li>
+                    <li className="text-black dark:text-white">Modalités de financement (apport, durée du prêt, taux d'intérêt)</li>
+                    <li className="text-black dark:text-white">Comparaison location classique vs location saisonnière (Airbnb)</li>
                   </ul>
                 </TabsContent>
                 
                 <TabsContent value="criteres" className="prose prose-slate max-w-none text-sm md:text-base">
-                  <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-slate-950 dark:text-white">Les critères d'un bon investissement locatif</h3>
-                  <p className="text-slate-950 dark:text-slate-200">
+                  <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-black dark:text-white">Les critères d'un bon investissement locatif</h3>
+                  <p className="text-black dark:text-white">
                     Pour qu'un investissement immobilier soit considéré comme rentable, plusieurs facteurs doivent être pris en compte:
                   </p>
                   <ul className="list-disc pl-4 md:pl-6 mt-2 mb-4 space-y-1">
-                    <li className="text-slate-950 dark:text-slate-200">Une rentabilité brute supérieure à 5-6%</li>
-                    <li className="text-slate-950 dark:text-slate-200">Un cash-flow mensuel positif</li>
-                    <li className="text-slate-950 dark:text-slate-200">Un potentiel d'évolution du prix du bien dans les années à venir</li>
-                    <li className="text-slate-950 dark:text-slate-200">Une demande locative forte dans le quartier</li>
-                    <li className="text-slate-950 dark:text-slate-200">Des charges de copropriété maîtrisées</li>
-                    <li className="text-slate-950 dark:text-slate-200">Une fiscalité optimisée</li>
+                    <li className="text-black dark:text-white">Une rentabilité brute supérieure à 5-6%</li>
+                    <li className="text-black dark:text-white">Un cash-flow mensuel positif</li>
+                    <li className="text-black dark:text-white">Un potentiel d'évolution du prix du bien dans les années à venir</li>
+                    <li className="text-black dark:text-white">Une demande locative forte dans le quartier</li>
+                    <li className="text-black dark:text-white">Des charges de copropriété maîtrisées</li>
+                    <li className="text-black dark:text-white">Une fiscalité optimisée</li>
                   </ul>
-                  <p className="text-slate-950 dark:text-slate-200">
+                  <p className="text-black dark:text-white">
                     Notre calculateur RentabilitiQ vous aide à analyser tous ces critères pour prendre des décisions éclairées.
                   </p>
                 </TabsContent>
                 
                 <TabsContent value="villes" className="prose prose-slate max-w-none text-sm md:text-base">
-                  <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-slate-950 dark:text-white">Les villes françaises les plus rentables pour investir</h3>
-                  <p className="text-slate-950 dark:text-slate-200">
+                  <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-black dark:text-white">Les villes françaises les plus rentables pour investir</h3>
+                  <p className="text-black dark:text-white">
                     Le rendement locatif varie considérablement selon les villes. D'après nos analyses, les villes moyennes offrent souvent les meilleures rentabilités:
                   </p>
                   <ul className="list-disc pl-4 md:pl-6 mt-2 space-y-1">
-                    <li className="text-slate-950 dark:text-slate-200">Le Havre: jusqu'à 8-9% de rentabilité brute</li>
-                    <li className="text-slate-950 dark:text-slate-200">Saint-Étienne: entre 7% et 10% selon les quartiers</li>
-                    <li className="text-slate-950 dark:text-slate-200">Perpignan: environ 7% de rentabilité moyenne</li>
-                    <li className="text-slate-950 dark:text-slate-200">Mulhouse: des rendements pouvant atteindre 9%</li>
-                    <li className="text-slate-950 dark:text-slate-200">Limoges: entre 6% et 8% de rendement brut</li>
+                    <li className="text-black dark:text-white">Le Havre: jusqu'à 8-9% de rentabilité brute</li>
+                    <li className="text-black dark:text-white">Saint-Étienne: entre 7% et 10% selon les quartiers</li>
+                    <li className="text-black dark:text-white">Perpignan: environ 7% de rentabilité moyenne</li>
+                    <li className="text-black dark:text-white">Mulhouse: des rendements pouvant atteindre 9%</li>
+                    <li className="text-black dark:text-white">Limoges: entre 6% et 8% de rendement brut</li>
                   </ul>
-                  <p className="mt-4 text-slate-950 dark:text-slate-200">
+                  <p className="mt-4 text-black dark:text-white">
                     Les grandes métropoles comme Paris, Lyon ou Bordeaux offrent généralement des rentabilités plus faibles (2-4%) mais compensent par une plus-value potentielle importante à la revente.
                   </p>
                 </TabsContent>

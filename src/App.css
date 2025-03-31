@@ -159,3 +159,10 @@
 .dark .calculator-result-value {
   color: #000;
 }
+
+/* Remove any conflicting overrides for footer resources section */
+.dark .prose h3.text-slate-950,
+.dark .prose p.text-slate-950,
+.dark .prose li.text-slate-950 {
+  /* These styles have been replaced by direct classes in Footer.tsx */
+}
