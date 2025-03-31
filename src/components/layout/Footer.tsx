@@ -1,11 +1,9 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Instagram, ExternalLink, ChevronDown, ChevronUp } from 'lucide-react';
 import Logo from '@/components/ui/Logo';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
-
 const Footer = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -15,7 +13,6 @@ const Footer = () => {
     // This prevents the default behavior which might be causing the scroll to top
     e.stopPropagation();
   };
-
   return <footer className="bg-gray-50 border-t border-gray-100">
       <div className="container mx-auto px-4 py-6 md:py-8">
         {/* SEO Content in Collapsible Section */}
@@ -45,15 +42,15 @@ const Footer = () => {
                 </TabsList>
                 
                 <TabsContent value="rentabilite" className="prose prose-slate dark:prose-invert max-w-none text-sm md:text-base">
-                  <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3">Comment calculer la rentabilité immobilière?</h3>
-                  <p>
+                  <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-slate-950">Comment calculer la rentabilité immobilière?</h3>
+                  <p className="text-slate-950">
                     La rentabilité d'un investissement immobilier se mesure principalement de deux façons: la rentabilité brute et la rentabilité nette. 
                     Notre calculateur RentabilitiQ prend en compte tous les paramètres essentiels pour vous offrir une analyse complète:
                   </p>
                   <ul className="list-disc pl-4 md:pl-6 mt-2 mb-4 space-y-1">
-                    <li>Prix d'achat et frais de notaire</li>
-                    <li>Montant du loyer mensuel</li>
-                    <li>Charges récurrentes (copropriété, taxe foncière, assurances)</li>
+                    <li className="bg-slate-50">Prix d'achat et frais de notaire</li>
+                    <li className="bg-slate-50">Montant du loyer mensuel</li>
+                    <li className="bg-slate-50">Charges récurrentes (copropriété, taxe foncière, assurances)</li>
                     <li>Modalités de financement (apport, durée du prêt, taux d'intérêt)</li>
                     <li>Comparaison location classique vs location saisonnière (Airbnb)</li>
                   </ul>
@@ -78,7 +75,7 @@ const Footer = () => {
                 </TabsContent>
                 
                 <TabsContent value="villes" className="prose prose-slate dark:prose-invert max-w-none text-sm md:text-base">
-                  <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3">Les villes françaises les plus rentables pour investir</h3>
+                  <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-slate-950">Les villes françaises les plus rentables pour investir</h3>
                   <p>
                     Le rendement locatif varie considérablement selon les villes. D'après nos analyses, les villes moyennes offrent souvent les meilleures rentabilités:
                   </p>
@@ -171,5 +168,4 @@ const Footer = () => {
       </div>
     </footer>;
 };
-
 export default Footer;
