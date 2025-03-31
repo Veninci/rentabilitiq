@@ -17,7 +17,7 @@ interface Logos3Props {
   className?: string;
 }
 const Logos3 = ({
-  heading = "Les partenaires engagés dans le développement",
+  heading = "Déploiement de Rentabilitiq",
   logos = [{
     id: "logo-1",
     description: "Supabase",
