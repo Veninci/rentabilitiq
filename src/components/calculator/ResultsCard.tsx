@@ -1,4 +1,3 @@
-
 import React, { useRef } from 'react';
 import { PropertyResults } from '@/types/property';
 import GlassCard from '../ui/GlassCard';
@@ -95,14 +94,21 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results, cityName }) => {
     }
   };
 
-  // Sécuriser la valeur de paybackPeriod qui pourrait être null ou Infinity
+  // Fonction améliorée pour afficher la période de retour sur investissement
   const displayPaybackPeriod = () => {
     if (paybackPeriod === null || paybackPeriod === undefined) {
-      return "Jamais";
+      return "Non calculable";
     }
-    if (!isFinite(paybackPeriod)) {
-      return "Jamais";
+    
+    if (!isFinite(paybackPeriod) || paybackPeriod >= 100) {
+      return "Plus de 100 ans";
     }
+    
+    if (paybackPeriod <= 0) {
+      return "Non rentable";
+    }
+    
+    // Format avec 1 décimale pour des résultats plus précis
     return `${safeGet(paybackPeriod).toFixed(1)} ans`;
   };
 
@@ -140,7 +146,7 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results, cityName }) => {
               <ResultItem 
                 label="Rendement net" 
                 value={`${formatter.formatPercent(netYield)}`} 
-                color="text-primary"
+                color={netYield >= 0 ? "text-primary" : "text-red-500"}
               />
             </div>
           </div>
@@ -265,7 +271,7 @@ const ResultsCard: React.FC<ResultsCardProps> = ({ results, cityName }) => {
           <ResultItem 
             label="Durée de remboursement" 
             value={displayPaybackPeriod()} 
-            color="text-foreground"
+            color={paybackPeriod > 50 ? "text-amber-600" : "text-foreground"}
           />
         </div>
         

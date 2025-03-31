@@ -127,6 +127,15 @@
   .text-balance {
     text-wrap: balance;
   }
+  
+  /* Improve calculator form on mobile */
+  .tabs-content {
+    padding: 0.75rem !important;
+  }
+  
+  .form-section {
+    gap: 0.75rem !important;
+  }
 }
 
 /* Better touch targets on mobile */
@@ -144,6 +153,16 @@
   input, select, textarea {
     font-size: 16px !important; /* Prevents iOS zoom on focus */
   }
+  
+  /* Better spacing for the form tabs on mobile */
+  .tabs-list {
+    gap: 0.25rem !important;
+  }
+  
+  .tabs-trigger {
+    padding: 0.5rem !important;
+    font-size: 0.875rem !important;
+  }
 }
 
 /* Fix for dark mode text colors in calculator mockup */
@@ -158,11 +177,4 @@
 
 .dark .calculator-result-value {
   color: #000;
-}
-
-/* Remove any conflicting overrides for footer resources section */
-.dark .prose h3.text-slate-950,
-.dark .prose p.text-slate-950,
-.dark .prose li.text-slate-950 {
-  /* These styles have been replaced by direct classes in Footer.tsx */
 }

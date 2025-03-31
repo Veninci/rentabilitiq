@@ -29,13 +29,14 @@ export const formatter = {
   formatPercent: (value: number | null | undefined, options?: Intl.NumberFormatOptions) => {
     // Protection contre les valeurs null, undefined, NaN ou Infinity
     if (value === null || value === undefined || isNaN(value) || !isFinite(value)) {
-      return '0 %';
+      return '0%';
     }
     
-    // Diviser par 100 seulement si nécessaire - la valeur est déjà en pourcentage
+    // Formater correctement les pourcentages
     return new Intl.NumberFormat('fr-FR', {
       style: 'percent',
-      maximumFractionDigits: 2,
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1,
       ...options,
     }).format(value / 100);
   },

@@ -86,12 +86,25 @@ export const calculateResults = (data: PropertyData): PropertyResults => {
   const monthlyCashFlow = annualCashFlow / 12;
   
   // Calcul des rendements - correctement calculés par rapport à l'investissement total
-  const grossYield = totalInvestment > 0 ? (annualIncome / totalInvestment) * 100 : 0;
-  const netYield = totalInvestment > 0 ? (annualCashFlow / totalInvestment) * 100 : 0;
+  // Pour éviter les divisions par zéro ou valeurs négatives inappropriées
+  const totalInvestmentForCalc = totalInvestment > 0 ? totalInvestment : 1; // Éviter division par zéro
+
+  // Rendement brut = revenus annuels / investissement total
+  const grossYield = (annualIncome / totalInvestmentForCalc) * 100;
+  
+  // Rendement net = cash-flow annuel / investissement total
+  const netYield = (annualCashFlow / totalInvestmentForCalc) * 100;
   
   // Période de récupération de l'investissement (en années)
-  // Si le cash flow est négatif ou nul, l'investissement ne sera jamais rentabilisé
-  const paybackPeriod = (annualCashFlow > 0) ? (totalInvestment / annualCashFlow) : Infinity;
+  // Formule améliorée pour éviter les valeurs "jamais" inappropriées
+  let paybackPeriod;
+  if (annualCashFlow <= 0) {
+    paybackPeriod = 100; // Utiliser 100 ans comme valeur maximale au lieu de Infinity
+  } else {
+    paybackPeriod = totalInvestment / annualCashFlow;
+    // Limiter à 100 ans maximum pour éviter des valeurs aberrantes
+    paybackPeriod = Math.min(paybackPeriod, 100);
+  }
   
   // Calcul du prix au m² - correctement calculé par rapport à la taille de la propriété
   const pricePerSqm = propertySize > 0 ? purchasePrice / propertySize : 0;
