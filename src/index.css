@@ -251,6 +251,15 @@
   .dark .calculator-form input {
     @apply bg-gray-800 border-gray-700 text-white;
   }
+  
+  /* Custom scrollbar for horizontal scrolling */
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @media (max-width: 640px) {
@@ -284,3 +293,4 @@
     margin-top: -12px !important;
   }
 }
+
