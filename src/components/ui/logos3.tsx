@@ -5,17 +5,20 @@ import { useEffect, useState } from "react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+
 interface Logo {
   id: string;
   description: string;
   image: string;
   className?: string;
 }
+
 interface Logos3Props {
   heading?: string;
   logos?: Logo[];
   className?: string;
 }
+
 const Logos3 = ({
   heading = "Déploiement de Rentabilitiq",
   logos = [{
@@ -43,6 +46,11 @@ const Logos3 = ({
     description: "Stripe",
     image: "/lovable-uploads/0b594ba9-4036-419f-b9e1-7999819636a7.png",
     className: "h-12 w-auto" // Augmenté la hauteur de h-10 à h-12 pour que le logo Stripe soit légèrement plus grand
+  }, {
+    id: "logo-6",
+    description: "Hostinger",
+    image: "/lovable-uploads/83a3da30-a600-4a3d-8761-882895c4c1fd.png",
+    className: "h-10 w-auto"
   }]
 }: Logos3Props) => {
   const isXs = useMediaQuery("(max-width: 480px)");
@@ -113,4 +121,5 @@ const Logos3 = ({
       </div>
     </section>;
 };
+
 export { Logos3 };
