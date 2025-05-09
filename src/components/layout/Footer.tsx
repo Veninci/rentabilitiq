@@ -5,8 +5,15 @@ import { Mail, Instagram, ExternalLink, ChevronDown, ChevronUp } from 'lucide-re
 import Logo from '@/components/ui/Logo';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { useForm } from "react-hook-form";
+import { toast } from '@/hooks/use-toast';
+
 const Footer = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
   // Function to prevent default behavior and stop event propagation
   const handleTabClick = (e: React.MouseEvent) => {
@@ -14,8 +21,78 @@ const Footer = () => {
     // This prevents the default behavior which might be causing the scroll to top
     e.stopPropagation();
   };
+
+  const onSubmit = async (data: { email: string }) => {
+    setIsLoading(true);
+    try {
+      // Simulate API call - in a real app, you'd send this to your backend
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      console.log("Email submitted:", data.email);
+      
+      toast({
+        title: "Inscription réussie !",
+        description: "Votre code de réduction de 10% vous sera envoyé par email.",
+      });
+      reset();
+    } catch (error) {
+      console.error("Error submitting email:", error);
+      toast({
+        title: "Une erreur s'est produite",
+        description: "Impossible de s'inscrire à la newsletter. Veuillez réessayer.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return <footer className="bg-gray-50 border-t border-gray-100 dark:bg-gray-900 dark:border-gray-800">
       <div className="container mx-auto px-4 py-6 md:py-8">
+        {/* Newsletter Section */}
+        <div className="mb-8 border-b border-gray-200 dark:border-gray-800 pb-8">
+          <div className="max-w-2xl mx-auto">
+            <div className="text-center mb-6">
+              <h2 className="text-xl md:text-2xl font-bold mb-2 text-black dark:text-white">
+                Inscrivez-vous à notre newsletter
+              </h2>
+              <p className="text-muted-foreground">
+                Recevez <span className="text-primary font-semibold">10% de réduction</span> sur nos forfaits premium et des conseils exclusifs sur l'investissement immobilier.
+              </p>
+            </div>
+            
+            <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col sm:flex-row gap-2 sm:gap-0">
+              <div className="flex-grow">
+                <Input
+                  type="email"
+                  placeholder="Votre adresse email"
+                  className="w-full h-12 sm:rounded-r-none"
+                  {...register("email", { 
+                    required: "L'email est requis", 
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "Adresse email invalide"
+                    }
+                  })}
+                  aria-invalid={errors.email ? "true" : "false"}
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-sm mt-1">{errors.email.message as string}</p>
+                )}
+              </div>
+              <Button 
+                type="submit" 
+                className="h-12 px-6 font-medium sm:rounded-l-none"
+                disabled={isLoading}
+              >
+                {isLoading ? "Inscription..." : "Obtenir -10%"}
+              </Button>
+            </form>
+            <p className="text-xs text-muted-foreground text-center mt-4">
+              En vous inscrivant, vous acceptez de recevoir nos emails marketing et confirmez avoir lu notre <Link to="/privacy" className="underline hover:text-primary">politique de confidentialité</Link>.
+            </p>
+          </div>
+        </div>
+
         {/* SEO Content in Collapsible Section */}
         <div className="mb-8 border-b pb-6 dark:border-gray-800">
           <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
